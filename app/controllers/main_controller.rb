@@ -7,6 +7,7 @@ class MainController < ApplicationController
       @restaurants = Restaurant.all
       @ip = request.remote_ip
       @users = User.all
+      
   end
   
   def choosefood
@@ -51,7 +52,8 @@ class MainController < ApplicationController
   
   def start
      # if params[:pass] == "vonviska"
-	
+    Time.now.hour
+    time = Timecontroll.new('start','','')
 	
   end
 end
