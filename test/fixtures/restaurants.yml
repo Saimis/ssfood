@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  about: MyString
+  votes: 1
+  waslast: false
+  lastused: MyString
+
+two:
+  name: MyString
+  about: MyString
+  votes: 1
+  waslast: false
+  lastused: MyString

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  ip: MyString
+  voted: false
+  food: MyString
+  decided: false
+
+two:
+  name: MyString
+  ip: MyString
+  voted: false
+  food: MyString
+  decided: false

@@ -1,0 +1,46 @@
+<% if voted_users < 11 %>
+
+<div id="countdown">00:<%= timeleft %>:00</div>
+<% end %>
+<div id="restaurants_holder">
+    <% @restaurants.each do |restaurant| %>
+    <% if !signed_in? && @current_user.voted != true %>
+      <a href="dovote/<%= restaurant.id %>" >
+    <% end %>
+	<div class="single_restaurant">
+	  <h1><%= restaurant.name %></h1>
+	  <h4><%= restaurant.about %></h4>
+	  <div class="votes"><%= restaurant.votes %></div>
+	  <div><% if restaurant.waslast %><%= image_tag("last.png") %><% end %></div>
+	  <div><%= restaurant.lastused %></div>
+	  <div class="vote_bar" style=" height:<%= restaurant.votes %>0px;"></div>
+	</div>
+	<% if !signed_in? && @current_user.voted != true %>
+      </a>
+      <% end %>
+    <% end %>
+</div>
+<% if !current_time || voted_users >=11 %>
+<div id="user_holder">
+  <% @users.each do |user| %>
+  <div class="single_user">
+    <h1><%= user.name %></h1>
+    <div class="copy">copycat it!</div>
+      <% if (!signed_in? && user.name != @current_user.name) || signed_in? %>
+      <div class="food" id="u_<%= user.id %>">
+      <%= user.food %>
+      <% else %>
+      <div class="food" >
+	<% if !signed_in? && user.name == @current_user.name %>
+	  <%= form_tag "savefood", :id => "food_form" do %>
+	    <%= text_area_tag "food", @user.food %>
+	    <!--< %= submit_tag "issaugoti" %> -->
+	  <% end %>
+	<% end %>
+      <% end %>
+      </div>
+  </div>
+  <% end %>
+</div>
+<% end %>
+

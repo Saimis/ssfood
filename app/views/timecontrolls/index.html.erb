@@ -1,0 +1,31 @@
+<h1>Listing timecontrolls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Gap</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @timecontrolls.each do |timecontroll| %>
+      <tr>
+        <td><%= timecontroll.start %></td>
+        <td><%= timecontroll.end %></td>
+        <td><%= timecontroll.gap %></td>
+        <td><%= link_to 'Show', timecontroll %></td>
+        <td><%= link_to 'Edit', edit_timecontroll_path(timecontroll) %></td>
+        <td><%= link_to 'Destroy', timecontroll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Timecontroll', new_timecontroll_path %>

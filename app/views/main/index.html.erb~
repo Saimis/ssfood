@@ -1,0 +1,67 @@
+<h1>Listing restaurants</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>About</th>
+      <th>Votes</th>
+      <th>Waslast</th>
+      <th>Lastused</th>
+      <th></th>
+     <!-- <th></th>
+      <th></th>
+      <th></th> -->
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @restaurants.each do |restaurant| %>
+      <tr>
+        <td><%= restaurant.name %></td>
+        <td><%= restaurant.about %></td>
+        <td><%= restaurant.votes %></td>
+        <td><%= restaurant.waslast %></td>
+        <td><%= restaurant.lastused %></td>
+        <td><%= link_to 'Vote', {:controller => :main, :action => "dovote", :id => restaurant.id} %></td>
+       <!-- <td>< %= link_to 'Show', restaurant %></td>
+        <td>< %= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
+        <td>< %= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<h1>Listing users</h1>
+<%= link_to "Rinktis maista", :controller => :main, :action => :choosefood %> 
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+     <!-- <th>Ip</th>-->
+      <!--<th>Voted</th>-->
+      <th>Food</th>
+     <!-- <th>Decided</th>-->
+      <!--<th></th>
+      <th></th>
+      <th></th>-->
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+      <!--  <td><%= user.ip %></td>-->
+      <!--  <td><%= user.voted %></td>-->
+        <td><%= user.food %></td>
+      <!--  <td><%= user.decided %></td>-->
+     <!--   <td>< %= link_to 'Show', user %></td>
+        <td>< %= link_to 'Edit', edit_user_path(user) %></td>
+        <td>< %= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<!--< %= link_to 'New Restaurant', new_restaurant_path %>-->
