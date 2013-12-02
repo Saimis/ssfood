@@ -26,8 +26,13 @@ $(document).ready(function(){
   });
   
   $(".copy").click(function() {
-     
-    $("#food").val($(this).parent().find(".food").text());
+    if($("#food").val().length > 0){
+      if (confirm("Kopijuoti?")) {
+	$("#food").val($(this).parent().parent().find(".food").text());
+      }   
+    } else {
+      $("#food").val($(this).parent().parent().find(".food").text());
+    }
    
     saveFood();
   });
@@ -65,30 +70,48 @@ function saveFood(){
 function liftOff() {
  alert("well shit"); 
 }
-function addmsg(type, msg){
-   jQuery.each(msg, function(i, item) {
-    $("#u_" + item.id).html(item.food);
+
+function addmsg(msg){
+  jQuery.each(msg, function(i, item) {
+    $("#uf_" + item.id).html(item.food);
     if(item.food.length > 0) {
-     $("#u_" + item.id).parent().css("background","green");
+     $("#u_" + item.id).css("background","#97ce68");
     } else {
-      $("#u_" + item.id).parent().css("background","none");
+      $("#u_" + item.id).css("background","#6bcbca");
     }
-  });
-  
-  
+    
+    if(item.voted) {
+      $("#uv_" + item.id).show();
+    }
+  });     
+}
+function addvotes(msg) {
+  jQuery.each(msg, function(i, item) {
+    $("#r_" + item.id).css("height",item.votes + "0px");
+    
+  });  
+}
+function setwinner(msg) {
+ console.log(msg.id);
+}
+
+function parseInfo(type, msg) {
+  addmsg(msg.users);
+  addvotes(msg.restaurants);
+  //setwinner(msg.winner);
 }
 
 function waitForMsg(){
   $.ajax({
       type: "GET",
-      url: "users/getfood.json",
+      url: "getData.json",
 
       async: true,
       cache: false,
       timeout:50000,
 
       success: function(data){ 
-	  addmsg("new", data);
+	  parseInfo("new", data);
 	  setTimeout(
 	      waitForMsg,
 	      5000

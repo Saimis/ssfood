@@ -9,7 +9,7 @@ FoodApp::Application.routes.draw do
   get 'dovote/:id' => 'main#dovote'
   get 'restaurants' => 'restaurants#index'
   get 'users/food' => 'users#choosefood'
-  get 'users/getfood' => 'users#getfood'
+  get 'getData' => 'main#getData'
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
   post 'savefood' => 'main#savefood'

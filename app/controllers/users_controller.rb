@@ -13,15 +13,7 @@ class UsersController < ApplicationController
      user.save
      redirect_to users_url
   end
-  
-  def getfood
-    @users = User.find(:all, :select => 'id, food')
-    
-    respond_to do |format|
-       format.json { render json: @users.to_json, :only => [:id, :food]}
-    end
-  end
-
+   
   # GET /users/1
   # GET /users/1.json
   def show

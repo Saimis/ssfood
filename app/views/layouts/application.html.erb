@@ -7,25 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-
-
 <% if signed_in? %>
   <%= link_to "Log in", log_in_path %>
 <% else %>
   <%= link_to "Log out", log_out_path %>
   <%= @current_user.name %>
 <% end %>
-
-
 <% flash.each do |name, msg| %>
   <%= content_tag :div, msg, :id => "flash_#{name}" %>
 <% end %>
-
-
-
-
 <%= yield %>
-
 </body>
 </html>
