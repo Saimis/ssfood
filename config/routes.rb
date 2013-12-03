@@ -18,6 +18,7 @@ FoodApp::Application.routes.draw do
   
   resources :sessions
   
+  get 'start' => 'main#start'
   
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'

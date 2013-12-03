@@ -15,7 +15,13 @@
 //= require turbolinks
 //= require_tree .
 var area_val = null;
+var isWinnerSet = false;
 $(document).ready(function(){
+  
+  
+  var endtime = $("#countdown").data("end");
+ 
+ $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
   
   
   $("#food").focus(function() {
@@ -25,8 +31,8 @@ $(document).ready(function(){
     saveFood();
   });
   
-  $(".copy").click(function() {
-     event.stopPropagation();
+  $(".copy").click(function(event) {
+    event.stopPropagation();
     var friends_food = $(this).parent().parent().find(".food").text();
     
     if(friends_food.length > 0) {
@@ -45,23 +51,25 @@ $(document).ready(function(){
     saveFood();
   });
   
-  $(".user_name").click(function(){
-    if($(this).parent().find(".food").text().length == 0) {
-      $(this).parent().css({
+  $(".user_name_activefield").click(function(){
+    console.log($(this).parent().parent().find("#food").val());
+    if($(this).parent().parent().find(".food").text().length == 0) {
+      console.log("shit");
+      $(this).parent().parent().css({
 	"background": "red",
 	"color": "#fff"
       });
       return;
     }
       
-    var x = $(this).parent().css('backgroundColor');
+    var x = $(this).parent().parent().css('backgroundColor');
      if(x != "rgb(39, 174, 96)") {
-      $(this).parent().css({
+      $(this).parent().parent().css({
 	"background": "#27ae60",
 	"color": "#fff"
       });
     } else {
-      $(this).parent().css({
+      $(this).parent().parent().css({
 	"background": "#ecf0f1",
 	"color": "#96846c"
       });
@@ -69,9 +77,7 @@ $(document).ready(function(){
     
   });
   
- var endtime = $("#countdown").data("end");
  
- $("#countdown").countdown({until: new Date(endtime), onExpiry: liftOff , compact: true,  format: 'HMs'});
   
  waitForMsg(); // Start the inital request 
 });
@@ -101,7 +107,7 @@ function saveFood(){
     } 
 }
 function liftOff() {
- alert("well shit"); 
+ alert("Laikas baigesi!"); 
 }
 
 function addmsg(msg){
@@ -121,16 +127,30 @@ function addmsg(msg){
 function addvotes(msg) {
   jQuery.each(msg, function(i, item) {
     $("#r_" + item.id).css("height",item.votes + "0px");
+    $("#r_" + item.id).parent().find(".votes").html(item.votes);
   });  
 }
 function setwinner(msg) {
- console.log(msg.id);
+  if(isWinnerSet == false && msg.id != null) {
+      console.log(msg.id);
+      isWinnerSet = true;
+      
+      $("#winner_" + msg.id).css("display","block");
+      $(".vote_button").css("display","none");
+      $("#restaurants_holder").children(".shadow_box").each(function(){
+	if($(this).attr("id") != "rest_" + msg.id) {
+	  $(this).css("opacity","0.3");
+	}
+      });
+  
+  }
+ 
 }
 
 function parseInfo(type, msg) {
   addmsg(msg.users);
   addvotes(msg.restaurants);
-  //setwinner(msg.winner);
+  setwinner(msg.winner);
 }
 
 function waitForMsg(){

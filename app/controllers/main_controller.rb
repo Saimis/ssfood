@@ -4,7 +4,7 @@ class MainController < ApplicationController
       @restaurants = Restaurant.all
       @ip = request.remote_ip
       @users = User.all
-      @time = Timecontroll.all.first
+      @time = Timecontroll.last.timebarrier.asctime.to_s
    end
   
   def choosefood
@@ -24,14 +24,14 @@ class MainController < ApplicationController
   end
   
   def dovote
-    if current_user
+    if current_user && Time.now.asctime < Timecontroll.last.timebarrier.to_datetime && voted_users <= 11
       user = User.where(:remember => cookies[:remember])
-      if !user.first.nil? && user.first.voted != true && Time.now.hour < 2 || voted_users < 11
+      if !user.first.nil? && !current_user.voted
         restaurant = Restaurant.find(params[:id])
 	restaurant.increment(:votes, by = 1)
 	restaurant.save
 	user.first.voted = true
-	user.first.remember = cookies[:remember]
+	#user.first.remember = cookies[:remember]
 	user.first.save
       end
     end
@@ -40,9 +40,7 @@ class MainController < ApplicationController
   
   def reset
     if params[:pass] == "vonviska"
-       User.update_all(:voted => false)
-       User.update_all("food = ''")
-       Restaurant.update_all("votes = 0")
+       
     elsif params[:pass] == "vonusers"
        User.update_all(:voted => false)
     elsif params[:pass] == "vonrestaurants"
@@ -52,21 +50,40 @@ class MainController < ApplicationController
   end
   
   def start
-     # if params[:pass] == "vonviska"
-    Time.now.hour
-    time = Timecontroll.new('start','','')
-	
+    t = Time.now
+    if !t.friday?  && params[:pass] == "vonviska" 
+      User.update_all(:voted => false)
+      User.update_all(:food => '')
+      Restaurant.update_all(:votes => 0)
+      
+      t += 100#1800
+
+      Timecontroll.new(:timebarrier => t.asctime).save
+      redirect_to root_path
+    else 
+      abort("ne 5dienis");
+    end
   end
   
-   def getData
-    @users = User.all(:select => 'id, food, voted')
-    @retaurants = Restaurant.all(:select => 'id, votes')
-    
+  def getData
+    users = User.all(:select => 'id, food, voted')
+    retaurants = Restaurant.all(:select => 'id, votes')
+    winner = {}
+	
+    if voted_users >= 11 || Time.now.asctime > Timecontroll.last.timebarrier.to_datetime
+      Restaurant.update_all(:waslast => false)
+      winner = Restaurant.order("votes DESC").first
+      winner.waslast = true
+      winner.lastused = Time.now.to_s
+      winner.save
+    end 
+      
     respond_to do |format|
        format.json { 
 	 render :json => {
-                       :users => @users.as_json(:only => [:id, :food, :voted]),
-                       :restaurants => @retaurants.as_json(:only => [:id, :votes])
+                       :users => users.as_json(:only => [:id, :food, :voted]),
+                       :restaurants => retaurants.as_json(:only => [:id, :votes]),
+                       :winner => winner.as_json(:only => [:id, :votes])
                       }
        }
     end

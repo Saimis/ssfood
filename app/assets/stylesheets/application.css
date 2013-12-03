@@ -27,6 +27,8 @@ h1 {
 
 #restaurants_holder {
   clear: both;
+  width: 90%;
+  margin: auto;
 }
 
   #restaurants_holder .single_restaurant {
@@ -67,10 +69,15 @@ h1 {
     #restaurants_holder .single_restaurant .vote_bar .votes {
       background: red;
     }
+    .winner_image {
+      display:none;
+    }
 
 #user_holder {
   clear: both;
   margin-top:30px;
+  width: 90%;
+  margin: auto;
 }
 
 .shadow_box {
@@ -100,10 +107,9 @@ h1 {
   vertical-align: middle;
   line-height: 50px;
   position: relative;
-  background: #97ce68;
-  cursor: crosshair;
+  background: #6bcbca;
 }
-.user_name_togler {
+.user_name_activefield {
    cursor: pointer;
 }
 
@@ -135,3 +141,10 @@ h1 {
   border-radius: 5px;
   border: none;
 }
+
+.hasCountdown {
+  border: none !important;
+  background: none !important;
+  text-align: center !important;
+}
+  
