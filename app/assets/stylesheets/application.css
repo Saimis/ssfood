@@ -33,19 +33,26 @@ h1 {
     width:200px;
     height:200px;
     float:left;
-    border:1px solid #ccc;
-    margin:40px;
+    margin: 3px 0 0 3px;
     text-align:center;
     position:relative;
-    border-radius:10px;
+    border-radius:5px;
+    background:#edede5;
   }
     #restaurants_holder .single_restaurant a{
       text-decoration:none;
-
     }
     #restaurants_holder .single_restaurant a:hover{
       text-decoration:none;
-
+    }
+    #restaurants_holder .single_restaurant .restaurant_name {
+      background: #f39c12;
+      height:50px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 20px;
+      vertical-align: middle;
+      line-height: 50px;
     }
     #restaurants_holder .single_restaurant .vote_bar_holder {
       position: absolute;
@@ -54,9 +61,8 @@ h1 {
     }
     #restaurants_holder .single_restaurant .vote_bar {
       width: 20px;
-      background:green;
-      
-      border-bottom-left-radius:10px;
+      background:#2ecc71;
+      border-bottom-left-radius:5px;
     }
     #restaurants_holder .single_restaurant .vote_bar .votes {
       background: red;
@@ -64,14 +70,15 @@ h1 {
 
 #user_holder {
   clear: both;
+  margin-top:30px;
 }
 
-#user_holder .single_user_shadow {
+.shadow_box {
   background: url(background_shadow.png);
   width: 212px;
   height: 212px;
   float:left;
-  margin:40px;
+  margin:20px;
 }
 
 #user_holder .single_user {
@@ -94,6 +101,10 @@ h1 {
   line-height: 50px;
   position: relative;
   background: #97ce68;
+  cursor: crosshair;
+}
+.user_name_togler {
+   cursor: pointer;
 }
 
 #user_holder .single_user .user_name .copy {
@@ -105,9 +116,22 @@ h1 {
   right: 10px;
   cursor: pointer;
 }
+#user_holder .single_user .user_name .voted {
+  height:17px;
+  width: 18px;
+  position:absolute;
+  top: 0px;
+  left: 10px;
+  cursor: pointer;
+}
+
+
 
 #food {
   width: 170px; 
   height: 115px;
   resize: none;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: none;
 }

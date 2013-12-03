@@ -15,7 +15,7 @@ class MainController < ApplicationController
     if current_user
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil?
-	user.food = Nokogiri::HTML(params[:food])
+	user.food = ActionController::Base.helpers.strip_tags(params[:food])
 	user.save
       end
     end

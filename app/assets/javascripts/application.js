@@ -26,16 +26,49 @@ $(document).ready(function(){
   });
   
   $(".copy").click(function() {
-    if($("#food").val().length > 0){
-      if (confirm("Kopijuoti?")) {
-	$("#food").val($(this).parent().parent().find(".food").text());
-      }   
+     event.stopPropagation();
+    var friends_food = $(this).parent().parent().find(".food").text();
+    
+    if(friends_food.length > 0) {
+      if($("#food").val().length > 0){
+	if (confirm("Kopijuoti?")) {
+	  $("#food").val(friends_food);
+	}   
+      } else {
+	$("#food").val(friends_food);
+      }
     } else {
-      $("#food").val($(this).parent().parent().find(".food").text());
+      alert("Dude c'mon....");
+      return;
     }
-   
+       
     saveFood();
   });
+  
+  $(".user_name").click(function(){
+    if($(this).parent().find(".food").text().length == 0) {
+      $(this).parent().css({
+	"background": "red",
+	"color": "#fff"
+      });
+      return;
+    }
+      
+    var x = $(this).parent().css('backgroundColor');
+     if(x != "rgb(39, 174, 96)") {
+      $(this).parent().css({
+	"background": "#27ae60",
+	"color": "#fff"
+      });
+    } else {
+      $(this).parent().css({
+	"background": "#ecf0f1",
+	"color": "#96846c"
+      });
+    }
+    
+  });
+  
  var sdate = $("#countdown").data("stime");
  var edate = $("#countdown").data("etime");
  console.log("START " + sdate + " END TIME " + edate);
@@ -88,7 +121,6 @@ function addmsg(msg){
 function addvotes(msg) {
   jQuery.each(msg, function(i, item) {
     $("#r_" + item.id).css("height",item.votes + "0px");
-    
   });  
 }
 function setwinner(msg) {
