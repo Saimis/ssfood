@@ -4,6 +4,7 @@ class MainController < ApplicationController
       @restaurants = Restaurant.all
       @ip = request.remote_ip
       @users = User.all
+      @time = Timecontroll.all.first
    end
   
   def choosefood

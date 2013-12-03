@@ -69,11 +69,11 @@ $(document).ready(function(){
     
   });
   
- var sdate = $("#countdown").data("stime");
- var edate = $("#countdown").data("etime");
- console.log("START " + sdate + " END TIME " + edate);
-  $("#countdown").countdown({until: new Date("11/30/2013 1:30:00"), onExpiry: liftOff , compact: true,  format: 'HMs'});
-  waitForMsg(); // Start the inital request 
+ var endtime = $("#countdown").data("end");
+ 
+ $("#countdown").countdown({until: new Date(endtime), onExpiry: liftOff , compact: true,  format: 'HMs'});
+  
+ waitForMsg(); // Start the inital request 
 });
 function saveFood(){
  if(area_val != $("#food").val()) {

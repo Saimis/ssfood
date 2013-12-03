@@ -1,5 +1,5 @@
 <% if voted_users < 11 %>
-  <div id="countdown">00:<%= timeleft %>:00</div>
+  <div id="countdown" data-end="<%= @time.end %>">00:<%= timeleft %>:00</div>
 <% end %>
 
 <div id="restaurants_holder">
