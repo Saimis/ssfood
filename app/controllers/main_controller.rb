@@ -2,9 +2,9 @@ class MainController < ApplicationController
   
   def index
       @user =User.find_by_remember(cookies[:remember]) #User.where(:remember => cookies[:remember])
-      @restaurants = Restaurant.all.order("RANDOM()")
+      @restaurants = Restaurant.all.order("NAME ASC") #("RANDOM()")
       @ip = request.remote_ip
-      @users = User.all.order("RANDOM()")
+      @users = User.all.order("NAME ASC")
       @time = Timecontroll.last.timebarrier.asctime.to_s
    end
   
@@ -56,7 +56,7 @@ class MainController < ApplicationController
       User.update_all(:food => '')
       Restaurant.update_all(:votes => 0)
       
-      t += 1800
+      t += 1200#1800
 
       Timecontroll.new(:timebarrier => t.asctime).save
       redirect_to root_path
@@ -68,13 +68,17 @@ class MainController < ApplicationController
   def getData
     users = User.all(:select => 'id, food, voted')
     retaurants = Restaurant.all(:select => 'id, votes')
+    vote_check = Restaurant.where("votes > 0")
+    
     winner = {}
   
-    if voted_users >= 11 || Time.now.asctime > Timecontroll.last.timebarrier.to_datetime
+    if voted_users >= 11 || Time.now.asctime > Timecontroll.last.timebarrier.to_datetime && vote_check.count > 0
       Restaurant.update_all(:waslast => false)
       winner = Restaurant.order("votes DESC").first
       winner.waslast = true
-      winner.lastused = Time.now.to_s
+      if winner.lastused < Time.now - 24.hours
+	winner.lastused = Time.now.to_s
+      end
       winner.save
     end 
       

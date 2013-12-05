@@ -5,7 +5,10 @@
       <div class="shadow_box" id="rest_<%= restaurant.id %>">
 	<div class="single_restaurant">
 	  <div class="restaurant_name"><%= restaurant.name %></div>
-	  <a target="_blank" href="<%= restaurant.about %>">Meniu</a>
+	  <div class="restaurant_info">
+	    <span><%= restaurant.phone %></span><br />
+	    <a target="_blank" href="<%= restaurant.about %>">Meniu</a>
+	  </div>
 	  <div class="winner_image"><%= image_tag("last.png") %></div>
 	  
 	  <% if !signed_in? && @current_user.voted != true %>

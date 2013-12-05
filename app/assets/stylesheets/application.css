@@ -42,6 +42,7 @@ h1 {
     background:#edede5;
     color: #96846c;
   }
+  
     #restaurants_holder .single_restaurant a{
       text-decoration:none;
     }
@@ -58,6 +59,20 @@ h1 {
       line-height: 50px;
       color: #fff;
     }
+    #restaurants_holder .single_restaurant .restaurant_info {
+      font-size: 16px;
+      margin: 10px 0 10px 0;
+    }
+      #restaurants_holder .single_restaurant .restaurant_info span {
+	clear:both;
+      }
+      
+      #restaurants_holder .single_restaurant .restaurant_info a {
+	clear:both;
+	 color: #d35400;
+      }
+     
+        
     #restaurants_holder .single_restaurant .vote_holder {
       position: absolute;
       left:0;
