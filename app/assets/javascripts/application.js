@@ -33,7 +33,6 @@ $(document).ready(function(){
   $("#food").blur(function() {
     saveFood();
   });
-  
   $("#food").keyup(function() {
     console.log("Set timeout");
     if(form_timout != null) {
@@ -43,7 +42,7 @@ $(document).ready(function(){
       console.log("Clear timeout");
       clearTimeout(form_timout);
       saveFood();
-    }, 3000);    
+    }, 2000);    
   });
   
   $(".copy").click(function(event) {

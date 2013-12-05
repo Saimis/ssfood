@@ -61,7 +61,7 @@ class MainController < ApplicationController
       Timecontroll.new(:timebarrier => t.asctime).save
       redirect_to root_path
     else 
-      abort("ne 5dienis");
+      redirect_to "http://" + request.env['HTTP_HOST'] + "/not.html"
     end
   end
   
@@ -76,7 +76,7 @@ class MainController < ApplicationController
       Restaurant.update_all(:waslast => false)
       winner = Restaurant.order("votes DESC").first
       winner.waslast = true
-      if winner.lastused < Time.now - 24.hours
+      if !winner.lastused.present? || winner.lastused.to_datetime < Time.now - 24.hours
 	winner.lastused = Time.now.to_s
       end
       winner.save
