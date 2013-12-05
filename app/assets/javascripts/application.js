@@ -17,7 +17,6 @@
 //= require_tree .
 
 var form_timout;
-var area_val = null;
 var isWinnerSet = false;
 $(document).ready(function(){
 
@@ -26,20 +25,15 @@ $(document).ready(function(){
  
  $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
   
-  
-  $("#food").focus(function() {
-    area_val = $(this).val();
-  });
+ 
   $("#food").blur(function() {
     saveFood();
   });
   $("#food").keyup(function() {
-    console.log("Set timeout");
     if(form_timout != null) {
       clearTimeout(form_timout);
     }
     form_timout = setTimeout(function() {
-      console.log("Clear timeout");
       clearTimeout(form_timout);
       saveFood();
     }, 2000);    
@@ -47,7 +41,6 @@ $(document).ready(function(){
   
   $(".copy").click(function(event) {
         
-    event.stopPropagation();
     if($(this).parent().parent().find("#food").length > 0){
       return;
     }
@@ -70,9 +63,7 @@ $(document).ready(function(){
   });
   
   $(".user_name_activefield").click(function(){
-    console.log($(this).parent().parent().find("#food").val());
     if($(this).parent().parent().find(".food").text().length == 0) {
-      console.log("shit");
       $(this).parent().parent().css({
 	"background": "red",
 	"color": "#fff"
@@ -94,39 +85,32 @@ $(document).ready(function(){
     }
     
   });
-  
- 
-  
- waitForMsg(); // Start the inital request 
+   
+  waitForMsg();
 });
 function saveFood(){
-  console.log("Save food iskviestas");
- if(area_val != $("#food").val()) {
-   console.log("Maistas updatintas");
-      $("#food_form").submit(function(e) {
-	console.log("Maistas siunciamas!");
-	var postData = $("#food_form").serializeArray();
-	var formURL = $("#food_form").attr("action");
-	$.ajax(
+  $("#food_form").submit(function(e) {
+    var postData = $("#food_form").serializeArray();
+    var formURL = $("#food_form").attr("action");
+    $.ajax(
+    {
+	url : formURL,
+	type: "POST",
+	data : postData,
+	success:function(data, textStatus, jqXHR) 
 	{
-	    url : formURL,
-	    type: "POST",
-	    data : postData,
-	    success:function(data, textStatus, jqXHR) 
-	    {
-	      console.log("Saved!");
-	    },
-	    error: function(jqXHR, textStatus, errorThrown) 
-	    {
-	      console.log("Some shitty error occured...");
-	    }
-	});
-	e.preventDefault(); //STOP default action
-      });
-console.log("Iskvieciam maisto siuntima");
-      $("#food_form").submit();
-    } 
+	  console.log("Saved!");
+	},
+	error: function(jqXHR, textStatus, errorThrown) 
+	{
+	  console.log("Some shitty error occured...");
+	}
+    });
+    e.preventDefault();
+  });
+  $("#food_form").submit();
 }
+
 function liftOff() {
  alert("Laikas baigesi!"); 
 }
@@ -145,28 +129,29 @@ function addmsg(msg){
     }
   });     
 }
+
 function addvotes(msg) {
   jQuery.each(msg, function(i, item) {
     $("#rest_" + item.id).children().find(".vote_bar").css("height",item.votes + "0px");
     $("#rest_" + item.id).children().find(".votes").html(item.votes);
   });  
 }
+
 function setwinner(msg) {
   if(isWinnerSet == false && msg.id != null) {
-      console.log(msg.id);
-      isWinnerSet = true;
-      
-      $("#rest_" + msg.id).children().find(".winner_image").css("display","block");
-      $("#countdown").hide();
-      $(".vote_button").css("display","none");
-      $("#restaurants_holder").children(".shadow_box").each(function(){
-	if($(this).attr("id") != "rest_" + msg.id) {
-	  $(this).css("opacity","0.3");
-	}
-      });
-  
+    console.log(msg.id);
+    isWinnerSet = true;
+    
+    $("#rest_" + msg.id).children().find(".winner_image").css("display","block");
+    $("#countdown").hide();
+    $(".vote_button").css("display","none");
+    $("#user_holder").css("display","block");
+    $("#restaurants_holder").children(".shadow_box").each(function(){
+      if($(this).attr("id") != "rest_" + msg.id) {
+	$(this).css("opacity","0.3");
+      }
+    });
   }
- 
 }
 
 function parseInfo(type, msg) {

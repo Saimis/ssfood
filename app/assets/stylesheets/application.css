@@ -95,10 +95,7 @@ h1 {
 	right:10px;
 	bottom:5px;
      }
-    
-    #restaurants_holder .single_restaurant .vote_button_holder {
-      
-    }
+   
     #restaurants_holder .single_restaurant .vote_button_holder .vote_button {
       font-size:16px;
       font-family:Arial;
@@ -139,6 +136,7 @@ h1 {
   margin-top:30px;
   width: 90%;
   margin: auto;
+  display: none;
 }
 
 .shadow_box {
@@ -189,7 +187,6 @@ h1 {
   position:absolute;
   top: 0px;
   left: 10px;
-  cursor: pointer;
 }
 
 #user_holder .single_user .food {
