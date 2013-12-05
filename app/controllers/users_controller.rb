@@ -1,10 +1,16 @@
 class UsersController < ApplicationController
+  http_basic_authenticate_with name: "admin", password: "geraspsw", except: [:changepass, :update]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
+    
+  end
+  
+  def changepass
+    @user = current_user
   end
   
   def savefood 
@@ -18,7 +24,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
   end
-
+  
   # GET /users/new
   def new
     @user = User.new

@@ -6,17 +6,20 @@
 	<div class="single_restaurant">
 	  <div class="restaurant_name"><%= restaurant.name %></div>
 	  <a target="_blank" href="<%= restaurant.about %>">Meniu</a>
-	  <div class="winner_image" id="winner_<%= restaurant.id %>"><%= image_tag("last.png") %></div>
+	  <div class="winner_image"><%= image_tag("last.png") %></div>
 	  
-	  <div class="vote_bar_holder"> 
-	    <div class="votes"><%= restaurant.votes %></div>
-	    <div class="vote_bar" id="r_<%= restaurant.id %>" style=" height:<%= restaurant.votes %>0px;"></div>
-	  </div>
-	  <div><%= restaurant.lastused %></div>
 	  <% if !signed_in? && @current_user.voted != true %>
-	    <div class="vote_button"> 
-	      <a href="dovote/<%= restaurant.id %>" >Vote</a>
+	    <div class="vote_button_holder">
+	      <a class="vote_button" href="dovote/<%= restaurant.id %>" >Balsuoti!</a>
 	    </div>
+	  <% end %>
+	  <div class="vote_holder"> 
+	    <div class="votes"><%= restaurant.votes %></div>
+	    <div class="vote_bar" style=" height:<%= restaurant.votes %>0px;"></div>
+	  </div>
+	 
+	  <% if restaurant.lastused.length > 0 %>
+	    <div class="last_time">U&#382;sakn&#279;ta: <%= restaurant.lastused[0..-16] %></div>
 	  <% end %>
 	</div>
       </div>
@@ -28,15 +31,15 @@
 <div id="user_holder">
   <% @users.each do |user| %>
     <div class="shadow_box">
-      <div class="single_user">
-	<div class="user_name" id="u_<%= user.id %>">
+      <div class="single_user" id="usr_<%= user.id %>">
+	<div class="user_name">
 	  <span class="user_name_activefield"><%= user.name %></span>
 	  <div class="copy" title="CopyCAT!"></div>
-	  <div title="Balsavo" id="uv_<%= user.id %>" style="display:none;" class="voted"><%= image_tag("voted.png") %></div>
+	  <div title="Balsavo"  style="display:none;" class="voted"><%= image_tag("voted.png") %></div>
 	</div>
 	<% if (!signed_in? && user.name != @current_user.name) || signed_in? %>
 	  <div class="food" id="uf_<%= user.id %>">
-	    <%= user.food %>
+	     <%= user.food %>
 	  </div>
 	<% else %>
 	  <div class="food">

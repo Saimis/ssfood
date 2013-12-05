@@ -1,4 +1,5 @@
 class TimecontrollsController < ApplicationController
+  http_basic_authenticate_with name: "admin", password: "geraspsw"
   before_action :set_timecontroll, only: [:show, :edit, :update, :destroy]
 
   # GET /timecontrolls

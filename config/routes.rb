@@ -15,7 +15,7 @@ FoodApp::Application.routes.draw do
   post 'savefood' => 'main#savefood'
   #match '/users/:id', :to => 'users#show', :as => :user, via: [:get, :post]
   resources :users
-  
+  get 'changepass' => 'users#changepass'
   resources :sessions
   
   get 'start' => 'main#start'

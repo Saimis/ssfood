@@ -1,9 +1,10 @@
 class MainController < ApplicationController
+  
   def index
       @user =User.find_by_remember(cookies[:remember]) #User.where(:remember => cookies[:remember])
-      @restaurants = Restaurant.all
+      @restaurants = Restaurant.all.order("RANDOM()")
       @ip = request.remote_ip
-      @users = User.all
+      @users = User.all.order("RANDOM()")
       @time = Timecontroll.last.timebarrier.asctime.to_s
    end
   
@@ -26,12 +27,11 @@ class MainController < ApplicationController
   def dovote
     if current_user && Time.now.asctime < Timecontroll.last.timebarrier.to_datetime && voted_users <= 11
       user = User.where(:remember => cookies[:remember])
-      if !user.first.nil? && !current_user.voted
+      if !user.first.nil? && !user.first.voted
         restaurant = Restaurant.find(params[:id])
 	restaurant.increment(:votes, by = 1)
 	restaurant.save
 	user.first.voted = true
-	#user.first.remember = cookies[:remember]
 	user.first.save
       end
     end
@@ -56,7 +56,7 @@ class MainController < ApplicationController
       User.update_all(:food => '')
       Restaurant.update_all(:votes => 0)
       
-      t += 100#1800
+      t += 1800
 
       Timecontroll.new(:timebarrier => t.asctime).save
       redirect_to root_path
@@ -69,7 +69,7 @@ class MainController < ApplicationController
     users = User.all(:select => 'id, food, voted')
     retaurants = Restaurant.all(:select => 'id, votes')
     winner = {}
-	
+  
     if voted_users >= 11 || Time.now.asctime > Timecontroll.last.timebarrier.to_datetime
       Restaurant.update_all(:waslast => false)
       winner = Restaurant.order("votes DESC").first

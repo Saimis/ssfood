@@ -10,8 +10,8 @@
 <% if signed_in? %>
   <%= link_to "Log in", log_in_path %>
 <% else %>
-  <%= link_to "Log out", log_out_path %>
-  <%= @current_user.name %>
+  <%= link_to "Log out", log_out_path %> | 
+  <a href="changepass"><%= @current_user.name %></a>
 <% end %>
 <% flash.each do |name, msg| %>
   <%= content_tag :div, msg, :id => "flash_#{name}" %>

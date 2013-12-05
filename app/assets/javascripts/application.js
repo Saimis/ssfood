@@ -13,11 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.turbolinks
 //= require_tree .
+
 var area_val = null;
 var isWinnerSet = false;
 $(document).ready(function(){
-  
+
   
   var endtime = $("#countdown").data("end");
  
@@ -32,7 +34,10 @@ $(document).ready(function(){
   });
   
   $(".copy").click(function(event) {
+    
+    
     event.stopPropagation();
+       
     var friends_food = $(this).parent().parent().find(".food").text();
     
     if(friends_food.length > 0) {
@@ -112,22 +117,22 @@ function liftOff() {
 
 function addmsg(msg){
   jQuery.each(msg, function(i, item) {
-    $("#uf_" + item.id).html(item.food);
+    $("#uf_" + item.id).html("<span>" + item.food + "</span>");
     if(item.food.length > 0) {
-     $("#u_" + item.id).css("background","#97ce68");
+     $("#usr_" + item.id).find(".user_name").css("background","#97ce68");
     } else {
-      $("#u_" + item.id).css("background","#6bcbca");
+      $("#usr_" + item.id).find(".user_name").css("background","#6bcbca");
     }
     
     if(item.voted) {
-      $("#uv_" + item.id).show();
+      $("#usr_" + item.id).find(".voted").show();
     }
   });     
 }
 function addvotes(msg) {
   jQuery.each(msg, function(i, item) {
-    $("#r_" + item.id).css("height",item.votes + "0px");
-    $("#r_" + item.id).parent().find(".votes").html(item.votes);
+    $("#rest_" + item.id).children().find(".vote_bar").css("height",item.votes + "0px");
+    $("#rest_" + item.id).children().find(".votes").html(item.votes);
   });  
 }
 function setwinner(msg) {
@@ -135,7 +140,8 @@ function setwinner(msg) {
       console.log(msg.id);
       isWinnerSet = true;
       
-      $("#winner_" + msg.id).css("display","block");
+      $("#rest_" + msg.id).children().find(".winner_image").css("display","block");
+      $("#countdown").hide();
       $(".vote_button").css("display","none");
       $("#restaurants_holder").children(".shadow_box").each(function(){
 	if($(this).attr("id") != "rest_" + msg.id) {

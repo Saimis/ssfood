@@ -40,6 +40,7 @@ h1 {
     position:relative;
     border-radius:5px;
     background:#edede5;
+    color: #96846c;
   }
     #restaurants_holder .single_restaurant a{
       text-decoration:none;
@@ -55,8 +56,9 @@ h1 {
       font-size: 20px;
       vertical-align: middle;
       line-height: 50px;
+      color: #fff;
     }
-    #restaurants_holder .single_restaurant .vote_bar_holder {
+    #restaurants_holder .single_restaurant .vote_holder {
       position: absolute;
       left:0;
       bottom:0;
@@ -67,11 +69,56 @@ h1 {
       border-bottom-left-radius:5px;
     }
     #restaurants_holder .single_restaurant .vote_bar .votes {
-      background: red;
+      color: 
     }
     .winner_image {
       display:none;
     }
+    
+     #restaurants_holder .single_restaurant .last_time {
+	font-size:9px;
+	position: absolute;
+	right:10px;
+	bottom:5px;
+     }
+    
+    #restaurants_holder .single_restaurant .vote_button_holder {
+      
+    }
+    #restaurants_holder .single_restaurant .vote_button_holder .vote_button {
+      font-size:16px;
+      font-family:Arial;
+      font-weight:normal;
+      -moz-border-radius:8px;
+      -webkit-border-radius:8px;
+      border-radius:8px;
+      border:0px solid #eeb44f;
+      padding:5px 38px;
+      text-decoration:none;
+      background:-webkit-gradient( linear, left top, left bottom, color-stop(5%, #ffc477), color-stop(100%, #fb9e25) );
+      background:-moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );
+      background:-ms-linear-gradient( top, #ffc477 5%, #fb9e25 100% );
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
+      background-color:#ffc477;
+      color:#ffffff;
+      display:inline-block;
+      text-shadow:1px 1px 0px #cc9f52;
+      -webkit-box-shadow:inset 1px 1px 0px 0px #fce2c1;
+      -moz-box-shadow:inset 1px 1px 0px 0px #fce2c1;
+      box-shadow:inset 1px 1px 0px 0px #fce2c1;
+    }
+	#restaurants_holder .single_restaurant .vote_button_holder .vote_button:hover {
+	  background:-webkit-gradient( linear, left top, left bottom, color-stop(5%, #fb9e25), color-stop(100%, #ffc477) );
+	  background:-moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );
+	  background:-ms-linear-gradient( top, #fb9e25 5%, #ffc477 100% );
+	  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
+	  background-color:#fb9e25;
+	}
+	#restaurants_holder .single_restaurant .vote_button_holder .vote_button:active {
+	  position:relative;
+	  top:1px;
+	}
+
 
 #user_holder {
   clear: both;
@@ -131,6 +178,18 @@ h1 {
   cursor: pointer;
 }
 
+#user_holder .single_user .food {
+  font-size: 16px;
+  line-height: 140px;
+  height: 140px;
+  padding: 0 5px 0 5px;
+  overflow: hidden;
+}
+#user_holder .single_user .food span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
 
 
 #food {
