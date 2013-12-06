@@ -38,6 +38,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'slim'
+gem 'thin'
+gem 'pry'
 gem 'therubyracer'
 gem 'jquery-turbolinks'
 # Use ActiveModel has_secure_password
