@@ -6,25 +6,25 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-    
+
   end
-  
+
   def changepass
     @user = current_user
   end
-  
-  def savefood 
+
+  def savefood
     # user = User.where(:ip => request.remote_ip).first
      user.food = params[:food]
      user.save
      redirect_to users_url
   end
-   
+
   # GET /users/1
   # GET /users/1.json
   def show
   end
-  
+
   # GET /users/new
   def new
     @user = User.new

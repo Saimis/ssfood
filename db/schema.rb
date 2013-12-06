@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131205140723) do
+ActiveRecord::Schema.define(version: 20131206151956) do
 
   create_table "restaurants", force: true do |t|
     t.string   "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20131205140723) do
     t.string   "remember"
     t.string   "password"
     t.string   "lastfood"
+    t.string   "password_digest"
   end
 
   add_index "users", ["remember"], name: "index_users_on_remember"
