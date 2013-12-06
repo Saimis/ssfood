@@ -34,15 +34,15 @@
 <div id="user_holder">
   <% @users.each do |user| %>
     <div class="shadow_box">
-      <div class="single_user" id="usr_<%= user.id %>">
+      <div class="single_user" id="usr_<%= h user.id %>">
 	<div class="user_name">
-	  <span class="user_name_activefield"><%= user.name %></span>
+	  <span class="user_name_activefield"><%= h user.name %></span>
 	  <div class="copy" title="CopyCAT!"></div>
 	  <div title="Balsavo"  style="display:none;" class="voted"><%= image_tag("voted.png") %></div>
 	</div>
 	<% if (!signed_in? && user.name != @current_user.name) || signed_in? %>
 	  <div class="food" id="uf_<%= user.id %>">
-	     <%= user.food %>
+	     <%= h user.food %>
 	  </div>
 	<% else %>
 	  <div class="food">

@@ -64,8 +64,10 @@ class MainController < ApplicationController
     winner = {}
   
     if voted_users >= 11 || Time.now.asctime > Timecontroll.last.timebarrier.to_datetime && vote_check.count > 0
+      winner = Restaurant.where("winner = 1").first
+      abort(winner.name)
       Restaurant.update_all(:waslast => false)
-      winner = Restaurant.order("votes DESC").first
+      winner = Restaurant.order("votes DESC, RANDOM()").first
       winner.waslast = true
       
       if !winner.lastused.present? || winner.lastused.to_datetime < Time.now - 24.hours
