@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131206080306) do
+ActiveRecord::Schema.define(version: 20131212080940) do
+
+  create_table "archyves", force: true do |t|
+    t.datetime "date"
+    t.integer  "restaurant_id"
+    t.integer  "caller"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "restaurants", force: true do |t|
     t.string   "name"
@@ -31,15 +39,25 @@ ActiveRecord::Schema.define(version: 20131206080306) do
     t.datetime "timebarrier"
   end
 
+  create_table "uaserarchyves", force: true do |t|
+    t.integer  "archyves_id"
+    t.integer  "voted_for"
+    t.string   "food"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "name"
-    t.boolean  "voted"
+    t.integer  "voted"
     t.string   "food"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember"
     t.string   "password"
     t.string   "lastfood"
+    t.string   "password_digest"
   end
 
   add_index "users", ["remember"], name: "index_users_on_remember"

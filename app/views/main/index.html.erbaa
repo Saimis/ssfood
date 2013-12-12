@@ -1,5 +1,5 @@
 <div id="countdown" data-end="<%= @time %>"></div>
-
+aaa
 <div id="restaurants_holder">
     <% @restaurants.each do |restaurant| %>
       <div class="shadow_box" id="rest_<%= restaurant.id %>">

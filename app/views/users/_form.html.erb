@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :required => true %>
   </div>
   <div class="field">
     <%= f.label :voted %><br>
-    <%= f.check_box :voted %>
+    <%= f.text_field :voted %>
   </div>
   <div class="field">
     <%= f.label :food %><br>
@@ -25,12 +25,17 @@
   </div>
   <div class="field">
     <%= f.label :password %><br>
-    <%= f.text_field :password %>
+    <%= f.password_field :password, :required => true %>
+  </div>
+  <div>
+    <%= f.label :password_confirmation %><br/>
+    <%= f.password_field :password_confirmation %>
   </div>
   <div class="field">
     <%= f.label :remember %><br>
     <%= f.text_field :remember, :readonly => true %>
   </div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

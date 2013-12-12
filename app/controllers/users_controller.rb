@@ -1,30 +1,39 @@
 class UsersController < ApplicationController
-  http_basic_authenticate_with name: "admin", password: "geraspsw", except: [:changepass, :update]
+ # http_basic_authenticate_with name: "admin", password: "geraspsw", except: [:changepass, :update]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
     @users = User.all
-    
+
   end
-  
-  def changepass
+
+  def change_password
     @user = current_user
   end
-  
-  def savefood 
-    # user = User.where(:ip => request.remote_ip).first
-     user.food = params[:food]
-     user.save
-     redirect_to users_url
+
+  #save food from user input via ajax post
+  def save_food
+    if current_user && (Time.now > current_round.date.to_datetime) && voted_users >= 11
+      user = User.where(:remember => cookies[:remember]).first
+      if !user.nil?
+        #userarchyve = Userarchyves.where(:user_id => user.id)
+        userarchyve = Uaserarchyves.where(:user_id => user.id, :archyves_id => current_round.id).first_or_create
+        #user.food = ActionController::Base.helpers.strip_tags(params[:food])
+        #user.save
+        userarchyve.food = ActionController::Base.helpers.strip_tags(params[:food])
+        userarchyve.save
+      end
+    end
+    redirect_to root_path
   end
-   
+
   # GET /users/1
   # GET /users/1.json
   def show
   end
-  
+
   # GET /users/new
   def new
     @user = User.new
@@ -82,6 +91,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :ip, :voted, :food, :decided, :password, :remember)
+      params.require(:user).permit(:name, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation)
     end
 end

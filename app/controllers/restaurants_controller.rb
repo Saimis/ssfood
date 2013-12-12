@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  http_basic_authenticate_with name: "admin", password: "geraspsw"
+  #http_basic_authenticate_with name: "admin", password: "geraspsw"
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
   # GET /restaurants
@@ -7,7 +7,32 @@ class RestaurantsController < ApplicationController
   def index
     @restaurants = Restaurant.all
   end
-  
+
+  #get call to vote for restaurant, if user logged in, time is not over and not all users voted
+  def vote
+    if current_user && Time.now < Archyves.last.date.to_datetime && voted_users <= 11 && !params[:id].nil?
+      user = User.where(:remember => cookies[:remember]).first
+      if !user.nil? 
+        restaurant = Restaurant.find(params[:id])
+        if user.voted.nil? && params[:act].nil?
+          restaurant.increment(:votes, by = 1)
+          user.voted = params[:id]
+        elsif !user.voted.nil? && !params[:act].nil?
+          restaurant.decrement(:votes, by = 1)
+          user.voted = nil
+        end
+        restaurant.save
+        user.save
+      end
+    end
+    redirect_to root_path
+  end
+
+  #get back your vote
+  def unvote
+
+  end
+
   # GET /restaurants/1
   # GET /restaurants/1.json
   def show
@@ -17,7 +42,7 @@ class RestaurantsController < ApplicationController
   def new
     @restaurant = Restaurant.new.order("lastused DESC")
   end
-  
+
   # GET /restaurants/1/edit
   def edit
   end

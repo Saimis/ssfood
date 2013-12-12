@@ -16,7 +16,8 @@ html {
  background: url("home_bg.jpg") no-repeat center center fixed #324a6f;
  -webkit-background-size: cover;
  -moz-background-size: cover;
- -o-background-size: cover; 
+ -o-background-size: cover;
+ background-size: cover; 
 }
 body a {
    color: #ccc;

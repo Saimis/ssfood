@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  archyves_id: 1
+  voted_for: 1
+  food: MyString
+  user_id: 1
+
+two:
+  archyves_id: 1
+  voted_for: 1
+  food: MyString
+  user_id: 1

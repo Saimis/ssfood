@@ -18,6 +18,7 @@
 
 var form_timout;
 var isWinnerSet = false;
+var startPolling = true;
 $(document).ready(function(){
 
   
@@ -65,8 +66,8 @@ $(document).ready(function(){
   $(".user_name_activefield").click(function(){
     if($(this).parent().parent().find(".food").text().length == 0) {
       $(this).parent().parent().css({
-	"background": "red",
-	"color": "#fff"
+      	"background": "red",
+      	"color": "#fff"
       });
       return;
     }
@@ -74,19 +75,22 @@ $(document).ready(function(){
     var x = $(this).parent().parent().css('backgroundColor');
      if(x != "rgb(39, 174, 96)") {
       $(this).parent().parent().css({
-	"background": "#27ae60",
-	"color": "#fff"
+      	"background": "#27ae60",
+      	"color": "#fff"
       });
     } else {
       $(this).parent().parent().css({
-	"background": "#ecf0f1",
-	"color": "#96846c"
+      	"background": "#ecf0f1",
+      	"color": "#96846c"
       });
     }
     
   });
    
-  waitForMsg();
+  if(startPolling){
+    waitForMsg();
+    startPolling = false;
+  }
 });
 function saveFood(){
   $("#food_form").submit(function(e) {
@@ -94,17 +98,15 @@ function saveFood(){
     var formURL = $("#food_form").attr("action");
     $.ajax(
     {
-	url : formURL,
-	type: "POST",
-	data : postData,
-	success:function(data, textStatus, jqXHR) 
-	{
-	  console.log("Saved!");
-	},
-	error: function(jqXHR, textStatus, errorThrown) 
-	{
-	  console.log("Some shitty error occured...");
-	}
+    	url : formURL,
+    	type: "POST",
+    	data : postData,
+    	success:function(data, textStatus, jqXHR) {
+    	  console.log("Saved!");
+    	},
+    	error: function(jqXHR, textStatus, errorThrown) {
+    	  console.log("Some shitty error occured...");
+    	}
     });
     e.preventDefault();
   });
@@ -117,14 +119,15 @@ function liftOff() {
 
 function addmsg(msg){
   jQuery.each(msg, function(i, item) {
-    $("#uf_" + item.id).html("<span>" + item.food + "</span>");
-    if(item.food.length > 0) {
+    if(item.food != null && item.food.length > 0) {
      $("#usr_" + item.id).find(".user_name").css("background","#97ce68");
+     $("#uf_" + item.id).html("<span>" + item.food + "</span>");
     } else {
       $("#usr_" + item.id).find(".user_name").css("background","#6bcbca");
+      $("#uf_" + item.id).html("");
     }
     
-    if(item.voted) {
+    if(item.voted != null && item.voted.length > 0) {
       $("#usr_" + item.id).find(".voted").show();
     }
   });     
@@ -139,7 +142,6 @@ function addvotes(msg) {
 
 function setwinner(msg) {
   if(isWinnerSet == false && msg.id != null) {
-    console.log(msg.id);
     isWinnerSet = true;
     
     $("#rest_" + msg.id).children().find(".winner_image").css("display","block");
@@ -148,7 +150,7 @@ function setwinner(msg) {
     $("#user_holder").css("display","block");
     $("#restaurants_holder").children(".shadow_box").each(function(){
       if($(this).attr("id") != "rest_" + msg.id) {
-	$(this).css("opacity","0.3");
+	      $(this).css("opacity","0.3");
       }
     });
   }
@@ -170,17 +172,18 @@ function waitForMsg(){
       timeout:50000,
 
       success: function(data){ 
-	  parseInfo("new", data);
-	  setTimeout(
-	      waitForMsg,
-	      5000
-	  );
+    	  parseInfo("new", data);
+    	  setTimeout(
+    	      waitForMsg,
+    	      5000
+    	  );
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
-	  addmsg("error", textStatus + " (" + errorThrown + ")");
-	  setTimeout(
-	      waitForMsg, 
-	      15000);  
+    	  addmsg("error", textStatus + " (" + errorThrown + ")");
+    	  setTimeout(
+    	      waitForMsg, 
+    	      15000
+        );  
       }
   });
 };

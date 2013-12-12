@@ -1,29 +1,36 @@
 FoodApp::Application.routes.draw do
+ 
+  root :to => 'main#index'
+      
+  #match '/users/:id', :to => 'users#show', :as => :user, via: [:get, :post]
+  resources :users
+  resources :restaurants
+  resources :sessions
   resources :timecontrolls
-
-    root :to => 'main#index'
+  resources :archyves
   
-  get 'users' => 'users#index'
-  
-  
-  get 'dovote/:id' => 'main#dovote'
-  get 'restaurants' => 'restaurants#index'
+  #users paths
+  get 'changepass' => 'users#change_password'
   get 'users/food' => 'users#choosefood'
+  get 'sign_up' => 'users#new'
+  post 'savefood' => 'users#save_food'
+  get 'users' => 'users#index'
+
+  #main paths
   get 'getData' => 'main#getData'
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
-  post 'savefood' => 'main#savefood'
-  #match '/users/:id', :to => 'users#show', :as => :user, via: [:get, :post]
-  resources :users
-  get 'changepass' => 'users#changepass'
-  resources :sessions
-  
   get 'start' => 'main#start'
+
+  #restaurants paths
+  get 'restaurants' => 'restaurants#index'
+  get 'vote/:id/:act' => 'restaurants#vote'
+  get 'vote/:id' => 'restaurants#vote'
   
+  #sessions paths
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'
-  get 'sign_up' => 'users#new'
-  resources :restaurants
+    
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
