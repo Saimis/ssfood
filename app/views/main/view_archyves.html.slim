@@ -1,0 +1,21 @@
+- @rounds.each do |round|
+  .rounds_holder
+    |ID: 
+    = round.id
+    |;  Date: 
+    = round.date
+    |;  Restaurant winner id:
+    = round.restaurant_id
+    |;  Caller id: 
+    = round.caller
+hr
+- @userarchyves.each do |single_userarchyve|
+  .rounds_holder
+    |Archyves ID: 
+    = single_userarchyve.archyves_id
+    |;  Voted for: 
+    = single_userarchyve.voted_for
+    |;  Food: 
+    = single_userarchyve.food
+    |;  User id: 
+    = single_userarchyve.user_id

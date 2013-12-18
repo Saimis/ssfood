@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131212080940) do
+ActiveRecord::Schema.define(version: 20131212160833) do
 
   create_table "archyves", force: true do |t|
     t.datetime "date"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20131212080940) do
     t.datetime "timebarrier"
   end
 
-  create_table "uaserarchyves", force: true do |t|
+  create_table "userarchyves", force: true do |t|
     t.integer  "archyves_id"
     t.integer  "voted_for"
     t.string   "food"

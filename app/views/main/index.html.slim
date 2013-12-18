@@ -1,5 +1,5 @@
-#countdown data-end=(@time)
-= @time
+#countdown data-end=(@restaurant_time)
+= @food_time
 #restaurants_holder
   - @restaurants.each do |restaurant|
     .shadow_box id=("rest_#{restaurant.id}")
@@ -14,11 +14,11 @@
             | Meniu
         .winner_image
           = image_tag("last.png")
-        - if !signed_in? && @current_user.voted.nil?
+        - if !signed_in? && current_round_userarchyve.voted_for.nil?
           .vote_button_holder
             a.vote_button href=("vote/#{restaurant.id}")
               | Balsuoti!
-        - elsif @current_user.voted == restaurant.id
+        - elsif !signed_in? && current_round_userarchyve.voted_for == restaurant.id
           .vote_button_holder
             a.vote_button href=("vote/#{restaurant.id}/1")
               | Atsaukti!
@@ -34,7 +34,7 @@
             = restaurant.lastused[0..-16]
 
 div style="clear:both;"
-
+#countdown_food data-end=(@food_time)
 #user_holder
   - @users.each do |user|
     .shadow_box

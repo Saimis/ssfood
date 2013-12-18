@@ -10,19 +10,25 @@ class RestaurantsController < ApplicationController
 
   #get call to vote for restaurant, if user logged in, time is not over and not all users voted
   def vote
-    if current_user && Time.now < Archyves.last.date.to_datetime && voted_users <= 11 && !params[:id].nil?
+    if current_user && Time.now < current_round.date.to_datetime && voted_users <= 11 && !params[:id].nil?
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil? 
         restaurant = Restaurant.find(params[:id])
-        if user.voted.nil? && params[:act].nil?
+        userarchyve = Userarchyves.where(:user_id => user.id, :archyves_id => current_round.id).first_or_create
+        #if user.voted.nil? && params[:act].nil?
+        if userarchyve.voted_for.nil? && params[:act].nil?
           restaurant.increment(:votes, by = 1)
-          user.voted = params[:id]
-        elsif !user.voted.nil? && !params[:act].nil?
+          #user.voted = params[:id]
+          userarchyve.voted_for = params[:id]
+        #elsif !user.voted.nil? && !params[:act].nil?
+        elsif !userarchyve.voted_for.nil? && !params[:act].nil?
           restaurant.decrement(:votes, by = 1)
-          user.voted = nil
+          #user.voted = nil
+           userarchyve.voted_for = nil
         end
         restaurant.save
-        user.save
+        #user.save
+        userarchyve.save
       end
     end
     redirect_to root_path

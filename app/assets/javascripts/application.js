@@ -23,9 +23,9 @@ $(document).ready(function(){
 
   
   var endtime = $("#countdown").data("end");
- 
- $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
-  
+  var endtime_food = $("#countdown_food").data("end");
+  $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
+  $("#countdown_food").countdown({until: new Date(endtime_food)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
  
   $("#food").blur(function() {
     saveFood();
@@ -120,15 +120,15 @@ function liftOff() {
 function addmsg(msg){
   jQuery.each(msg, function(i, item) {
     if(item.food != null && item.food.length > 0) {
-     $("#usr_" + item.id).find(".user_name").css("background","#97ce68");
-     $("#uf_" + item.id).html("<span>" + item.food + "</span>");
+     $("#usr_" + item.user_id).find(".user_name").css("background","#97ce68");
+     $("#uf_" + item.user_id).html("<span>" + item.food + "</span>");
     } else {
-      $("#usr_" + item.id).find(".user_name").css("background","#6bcbca");
-      $("#uf_" + item.id).html("");
+      $("#usr_" + item.user_id).find(".user_name").css("background","#6bcbca");
+      $("#uf_" + item.user_id).html("");
     }
     
     if(item.voted != null && item.voted.length > 0) {
-      $("#usr_" + item.id).find(".voted").show();
+      $("#usr_" + item.user_id).find(".voted").show();
     }
   });     
 }
@@ -159,7 +159,9 @@ function setwinner(msg) {
 function parseInfo(type, msg) {
   addmsg(msg.users);
   addvotes(msg.restaurants);
-  setwinner(msg.winner);
+  if(msg.winner != null) {
+    setwinner(msg.winner);
+  }
 }
 
 function waitForMsg(){
