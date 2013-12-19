@@ -5,4 +5,11 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include RestaurantsHelper
   include UsersHelper
+
+  rescue_from Exception, :with => :error_render_method
+
+  def error_render_method
+    redirect_to "http://" + request.env['HTTP_HOST'] + "/404.html"
+    true
+  end
 end

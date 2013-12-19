@@ -140,6 +140,10 @@ h1 {
   display: none;
 }
 
+#countdown_food {
+  display: none;
+}
+
 .shadow_box {
   background: url(background_shadow.png);
   width: 212px;

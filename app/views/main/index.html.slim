@@ -1,5 +1,4 @@
 #countdown data-end=(@restaurant_time)
-= @food_time
 #restaurants_holder
   - @restaurants.each do |restaurant|
     .shadow_box id=("rest_#{restaurant.id}")
@@ -53,4 +52,4 @@ div style="clear:both;"
           .food
             - if !signed_in? && user.name == @current_user.name
               = form_tag "savefood", :id => "food_form" do
-                = text_area_tag "food", @user.food
+                = text_area_tag "food", user.food

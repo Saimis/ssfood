@@ -8,6 +8,8 @@
     = round.restaurant_id
     |;  Caller id: 
     = round.caller
+    a href=("archyve/#{round.id}")
+        | Trinti
 hr
 - @userarchyves.each do |single_userarchyve|
   .rounds_holder
@@ -19,3 +21,5 @@ hr
     = single_userarchyve.food
     |;  User id: 
     = single_userarchyve.user_id
+    a href=("archyve/u/#{single_userarchyve.id}")
+        | Trinti

@@ -3,10 +3,10 @@ FoodApp::Application.routes.draw do
   root :to => 'main#index'
       
   #match '/users/:id', :to => 'users#show', :as => :user, via: [:get, :post]
-  resources :users
-  resources :restaurants
-  resources :sessions
-  resources :timecontrolls
+  resources :users, :only => [:update]
+  resources :restaurants, :only => [:update]
+  resources :sessions, :only => [:update]
+  resources :timecontrolls, :only => [:update]
   resources :archyves
   
   #users paths
@@ -23,7 +23,9 @@ FoodApp::Application.routes.draw do
   get 'reset/:pass' => 'main#reset'
   get 'start' => 'main#start'
   get 'archyve' => 'main#view_archyves'
-  
+  get 'archyve/:id' => 'main#destroy_archyve'
+  get 'archyve/u/:id' => 'main#destroy_userarchyve'
+
   #restaurants paths
   get 'restaurants' => 'restaurants#index'
   get 'vote/:id/:act' => 'restaurants#vote'

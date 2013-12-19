@@ -16,14 +16,14 @@ class UsersController < ApplicationController
   #save food from user input via ajax post
   def save_food
     t = current_round.date
-    t_food = t + 200
+    t_food = t + 40#200
     if current_user && (Time.now > t.to_datetime || voted_users >= 11) && (Time.now < t_food.to_datetime)
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil?
         #userarchyve = Userarchyves.where(:user_id => user.id)
         userarchyve = Userarchyves.where(:user_id => user.id, :archyves_id => current_round.id).first
-        #user.food = ActionController::Base.helpers.strip_tags(params[:food])
-        #user.save
+        user.food = ActionController::Base.helpers.strip_tags(params[:food])
+        user.save
         userarchyve.food = ActionController::Base.helpers.strip_tags(params[:food])
         userarchyve.save
       end

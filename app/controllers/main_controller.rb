@@ -1,13 +1,13 @@
 class MainController < ApplicationController
 
   def index
-      @user =User.find_by_remember(cookies[:remember]) #User.where(:remember => cookies[:remember])
       @restaurants = Restaurant.all.order("NAME ASC") #("RANDOM()")
-      @ip = request.remote_ip
       @users = User.all.order("NAME ASC")
-      time = Archyves.last.date
-      @restaurant_time = time.asctime.to_s
-      @food_time = (time+200).asctime.to_s
+      if !Archyves.last.nil?
+        time = Archyves.last.date
+        @restaurant_time = time.asctime.to_s
+        @food_time = (time+40).asctime.to_s
+      end
    end
 
   def choosefood
@@ -17,9 +17,9 @@ class MainController < ApplicationController
 
   def start
     t = Time.now
-    if !t.friday?  && params[:pass] == "vonviska"
+    if t.friday?  && params[:pass] == "vonviska"
       #User.update_all(:voted => nil)
-      #User.update_all(:food => nil)
+      User.update_all(:food => nil)
       Restaurant.update_all(:votes => 0)
       t += 100#00
       archyve = Archyves.create :date => t
@@ -66,5 +66,15 @@ class MainController < ApplicationController
   def view_archyves
     @rounds = Archyves.all 
     @userarchyves = Userarchyves.find(:all)
+  end
+
+  def destroy_archyve
+    Archyves.destroy(params[:id])
+    redirect_to archyve_path
+  end
+
+  def destroy_userarchyve
+    Userarchyves.destroy(params[:id])
+    redirect_to archyve_path
   end
 end
