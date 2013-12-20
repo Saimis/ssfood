@@ -5,7 +5,7 @@ FoodApp::Application.routes.draw do
   #match '/users/:id', :to => 'users#show', :as => :user, via: [:get, :post]
   resources :users, :only => [:update]
   resources :restaurants, :only => [:update]
-  resources :sessions, :only => [:update]
+  resources :sessions
   resources :timecontrolls, :only => [:update]
   resources :archyves
   
