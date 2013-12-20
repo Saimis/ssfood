@@ -46,7 +46,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/new
   def new
-    @restaurant = Restaurant.new.order("lastused DESC")
+    @restaurant = Restaurant.new
   end
 
   # GET /restaurants/1/edit
