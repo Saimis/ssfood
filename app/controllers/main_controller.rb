@@ -6,7 +6,7 @@ class MainController < ApplicationController
       if !Archyves.last.nil?
         time = Archyves.last.date
         @restaurant_time = time.asctime.to_s
-        @food_time = (time+40).asctime.to_s
+        @food_time = (time+900).asctime.to_s
       end
    end
 
@@ -21,7 +21,7 @@ class MainController < ApplicationController
       #User.update_all(:voted => nil)
       User.update_all(:food => nil)
       Restaurant.update_all(:votes => 0)
-      t += 100#00
+      t += 1200
       archyve = Archyves.create :date => t
       User.all().each do |user|
         Userarchyves.create :user_id => user.id, :archyves_id => archyve.id
