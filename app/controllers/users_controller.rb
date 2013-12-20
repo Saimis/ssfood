@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def save_food
     t = current_round.date
     t_food = t + 900
-    if current_user && (Time.now > t.to_datetime || voted_users >= 11) && (Time.now < t_food.to_datetime)
+    if current_user && (Time.now > t.to_datetime || voted_users >= 11) #&& (Time.now < t_food.to_datetime)
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil?
         #userarchyve = Userarchyves.where(:user_id => user.id)
