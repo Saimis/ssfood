@@ -3,10 +3,10 @@ FoodApp::Application.routes.draw do
   root :to => 'main#index'
       
   #match '/users/:id', :to => 'users#show', :as => :user, via: [:get, :post]
-  resources :users, :only => [:update]
-  resources :restaurants, :only => [:update]
+  resources :users#, :only => [:update]
+  resources :restaurants#, :only => [:update]
   resources :sessions
-  resources :timecontrolls, :only => [:update]
+  resources :timecontrolls#, :only => [:update]
   resources :archyves
   
   #users paths
