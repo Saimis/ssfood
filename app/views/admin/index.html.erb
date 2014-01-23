@@ -1,0 +1,27 @@
+<div id="restaurants_holder">
+	<p>  Pradeti sesija: <a href="start"><button><span>Start</span></button></a> <br />
+	Paskutinis archyvu irasas <input type="text" name="arcyves_time" value="<%= @archyve_last_date %>" /></p>
+  <div class="admin_user_holder" style="border:1px solid #ccc;">
+  	Prideti nauja vartotoja: <a href="users/new"><button><span>New User</span></button></a>
+  	<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Voted</th>
+      <th>Food</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+				<td><%= user.voted %></td>
+        <td><%= user.food %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  </div>
+</div>

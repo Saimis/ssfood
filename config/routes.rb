@@ -11,6 +11,7 @@ FoodApp::Application.routes.draw do
   
   #users paths
   get 'changepass' => 'users#change_password'
+  patch 'changepass' => 'users#change_password'
   get 'users/food' => 'users#choosefood'
   get 'sign_up' => 'users#new'
   post 'savefood' => 'users#save_food'
@@ -21,7 +22,7 @@ FoodApp::Application.routes.draw do
   get 'getData' => 'main#getData'
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
-  get 'start' => 'main#start'
+  
   get 'archyve' => 'main#view_archyves'
   get 'archyve/:id' => 'main#destroy_archyve'
   get 'archyve/u/:id' => 'main#destroy_userarchyve'
@@ -35,7 +36,9 @@ FoodApp::Application.routes.draw do
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'
     
-
+  #admin paths
+  get 'admin' => 'admin#index'
+  get 'start' => 'admin#start'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

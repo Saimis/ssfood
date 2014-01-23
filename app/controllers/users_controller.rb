@@ -1,6 +1,13 @@
 class UsersController < ApplicationController
  # http_basic_authenticate_with name: "admin", password: "geraspsw", except: [:changepass, :update]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #before_action :set_user, only: [:show, :edit, :update, :destroy]
+  #before_action :admin_check
+
+  def admin_check 
+    if current_user.name != 'admin'
+      redirect_to root_path
+    end
+  end
 
   # GET /users
   # GET /users.json
@@ -11,6 +18,7 @@ class UsersController < ApplicationController
 
   def change_password
     @user = current_user
+    @user.update(user_params)
   end
 
   #save food from user input via ajax post
@@ -52,7 +60,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to admin_url}
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }

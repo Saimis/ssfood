@@ -1,8 +1,8 @@
 class MainController < ApplicationController
 
   def index
-      @restaurants = Restaurant.all.order("NAME ASC") #("RANDOM()")
-      @users = User.all.order("NAME ASC")
+      @restaurants = Restaurant.all.order("name ASC")
+      @users = User.find(:all, :conditions => ["name != 'admin'"], :order => ["name ASC"])
       if !Archyves.last.nil?
         time = Archyves.last.date
         @restaurant_time = time.asctime.to_s
@@ -15,23 +15,7 @@ class MainController < ApplicationController
      @food = @user.food
   end
 
-  def start
-    t = Time.now
-    if t.friday?  && params[:pass] == "vonviska"
-      #User.update_all(:voted => nil)
-      User.update_all(:food => nil)
-      Restaurant.update_all(:votes => 0)
-      t += 1200
-      archyve = Archyves.create :date => t
-      User.all().each do |user|
-        Userarchyves.create :user_id => user.id, :archyves_id => archyve.id
-      end
-
-      redirect_to root_path
-    else
-      redirect_to "http://" + request.env['HTTP_HOST'] + "/not.html"
-    end
-  end
+  
 
   #the main information source for long poller, returns all information about users and restaurants
   def getData
