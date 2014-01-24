@@ -1,6 +1,22 @@
 <div id="restaurants_holder">
-	<p>  Pradeti sesija: <a href="start"><button><span>Start</span></button></a> <br />
-	Paskutinis archyvu irasas <input type="text" name="arcyves_time" value="<%= @archyve_last_date %>" /></p>
+	<p>  
+		Pradeti sesija: <a href="start"><button><span>Start</span></button></a> 
+		<% if @archyve.date > Time.now %><span style="color:red;">Sesija aktyvi</span><% end %>
+	</p>
+	 
+  <p>
+  <%= form_for @archyve, url: {action: "edit_last_archyve"} do |f|  %>
+			<div class="field">
+			    Paskutinis archyvu irasas<br>
+			    <%= f.datetime_field :date, :required => true %>
+			  </div>
+			  
+			  <div class="actions">
+			    <%= f.submit %>
+			  </div>
+			<% end %>
+  </p>
+
   <div class="admin_user_holder" style="border:1px solid #ccc;">
   	Prideti nauja vartotoja: <a href="users/new"><button><span>New User</span></button></a>
   	<table>

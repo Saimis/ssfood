@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
  # http_basic_authenticate_with name: "admin", password: "geraspsw", except: [:changepass, :update]
-  #before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   #before_action :admin_check
 
   def admin_check 
-    if current_user.name != 'admin'
+    if !current_user.nil? && current_user.name != 'admin'
       redirect_to root_path
     end
   end
 
-  # GET /users
+  # GET /users`
   # GET /users.json
   def index
     @users = User.all
@@ -18,7 +18,6 @@ class UsersController < ApplicationController
 
   def change_password
     @user = current_user
-    @user.update(user_params)
   end
 
   #save food from user input via ajax post

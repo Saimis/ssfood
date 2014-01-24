@@ -2,14 +2,21 @@ class AdminController < ApplicationController
 	before_action :admin_check
 
 	def admin_check 
-		if current_user.name != 'admin'
+		if current_user.nil? || current_user.name != 'admin'
 			redirect_to root_path
 		end
 	end
 
 	def index
-		@archyve_last_date = Archyves.last.date
+		@archyve = Archyves.last
 		@users = User.all
+	end
+
+	def edit_last_archyve
+		@archyve = Archyves.last
+		@archyve.date = params[:archyves][:date]
+		@archyve.save
+		redirect_to admin_url
 	end
 
 	def start
