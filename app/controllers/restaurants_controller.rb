@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
   def admin_check 
-    if !current_user.nil? && current_user.name != 'admin'
+    if current_user.nil? || current_user.name != 'admin'
       redirect_to root_path
     end
   end
