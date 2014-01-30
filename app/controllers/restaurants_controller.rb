@@ -1,6 +1,12 @@
 class RestaurantsController < ApplicationController
-  #http_basic_authenticate_with name: "admin", password: "geraspsw"
+  before_action :admin_check, only: [:index, :show, :edit,  :destroy, :new, :create]
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+
+  def admin_check 
+    if !current_user.nil? && current_user.name != 'admin'
+      redirect_to root_path
+    end
+  end
 
   # GET /restaurants
   # GET /restaurants.json

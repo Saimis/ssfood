@@ -45,7 +45,7 @@ div style="clear:both;"
           .voted title="Balsavo" style="display:none;"
             = image_tag("voted.png")
 
-        - if (!signed_in? && user.name != @current_user.name) || signed_in?
+        - if (!signed_in? && user.id != @current_user.id)
           .food id=("uf_#{user.id}")
             = h user.food
         - else

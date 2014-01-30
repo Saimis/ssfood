@@ -10,6 +10,9 @@ class AdminController < ApplicationController
 	def index
 		@archyve = Archyves.last
 		@users = User.all
+		@rounds = Archyves.all 
+    @userarchyves = Userarchyves.find(:all)
+    @restaurants = Restaurant.all
 	end
 
 	def edit_last_archyve
@@ -21,10 +24,10 @@ class AdminController < ApplicationController
 
 	def start
     if current_user.name == 'admin'
-    	
       User.update_all(:food => nil)
       Restaurant.update_all(:votes => 0)
-      archyve = Archyves.create :date => Time.now + 600
+      time_gap = params[:time].to_i > 0 ? params[:time].to_i : 1200
+      archyve = Archyves.create :date => Time.now + time_gap
       User.all().each do |user|
         Userarchyves.create :user_id => user.id, :archyves_id => archyve.id
       end

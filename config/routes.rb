@@ -38,7 +38,7 @@ FoodApp::Application.routes.draw do
     
   #admin paths
   get 'admin' => 'admin#index'
-  get 'start' => 'admin#start'
+  post 'start' => 'admin#start'
   patch 'editarchyve' => 'admin#edit_last_archyve'
   
   # The priority is based upon order of creation: first created -> highest priority.

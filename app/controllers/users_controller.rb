@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
- # http_basic_authenticate_with name: "admin", password: "geraspsw", except: [:changepass, :update]
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  #before_action :admin_check
+  before_action :admin_check, only: [:index, :show, :edit,  :destroy, :new, :create]
+  before_action :set_user, only:  [:show, :edit, :update, :destroy]
 
   def admin_check 
     if !current_user.nil? && current_user.name != 'admin'
@@ -13,7 +12,6 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     @users = User.all
-
   end
 
   def change_password
@@ -24,7 +22,7 @@ class UsersController < ApplicationController
   def save_food
     t = current_round.date
     t_food = t + 900
-    if current_user && (Time.now > t.to_datetime || voted_users >= 11) #&& (Time.now < t_food.to_datetime)
+    if current_user && (Time.now > t.to_datetime || voted_users >= 11) && (Time.now < t_food.to_datetime)
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil?
         #userarchyve = Userarchyves.where(:user_id => user.id)
@@ -95,7 +93,11 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      if !current_user.nil? && current_user.name == 'admin'
+        @user = User.find(params[:id])
+      else
+        @user = User.find(current_user.id)
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

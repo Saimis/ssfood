@@ -1,43 +1,117 @@
 <div id="restaurants_holder">
 	<p>  
-		Pradeti sesija: <a href="start"><button><span>Start</span></button></a> 
-		<% if @archyve.date > Time.now %><span style="color:red;">Sesija aktyvi</span><% end %>
-	</p>
-	 
-  <p>
-  <%= form_for @archyve, url: {action: "edit_last_archyve"} do |f|  %>
-			<div class="field">
-			    Paskutinis archyvu irasas<br>
-			    <%= f.datetime_field :date, :required => true %>
-			  </div>
-			  
-			  <div class="actions">
-			    <%= f.submit %>
-			  </div>
-			<% end %>
-  </p>
+		Pradeti sesija: 
+    <%= form_tag("start", method: "start") do %>
+      <%= label_tag(:time, "Laikas sekundemis:") %>
+      <%= text_field_tag(:time, 1200) %>
+      <%= submit_tag("Start") %>
+    <% end %> 
 
+    <!--<a href="start"><button><span>Start</span></button></a> -->
+		<% if !@archyve.nil? && @archyve.date > Time.now %><span style="color:red;">Sesija aktyvi</span><% end %>
+	</p>
+	  <hr />
+  <p>
+    <% if !@archyve.nil? %>
+      <%= form_for @archyve, url: {action: "edit_last_archyve"} do |f|  %>
+  			<div class="field">
+  			    <%= label_tag(:date) %>
+  			    <%= f.datetime_field :date, :required => true %>
+            <%= label_tag(:restaurant_id) %>
+            <%= f.text_field :restaurant_id, :required => false %>
+            <%= label_tag(:caller) %>
+            <%= f.text_field :caller, :required => false %>
+  			  </div>
+  			  
+  			  <div class="actions">
+  			    <%= f.submit %>
+  			  </div>
+  		<% end %>
+    <% end %>
+  </p>
+ <hr />
   <div class="admin_user_holder" style="border:1px solid #ccc;">
   	Prideti nauja vartotoja: <a href="users/new"><button><span>New User</span></button></a>
   	<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Voted</th>
-      <th>Food</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-				<td><%= user.voted %></td>
-        <td><%= user.food %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Voted</th>
+          <th>Food</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
+    				<td><%= user.voted %></td>
+            <td><%= user.food %></td>
+            <td><%= link_to 'Edit', edit_user_path(user) %></td>
+            <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <hr />
+  <div class="admin_user_holder" style="border:1px solid #ccc;">
+    Prideti nauja restorana: <a href="restaurants/new"><button><span>New Restaurant</span></button></a>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>About</th>
+          <th>Votes</th>
+          <th>Waslast</th>
+          <th>Lastused</th>
+          <th>Phone</th>
+          <th></th>
+          <th></th>
+          <th></th> 
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @restaurants.each do |restaurant| %>
+          <tr>
+            <td><%= restaurant.name %></td>
+            <td><%= restaurant.about %></td>
+            <td><%= restaurant.votes %></td>
+            <td><%= restaurant.waslast %></td>
+            <td><%= restaurant.lastused %></td>
+            <td><%= restaurant.phone %></td>
+            <td><%= link_to 'Show', restaurant %></td>
+            <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
+            <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <hr />
+  <div>
+    <% @rounds.each do |round| %>
+      <div class="rounds_holder">
+        ID:   <%= round.id %>
+        Date: <%= round.date %>
+        Restaurant winner id: <%= round.restaurant_id %>
+        Caller id: <%= round.caller %>
+        <a href="archyve/<%= round.id %>">Trinti</a>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <hr />
+  <div>
+    <% @userarchyves.each do |single_userarchyve| %>
+      <div class="rounds_holder">
+        Archyves ID: <%= single_userarchyve.archyves_id %>
+        Voted for: <%= single_userarchyve.voted_for %>
+        Food: <%= single_userarchyve.food %>
+        User id: <%= single_userarchyve.user_id %>
+        <a href="archyve/u/<%= single_userarchyve.id %>">Trinti</a>
+      </div>
+    <% end %>
   </div>
 </div>
