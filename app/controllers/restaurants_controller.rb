@@ -16,7 +16,10 @@ class RestaurantsController < ApplicationController
 
   #get call to vote for restaurant, if user logged in, time is not over and not all users voted
   def vote
-    if current_user && Time.now < current_round.date.to_datetime && voted_users <= 11 && !params[:id].nil?
+    current_round = Archyves.last
+    users_without_admin = User.all.count - 1
+    
+    if current_user && Time.now < current_round.date.to_datetime && voted_users <= users_without_admin && !params[:id].nil?
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil? 
         restaurant = Restaurant.find(params[:id])

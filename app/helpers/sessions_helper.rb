@@ -21,7 +21,4 @@ module SessionsHelper
     self.current_user = nil
     cookies.delete :remember
   end
-  def timeleft
-    @timeleft = 10
-  end
 end

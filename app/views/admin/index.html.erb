@@ -37,7 +37,6 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
-          <th>Voted</th>
           <th>Food</th>
         </tr>
       </thead>
@@ -46,8 +45,7 @@
           <tr>
             <td><%= user.id %></td>
             <td><%= user.name %></td>
-    				<td><%= user.voted %></td>
-            <td><%= user.food %></td>
+    			  <td><%= user.food %></td>
             <td><%= link_to 'Edit', edit_user_path(user) %></td>
             <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
@@ -79,8 +77,6 @@
             <td><%= restaurant.name %></td>
             <td><%= restaurant.about %></td>
             <td><%= restaurant.votes %></td>
-            <td><%= restaurant.waslast %></td>
-            <td><%= restaurant.lastused %></td>
             <td><%= restaurant.phone %></td>
             <td><%= link_to 'Show', restaurant %></td>
             <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>

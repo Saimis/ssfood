@@ -6,36 +6,29 @@ class MainController < ApplicationController
       if !Archyves.last.nil?
         time = Archyves.last.date
         @restaurant_time = time.asctime.to_s
-        @food_time = (time+900).asctime.to_s
+        @food_time = (time+1900).asctime.to_s
       end
    end
 
-  def choosefood
-     @user = User.where(:remember => cookies[:remember]).first
-     @food = @user.food
-  end
-
-  
-
   #the main information source for long poller, returns all information about users and restaurants
   def getData
-    #users = User.all(:select => 'id, food, voted')
+    users_without_admin = User.all.count - 1
+    current_round = Archyves.last
     users = Userarchyves.all(:select => 'user_id, food, voted_for', :conditions => 'archyves_id = ' + current_round.id.to_s)
     retaurants = Restaurant.all(:select => 'id, votes')
     vote_check = Restaurant.where("votes > 0")
     winner = {}
-    
-    
+        
     #if there's no winner set yet and all users voted or time ended and also if any restaurant got a vote
-    if current_round.restaurant_id.nil? && (voted_users >= 11 || Time.now > Archyves.last.date.to_datetime) && vote_check.count > 0 
-      archyve = Archyves.find(current_round.id)
+    if current_round.restaurant_id.nil? && (voted_users >= users_without_admin || Time.now > current_round.date.to_datetime) && vote_check.count > 0 
       winner = Restaurant.order("votes DESC, RANDOM()").first
-      archyve.restaurant_id = winner.id
-      archyve.save
-    elsif !current_round.restaurant_id.nil?
+      current_round.restaurant_id = winner.id
+      current_round.save
+    else
       winner = Restaurant.find(current_round.restaurant_id)
     end
-
+    
+    # return json 
     respond_to do |format|
       format.json {
        render :json => {

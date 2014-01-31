@@ -26,12 +26,6 @@
             = restaurant.votes
           .vote_bar style="height:#{restaurant.votes}0px;"
 
-        - if restaurant.lastused.length > 0
-          .last_time
-            | Pask. k. u&#382;sk:
-            | &nbsp;
-            = restaurant.lastused[0..-16]
-
 div style="clear:both;"
 #countdown_food data-end=(@food_time)
 #user_holder
@@ -42,14 +36,11 @@ div style="clear:both;"
           span.user_name_activefield
             = user.name
           .copy title="CopyCAT!"
-          .voted title="Balsavo" style="display:none;"
-            = image_tag("voted.png")
-
-        - if (!signed_in? && user.id != @current_user.id)
-          .food id=("uf_#{user.id}")
-            = h user.food
-        - else
+          
+        - if !signed_in? && user.id == @current_user.id
           .food
-            - if !signed_in? && user.name == @current_user.name
               = form_tag "savefood", :id => "food_form" do
                 = text_area_tag "food", user.food
+        - else
+          .food id=("uf_#{user.id}")
+            = h user.food

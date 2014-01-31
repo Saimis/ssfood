@@ -20,9 +20,13 @@ class UsersController < ApplicationController
 
   #save food from user input via ajax post
   def save_food
+    current_round = Archyves.last
     t = current_round.date
-    t_food = t + 900
-    if current_user && (Time.now > t.to_datetime || voted_users >= 11) && (Time.now < t_food.to_datetime)
+    t_food = t + 1900
+    
+    users_without_admin = User.all.count - 1
+
+    if current_user && (Time.now > t.to_datetime || voted_users >= users_without_admin) && (Time.now < t_food.to_datetime)
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil?
         #userarchyve = Userarchyves.where(:user_id => user.id)

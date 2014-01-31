@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131220000218) do
+ActiveRecord::Schema.define(version: 20140131183349) do
 
   create_table "archyves", force: true do |t|
     t.datetime "date"
@@ -25,17 +25,9 @@ ActiveRecord::Schema.define(version: 20131220000218) do
     t.string   "name"
     t.string   "about"
     t.integer  "votes"
-    t.boolean  "waslast"
-    t.string   "lastused"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone"
-  end
-
-  create_table "timecontrolls", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "timebarrier"
   end
 
   create_table "userarchyves", force: true do |t|
@@ -49,13 +41,11 @@ ActiveRecord::Schema.define(version: 20131220000218) do
 
   create_table "users", force: true do |t|
     t.string   "name"
-    t.integer  "voted"
     t.string   "food"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "remember"
     t.string   "password"
-    t.string   "lastfood"
     t.string   "password_digest"
   end
 
