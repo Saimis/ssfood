@@ -160,6 +160,7 @@ h1 {
   text-align:center;
   border-radius:5px;
   background:#edede5;
+  position: relative;
 }
 
 #user_holder .single_user .user_name {
@@ -186,6 +187,17 @@ h1 {
   right: 10px;
   cursor: pointer;
 }
+#user_holder .single_user .user_name .history {
+  background: url(journal.png);
+  height:17px;
+  width: 17px;
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  display: none;
+}
+
 #user_holder .single_user .user_name .voted {
   height:17px;
   width: 18px;
@@ -222,4 +234,28 @@ h1 {
   background: none !important;
   text-align: center !important;
 }
-  
+.histbox {
+  display: none;
+  background: #fff;
+  position: absolute;
+  padding:5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  top: 30px;
+  left: 10px;
+  border: 1px solid #ccc;
+}
+
+.histbox ul {
+  margin:0;
+  padding:0;
+}
+.histbox ul li {
+  list-style: none;
+  border-bottom: 1px solid #F2F2F2;
+  cursor: pointer;
+}
+.histbox ul li:HOVER {
+  background: #F0F0F0;
+}

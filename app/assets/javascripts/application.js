@@ -19,8 +19,15 @@
 var form_timout;
 var isWinnerSet = false;
 var startPolling = true;
+var historyIsSet = false;
 $(document).ready(function(){
-
+  $(document).click(function(e) { 
+    if (!$(e.target).is(".history") && !$(e.target).is(".f_history_item")) {
+      if($(".histbox").is(":visible")) {
+        $(".histbox").hide();
+      }
+    }
+  });
   
   var endtime = $("#countdown").data("end");
   var endtime_food = $("#countdown_food").data("end");
@@ -39,7 +46,21 @@ $(document).ready(function(){
       saveFood();
     }, 2000);    
   });
-  
+
+  $(".history").click(function(event) {
+    if($(".histbox").is(":visible")) {
+      $(".histbox").hide();
+    } else {
+      $(".histbox").show();
+    }
+  });
+
+  $(".histbox").on('click', 'li', function(){
+    $("#food").val($(this).text());
+    $(".histbox").hide();
+    saveFood();
+  });
+
   $(".copy").click(function(event) {
         
     if($(this).parent().parent().find("#food").length > 0){
@@ -157,12 +178,29 @@ function setwinner(msg) {
     });
   }
 }
+function appendHistory(msg) {
+  if(!historyIsSet) {
+    if(msg.length > 0) {
+      $(".history").show();
+      var foodHistoryList = "<ul>";
+      jQuery.each(msg, function(i, item) {
+        foodHistoryList += '<li>' + item + '</li>';
+      });
+      foodHistoryList += "</ul>";
+      $(".histbox").html(foodHistoryList);
+    }
+    historyIsSet = true;
+  }
+}
 
 function parseInfo(type, msg) {
   addmsg(msg.users);
   addvotes(msg.restaurants);
   if(msg.winner != null) {
     setwinner(msg.winner);
+  }
+  if(msg.food_history != null) {
+    appendHistory(msg.food_history);
   }
 }
 

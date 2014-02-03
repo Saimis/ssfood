@@ -33,11 +33,14 @@ div style="clear:both;"
     .shadow_box
       .single_user id="usr_#{user.id}"
         .user_name
+          - if !signed_in? && user.id == @current_user.id
+            .history title="History"
           span.user_name_activefield
             = user.name
           .copy title="CopyCAT!"
           
         - if !signed_in? && user.id == @current_user.id
+          .histbox
           .food
               = form_tag "savefood", :id => "food_form" do
                 = text_area_tag "food", user.food

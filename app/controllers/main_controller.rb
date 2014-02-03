@@ -1,13 +1,20 @@
 class MainController < ApplicationController
 
   def index
-      @restaurants = Restaurant.all.order("name ASC")
-      @users = User.find(:all, :conditions => ["name != 'admin'"], :order => ["name ASC"])
-      if !Archyves.last.nil?
-        time = Archyves.last.date
-        @restaurant_time = time.asctime.to_s
-        @food_time = (time+1900).asctime.to_s
-      end
+    @restaurants = Restaurant.all.order("name ASC")
+    @users = User.find(:all, :conditions => ["name != 'admin'"], :order => ["name ASC"])
+    current_round = Archyves.last
+    
+    if !current_round.nil?
+      time = current_round.date
+      @restaurant_time = time.asctime.to_s
+      @food_time = (time+1900).asctime.to_s
+    end
+    
+   # if !current_round.restaurant_id.nil? && !current_user.nil?
+    #  @food_history = {}
+  #    @food_history = Userarchyves.all.joins(:archyves).where("userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s)
+  #  end
    end
 
   #the main information source for long poller, returns all information about users and restaurants
@@ -18,14 +25,21 @@ class MainController < ApplicationController
     retaurants = Restaurant.all(:select => 'id, votes')
     vote_check = Restaurant.where("votes > 0")
     winner = {}
-        
+    food_history = {}
+
     #if there's no winner set yet and all users voted or time ended and also if any restaurant got a vote
     if current_round.restaurant_id.nil? && (voted_users >= users_without_admin || Time.now > current_round.date.to_datetime) && vote_check.count > 0 
       winner = Restaurant.order("votes DESC, RANDOM()").first
       current_round.restaurant_id = winner.id
       current_round.save
+      if !current_user.nil?
+        food_history = Userarchyves.all.joins(:archyves).where("userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s).pluck(:food)
+      end
     else
       winner = Restaurant.find(current_round.restaurant_id)
+      if !current_user.nil?
+        food_history = Userarchyves.joins(:archyves).where("userarchyves.food NOT NULL AND userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s).order("userarchyves.id DESC").offset(1).pluck(:food)
+      end
     end
     
     # return json 
@@ -34,7 +48,8 @@ class MainController < ApplicationController
        render :json => {
          :users => users.as_json(:only => [:user_id, :food, :voted]),
          :restaurants => retaurants.as_json(:only => [:id, :votes]),
-         :winner => winner.as_json(:only => [:id])
+         :winner => winner.as_json(:only => [:id]),
+         :food_history => food_history.as_json(:only => [:user_id]),
         } 
       }
     end
