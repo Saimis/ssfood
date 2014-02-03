@@ -10,12 +10,7 @@ class MainController < ApplicationController
       @restaurant_time = time.asctime.to_s
       @food_time = (time+1900).asctime.to_s
     end
-    
-   # if !current_round.restaurant_id.nil? && !current_user.nil?
-    #  @food_history = {}
-  #    @food_history = Userarchyves.all.joins(:archyves).where("userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s)
-  #  end
-   end
+  end
 
   #the main information source for long poller, returns all information about users and restaurants
   def getData
@@ -32,15 +27,13 @@ class MainController < ApplicationController
       winner = Restaurant.order("votes DESC, RANDOM()").first
       current_round.restaurant_id = winner.id
       current_round.save
-      if !current_user.nil?
-        food_history = Userarchyves.all.joins(:archyves).where("userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s).pluck(:food)
-      end
-    else
+    elsif !current_round.restaurant_id.nil?
       winner = Restaurant.find(current_round.restaurant_id)
-      if !current_user.nil?
-        food_history = Userarchyves.joins(:archyves).where("userarchyves.food NOT NULL AND userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s).order("userarchyves.id DESC").offset(1).pluck(:food)
-      end
     end
+
+    #if !current_round.restaurant_id.nil? && !current_user.nil?
+    #    food_history = Userarchyves.joins('JOIN archyves ON userarchyves.archyves_id = archyves.id').where("userarchyves.food NOT NULL AND userarchyves.user_id = " + current_user.id.to_s + " AND archyves.restaurant_id = " + current_round.restaurant_id.to_s).order("userarchyves.id DESC").offset(1).pluck(:food)
+    #end
     
     # return json 
     respond_to do |format|

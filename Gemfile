@@ -42,7 +42,6 @@ end
 
 gem 'slim'
 gem 'thin'
-gem 'pry'
 gem 'therubyracer'
 
 # Use ActiveModel has_secure_password
