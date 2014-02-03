@@ -33,7 +33,7 @@ class MainController < ApplicationController
 
     if !current_round.restaurant_id.nil? && !current_user.nil?
        food_history = Userarchyves.joins(:archyves)
-        .where('"userarchyves"."food" NOT NULL AND "userarchyves"."user_id" = 3 AND "archyves"."restaurant_id" = 6')
+        .where('userarchyves.food NOT NULL')
     end
     
     # return json 
