@@ -32,8 +32,8 @@ class MainController < ApplicationController
     end
 
     if !current_round.restaurant_id.nil? && !current_user.nil?
-       food_history = Userarchyves.select("userarchyves.food")
-        .joins(:archyves)
+       food_history = Userarchyves.joins(:archyves)
+        .where("userarchyves.food NOT NULL")
         .where("userarchyves.user_id = ?",current_user.id.to_s)
         .where("archyves.restaurant_id = ?", current_round.restaurant_id.to_s)
         .order("userarchyves.id DESC")
@@ -46,7 +46,7 @@ class MainController < ApplicationController
          :users => users.as_json(:only => [:user_id, :food, :voted]),
          :restaurants => retaurants.as_json(:only => [:id, :votes]),
          :winner => winner.as_json(:only => [:id]),
-         :food_history => food_history.as_json(:only => [:user_id]),
+         :food_history => food_history.as_json(:only => [:food]),
         } 
       }
     end
