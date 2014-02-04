@@ -8,12 +8,12 @@
     <% end %> 
 
     <!--<a href="start"><button><span>Start</span></button></a> -->
-		<% if !@archyve.nil? && @archyve.date > Time.now %><span style="color:red;">Sesija aktyvi</span><% end %>
+		<% if !@archive.nil? && @archive.date > Time.now %><span style="color:red;">Sesija aktyvi</span><% end %>
 	</p>
 	  <hr />
   <p>
-    <% if !@archyve.nil? %>
-      <%= form_for @archyve, url: {action: "edit_last_archyve"} do |f|  %>
+    <% if !@archive.nil? %>
+      <%= form_for @archive, url: {action: "edit_last_archyve"} do |f|  %>
   			<div class="field">
   			    <%= label_tag(:date) %>
   			    <%= f.datetime_field :date, :required => true %>
@@ -100,13 +100,13 @@
   </div>
   <hr />
   <div>
-    <% @userarchyves.each do |single_userarchyve| %>
+    <% @userarchives.each do |single_userarchive| %>
       <div class="rounds_holder">
-        Archyves ID: <%= single_userarchyve.archyves_id %>
-        Voted for: <%= single_userarchyve.voted_for %>
-        Food: <%= single_userarchyve.food %>
-        User id: <%= single_userarchyve.user_id %>
-        <a href="archyve/u/<%= single_userarchyve.id %>">Trinti</a>
+        Archyves ID: <%= single_userarchive.archives_id %>
+        Voted for: <%= single_userarchive.voted_for %>
+        Food: <%= single_userarchive.food %>
+        User id: <%= single_userarchive.user_id %>
+        <a href="archyve/u/<%= single_userarchive.id %>">Trinti</a>
       </div>
     <% end %>
   </div>

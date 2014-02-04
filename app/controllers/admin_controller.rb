@@ -8,17 +8,17 @@ class AdminController < ApplicationController
 	end
 
 	def index
-		@archyve = Archyves.last
+		@archive = Archives.last
 		@users = User.all
-		@rounds = Archyves.all 
-    @userarchyves = Userarchyves.find(:all)
+		@rounds = Archives.all 
+    @userarchives = Userarchives.find(:all)
     @restaurants = Restaurant.all
 	end
 
 	def edit_last_archyve
-		@archyve = Archyves.last
-		@archyve.date = params[:archyves][:date]
-		@archyve.save
+		@archive = Archives.last
+		@archive.date = params[:archives][:date]
+		@archive.save
 		redirect_to admin_url
 	end
 
@@ -27,9 +27,9 @@ class AdminController < ApplicationController
       User.update_all(:food => nil)
       Restaurant.update_all(:votes => 0)
       time_gap = params[:time].to_i > 0 ? params[:time].to_i : 1200
-      archyve = Archyves.create :date => Time.now + time_gap
+      archive = Archives.create :date => Time.now + time_gap
       User.all().each do |user|
-        Userarchyves.create :user_id => user.id, :archyves_id => archyve.id
+        Userarchives.create :user_id => user.id, :archives_id => archive.id
       end
     end
     redirect_to admin_url

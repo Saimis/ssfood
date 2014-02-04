@@ -11,15 +11,15 @@
     a href=("archyve/#{round.id}")
         | Trinti
 hr
-- @userarchyves.each do |single_userarchyve|
+- @userarchives.each do |single_userarchive|
   .rounds_holder
     |Archyves ID: 
-    = single_userarchyve.archyves_id
+    = single_userarchive.archives_id
     |;  Voted for: 
-    = single_userarchyve.voted_for
+    = single_userarchive.voted_for
     |;  Food: 
-    = single_userarchyve.food
+    = single_userarchive.food
     |;  User id: 
-    = single_userarchyve.user_id
+    = single_userarchive.user_id
     a href=("archyve/u/#{single_userarchyve.id}")
         | Trinti

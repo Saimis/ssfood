@@ -3,7 +3,7 @@ class MainController < ApplicationController
   def index
     @restaurants = Restaurant.all.order("name ASC")
     @users = User.find(:all, :conditions => ["name != 'admin'"], :order => ["name ASC"])
-    current_round = Archyves.last
+    current_round = Archives.last
     
     if !current_round.nil?
       time = current_round.date
@@ -15,8 +15,8 @@ class MainController < ApplicationController
   #the main information source for long poller, returns all information about users and restaurants
   def getData
     users_without_admin = User.all.count - 1
-    current_round = Archyves.last
-    users = Userarchyves.all(:select => 'user_id, food, voted_for', :conditions => 'archyves_id = ' + current_round.id.to_s)
+    current_round = Archives.last
+    users = Userarchives.all(:select => 'user_id, food, voted_for', :conditions => 'archives_id = ' + current_round.id.to_s)
     retaurants = Restaurant.all(:select => 'id, votes')
     vote_check = Restaurant.where("votes > 0")
     winner = {}
@@ -32,10 +32,10 @@ class MainController < ApplicationController
     end
 
     if !current_round.restaurant_id.nil? && !current_user.nil?
-       food_history = Userarchyves.joins(:archyves)
-        .where("userarchyves.user_id = ?",current_user.id.to_s)
-        .where("archyves.restaurant_id = ?", current_round.restaurant_id.to_s)
-        .order("userarchyves.id DESC")
+       food_history = Userarchives.joins(:archives)
+        .where("userarchives.user_id = ?",current_user.id.to_s)
+        .where("archives.restaurant_id = ?", current_round.restaurant_id.to_s)
+        .order("userarchives.id ASC")
     end
     
     # return json 
@@ -52,17 +52,17 @@ class MainController < ApplicationController
   end
 
   def view_archyves
-    @rounds = Archyves.all 
-    @userarchyves = Userarchyves.find(:all)
+    @rounds = Archives.all 
+    @userarchyves = Userarchives.find(:all)
   end
 
   def destroy_archyve
-    Archyves.destroy(params[:id])
+    Archives.destroy(params[:id])
     redirect_to archyve_path
   end
 
   def destroy_userarchyve
-    Userarchyves.destroy(params[:id])
+    Userarchives.destroy(params[:id])
     redirect_to archyve_path
   end
 end

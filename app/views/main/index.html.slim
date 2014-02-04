@@ -13,11 +13,11 @@
             | Meniu
         .winner_image
           = image_tag("last.png")
-        - if !signed_in? && current_round_userarchyve.voted_for.nil?
+        - if !signed_in? && current_round_userarchive.voted_for.nil?
           .vote_button_holder
             a.vote_button href=("vote/#{restaurant.id}")
               | Balsuoti!
-        - elsif !signed_in? && current_round_userarchyve.voted_for == restaurant.id
+        - elsif !signed_in? && current_round_userarchive.voted_for == restaurant.id
           .vote_button_holder
             a.vote_button href=("vote/#{restaurant.id}/1")
               | Atsaukti!

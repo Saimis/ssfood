@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
   #save food from user input via ajax post
   def save_food
-    current_round = Archyves.last
+    current_round = Archives.last
     t = current_round.date
     t_food = t + 1900
     
@@ -30,11 +30,11 @@ class UsersController < ApplicationController
       user = User.where(:remember => cookies[:remember]).first
       if !user.nil?
         #userarchyve = Userarchyves.where(:user_id => user.id)
-        userarchyve = Userarchyves.where(:user_id => user.id, :archyves_id => current_round.id).first
+        userarchive = Userarchives.where(:user_id => user.id, :archives_id => current_round.id).first
         user.food = ActionController::Base.helpers.strip_tags(params[:food])
         user.save
-        userarchyve.food = ActionController::Base.helpers.strip_tags(params[:food])
-        userarchyve.save
+        userarchive.food = ActionController::Base.helpers.strip_tags(params[:food])
+        userarchive.save
       end
     end
     redirect_to root_path
