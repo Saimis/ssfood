@@ -33,8 +33,11 @@ class MainController < ApplicationController
 
     if !current_round.restaurant_id.nil? && !current_user.nil?
        food_history = Userarchyves.joins(:archyves)
-        .where("userarchyves.food NOT NULL AND userarchyves.user_id == ? AND archyves.restaurant_id == ?", current_user.id.to_s, current_round.restaurant_id.to_s)
-        .order("userarchyves.id DESC").offset(1).pluck(:food)
+        .where("userarchyves.food NOT NULL")
+        .where("userarchyves.user_id = ?",current_user.id.to_s)
+        .where("archyves.restaurant_id = ?", current_round.restaurant_id.to_s)
+        .order("userarchyves.id DESC")
+        .pluck(:food)
     end
     
     # return json 
