@@ -253,7 +253,7 @@ h1 {
 }
 .histbox ul li {
   list-style: none;
-  border-bottom: 1px solid #F2F2F2;
+  border-bottom: 1px dotted #7A7A7A;
   cursor: pointer;
 }
 .histbox ul li:HOVER {
