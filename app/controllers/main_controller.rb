@@ -33,7 +33,6 @@ class MainController < ApplicationController
 
     if !current_round.restaurant_id.nil? && !current_user.nil?
        food_history = Userarchyves.joins(:archyves)
-        .where("userarchyves.food NOT NULL")
         .where("userarchyves.user_id = ?",current_user.id.to_s)
         .where("archyves.restaurant_id = ?", current_round.restaurant_id.to_s)
         .order("userarchyves.id DESC")

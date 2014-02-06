@@ -184,7 +184,9 @@ function appendHistory(msg) {
     
     var foodHistoryList = "<ul>";
     jQuery.each(msg, function(i, item) {
-      foodHistoryList += '<li>' + item.food + '</li>';
+      if(item.food != null) {
+        foodHistoryList += '<li>' + item.food + '</li>';
+      }
     });
     foodHistoryList += "</ul>";
     $(".histbox").html(foodHistoryList);
