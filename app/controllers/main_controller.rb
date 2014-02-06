@@ -36,7 +36,6 @@ class MainController < ApplicationController
         .where("userarchyves.user_id = ?",current_user.id.to_s)
         .where("archyves.restaurant_id = ?", current_round.restaurant_id.to_s)
         .order("userarchyves.id DESC")
-        .group("userarchyves.food")
     end
     
     # return json 
