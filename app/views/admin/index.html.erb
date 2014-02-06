@@ -76,6 +76,7 @@
   <table style="text-align:center;">
   <thead>
     <tr>
+      <th>Id</th>
       <th>Date</th>
       <th>Winner restaurant</th>
       <th>Food time (s)</th>
@@ -89,6 +90,7 @@
   <tbody>
     <% @archyves.each do |archyve| %>
       <tr>
+        <td><%= archyve.id %></td>
         <td><%= archyve.date %></td>
         <td><%= archyve.restaurant_id %></td>
         <td><%= archyve.food_time %></td>

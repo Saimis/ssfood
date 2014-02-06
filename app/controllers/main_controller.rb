@@ -52,7 +52,11 @@ class MainController < ApplicationController
   end
   
   def destroy_userarchyve
-    Userarchyves.destroy(params[:id])
-    redirect_to archyve_path
+    if current_user.nil? || current_user.name != 'admin'
+      redirect_to root_path
+    else 
+      Userarchyves.destroy(params[:id])
+      redirect_to admin_url
+    end
   end
 end
