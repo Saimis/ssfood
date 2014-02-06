@@ -50,17 +50,7 @@ class MainController < ApplicationController
       }
     end
   end
-
-  def view_archyves
-    @rounds = Archyves.all 
-    @userarchyves = Userarchyves.find(:all)
-  end
-
-  def destroy_archyve
-    Archyves.destroy(params[:id])
-    redirect_to archyve_path
-  end
-
+  
   def destroy_userarchyve
     Userarchyves.destroy(params[:id])
     redirect_to archyve_path

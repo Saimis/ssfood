@@ -171,7 +171,6 @@ function setwinner(msg) {
     $(".vote_button").css("display","none");
     $("#user_holder").css("display","block");
     $("#countdown_food").css("display","block");
-    //$("#food").attr("disabled", "disabled");
     $("#restaurants_holder").children(".shadow_box").each(function(){
       if($(this).attr("id") != "rest_" + msg.id) {
 	      $(this).css("opacity","0.3");
