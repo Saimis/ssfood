@@ -1,0 +1,31 @@
+<h1>Listing archyves</h1>
+<%= link_to "Rinktis maista", :controller => :users, :action => :choosefood %> 
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Winner restaurant</th>
+      <th>Caller user</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @archyves.each do |archyve| %>
+      <tr>
+        <td><%= archyve.date %></td>
+        <td><%= archyve.restaurant_id %></td>
+        <td><%= archyve.caller %></td>
+        <td><%= link_to 'Show', archyve %></td>
+        <td><%= link_to 'Edit', edit_archyfe_path(archyve) %></td>
+        <td><%= link_to 'Destroy', archyve, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<!--< %= link_to 'New User', new_user_path %>-->

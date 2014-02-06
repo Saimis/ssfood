@@ -8,7 +8,7 @@ class MainController < ApplicationController
     if !current_round.nil?
       time = current_round.date
       @restaurant_time = time.asctime.to_s
-      @food_time = (time+1900).asctime.to_s
+      @food_time = (time + current_round.food_time).asctime.to_s
     end
   end
 
@@ -37,7 +37,7 @@ class MainController < ApplicationController
         .where("userarchyves.user_id = ?",current_user.id.to_s)
         .where("archyves.restaurant_id = ?", current_round.restaurant_id.to_s)
         .order("userarchyves.id DESC")
-        .pluck(:food)
+        .group("userarchyves.food")
     end
     
     # return json 
@@ -47,7 +47,7 @@ class MainController < ApplicationController
          :users => users.as_json(:only => [:user_id, :food, :voted]),
          :restaurants => retaurants.as_json(:only => [:id, :votes]),
          :winner => winner.as_json(:only => [:id]),
-         :food_history => food_history.as_json(:only => [:user_id]),
+         :food_history => food_history.as_json(:only => [:food]),
         } 
       }
     end

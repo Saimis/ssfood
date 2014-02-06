@@ -6,7 +6,6 @@ FoodApp::Application.routes.draw do
   resources :users#, :only => [:update]
   resources :restaurants#, :only => [:update]
   resources :sessions
-  resources :timecontrolls#, :only => [:update]
   resources :archyves
   
   #users paths
@@ -23,9 +22,9 @@ FoodApp::Application.routes.draw do
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
   
-  get 'archyve' => 'main#view_archyves'
-  get 'archyve/:id' => 'main#destroy_archyve'
-  get 'archyve/u/:id' => 'main#destroy_userarchyve'
+  #get 'archyve' => 'main#view_archyves'
+  #get 'archyve/:id' => 'main#destroy_archyve'
+  #get 'archyve/u/:id' => 'main#destroy_userarchyve'
 
   #restaurants paths
   get 'restaurants' => 'restaurants#index'
@@ -39,7 +38,7 @@ FoodApp::Application.routes.draw do
   #admin paths
   get 'admin' => 'admin#index'
   post 'start' => 'admin#start'
-  patch 'editarchyve' => 'admin#edit_last_archyve'
+  #patch 'editarchyve' => 'admin#edit_last_archyve'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

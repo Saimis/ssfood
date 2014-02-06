@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def save_food
     current_round = Archyves.last
     t = current_round.date
-    t_food = t + 1900
+    t_food = t + current_round.food_time
     
     users_without_admin = User.all.count - 1
 

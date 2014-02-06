@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131183349) do
+ActiveRecord::Schema.define(version: 20140206141455) do
 
   create_table "archyves", force: true do |t|
     t.datetime "date"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20140131183349) do
     t.integer  "caller"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "food_time"
   end
 
   create_table "restaurants", force: true do |t|
@@ -30,14 +31,8 @@ ActiveRecord::Schema.define(version: 20140131183349) do
     t.string   "phone"
   end
 
-  create_table "userarchyves", force: true do |t|
-    t.integer  "archyves_id"
-    t.integer  "voted_for"
-    t.string   "food"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "userarchyves" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "users", force: true do |t|
     t.string   "name"

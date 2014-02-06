@@ -32,7 +32,7 @@ $(document).ready(function(){
   var endtime = $("#countdown").data("end");
   var endtime_food = $("#countdown_food").data("end");
   $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
-  $("#countdown_food").countdown({until: new Date(endtime_food)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
+  $("#countdown_food").countdown({until: new Date(endtime_food), onExpiry: hideFoodTimer , compact: true,  format: 'HMs'});
  
   $("#food").blur(function() {
     saveFood();
@@ -113,6 +113,10 @@ $(document).ready(function(){
     startPolling = false;
   }
 });
+function hideFoodTimer() {
+  $("#countdown_food").hide();
+}
+
 function saveFood(){
   $("#food_form").submit(function(e) {
     var postData = $("#food_form").serializeArray();
@@ -134,9 +138,6 @@ function saveFood(){
   $("#food_form").submit();
 }
 
-function liftOff() {
- alert("Laikas baigesi!"); 
-}
 
 function addmsg(msg){
   jQuery.each(msg, function(i, item) {
@@ -180,15 +181,14 @@ function setwinner(msg) {
 }
 function appendHistory(msg) {
   if(!historyIsSet) {
-    if(msg.length > 0) {
-      $(".history").show();
-      var foodHistoryList = "<ul>";
-      jQuery.each(msg, function(i, item) {
-        foodHistoryList += '<li>' + item + '</li>';
-      });
-      foodHistoryList += "</ul>";
-      $(".histbox").html(foodHistoryList);
-    }
+    
+    var foodHistoryList = "<ul>";
+    jQuery.each(msg, function(i, item) {
+      foodHistoryList += '<li>' + item.food + '</li>';
+    });
+    foodHistoryList += "</ul>";
+    $(".histbox").html(foodHistoryList);
+    $(".history").show();
     historyIsSet = true;
   }
 }
@@ -196,10 +196,10 @@ function appendHistory(msg) {
 function parseInfo(type, msg) {
   addmsg(msg.users);
   addvotes(msg.restaurants);
-  if(msg.winner != null) {
+  if(msg.winner.id != null) {
     setwinner(msg.winner);
   }
-  if(msg.food_history != null) {
+  if(msg.food_history.length > 0) {
     appendHistory(msg.food_history);
   }
 }
