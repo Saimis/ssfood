@@ -113,6 +113,8 @@ $(document).ready(function(){
     startPolling = false;
   }
 });
+
+
 function hideFoodTimer() {
   $("#countdown_food").hide();
 }
@@ -194,7 +196,7 @@ function appendHistory(msg) {
   }
 }
 
-function parseInfo(type, msg) {
+function parseInfo(msg) {
   addmsg(msg.users);
   addvotes(msg.restaurants);
   if(msg.winner.id != null) {
@@ -202,6 +204,9 @@ function parseInfo(type, msg) {
   }
   if(msg.food_history.length > 0) {
     appendHistory(msg.food_history);
+  }
+  if(msg.round_end == true) {
+    roundEnd();
   }
 }
 
@@ -215,7 +220,7 @@ function waitForMsg(){
       timeout:50000,
 
       success: function(data){ 
-    	  parseInfo("new", data);
+    	  parseInfo(data);
     	  setTimeout(
     	      waitForMsg,
     	      5000
@@ -230,3 +235,9 @@ function waitForMsg(){
       }
   });
 };
+
+function roundEnd() {
+  if(!$("#caller_popup").is(":visible")) {
+    $("#caller_popup").show();
+  }
+}

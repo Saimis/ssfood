@@ -1,49 +1,61 @@
-#countdown data-end=(@restaurant_time)
-#restaurants_holder
-  - @restaurants.each do |restaurant|
-    .shadow_box id=("rest_#{restaurant.id}")
-      .single_restaurant
-        .restaurant_name
-          = restaurant.name
-        .restaurant_info
-          span
-            = restaurant.phone
-          br
-          a target="_blank" href=(restaurant.about)
-            | Meniu
-        .winner_image
-          = image_tag("last.png")
-        - if !signed_in? && current_round_userarchyve.voted_for.nil?
-          .vote_button_holder
-            a.vote_button href=("vote/#{restaurant.id}")
-              | Balsuoti!
-        - elsif !signed_in? && current_round_userarchyve.voted_for == restaurant.id
-          .vote_button_holder
-            a.vote_button href=("vote/#{restaurant.id}/1")
-              | Atsaukti!
-        .vote_holder
-          .votes
-            = restaurant.votes
-          .vote_bar style="height:#{restaurant.votes}0px;"
+-if current_round
+  - if !signed_in? && current_user.id == current_round.caller
+    #caller_popup
+      .shadow_box
+        .popup_box
+          .default_food_top
+            | Default food
+          = form_tag "default_food", :id => "default_food_form" do
+            = text_area_tag "default_food"
+  #countdown data-end=(@restaurant_time)
+  #restaurants_holder
+    - @restaurants.each do |restaurant|
+      .shadow_box id=("rest_#{restaurant.id}")
+        .single_restaurant
+          .restaurant_name
+            = restaurant.name
+          .restaurant_info
+            span
+              = restaurant.phone
+            br
+            a target="_blank" href=(restaurant.about)
+              | Meniu
+          .winner_image
+            = image_tag("last.png")
+          - if !signed_in? && current_round_userarchyve.voted_for.nil?
+            .vote_button_holder
+              a.vote_button href=("vote/#{restaurant.id}")
+                | Balsuoti!
+          - elsif !signed_in? && current_round_userarchyve.voted_for == restaurant.id
+            .vote_button_holder
+              a.vote_button href=("vote/#{restaurant.id}/1")
+                | Atsaukti!
+          .vote_holder
+            .votes
+              = restaurant.votes
+            .vote_bar style="height:#{restaurant.votes}0px;"
 
-div style="clear:both;"
-#countdown_food data-end=(@food_time)
-#user_holder
-  - @users.each do |user|
-    .shadow_box
-      .single_user id="usr_#{user.id}"
-        .user_name
+  div style="clear:both;"
+  #countdown_food data-end=(@food_time)
+  #user_holder
+    - @users.each do |user|
+      .shadow_box
+        .single_user id="usr_#{user.id}"
+          .user_name
+            - if !signed_in? && user.id == @current_user.id
+              .history title="History"
+            span.user_name_activefield
+              = user.name
+            .copy title="CopyCAT!"
+            
           - if !signed_in? && user.id == @current_user.id
-            .history title="History"
-          span.user_name_activefield
-            = user.name
-          .copy title="CopyCAT!"
-          
-        - if !signed_in? && user.id == @current_user.id
-          .histbox
-          .food
-              = form_tag "savefood", :id => "food_form" do
-                = text_area_tag "food", user.food
-        - else
-          .food id=("uf_#{user.id}")
-            = h user.food
+            .histbox
+            .food
+                = form_tag "savefood", :id => "food_form" do
+                  = text_area_tag "food", user.food
+          - else
+            .food id=("uf_#{user.id}")
+              = h user.food
+- else
+  .no_session
+    h1 No active session

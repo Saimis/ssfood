@@ -152,7 +152,7 @@ h1 {
   margin:20px;
 }
 
-#user_holder .single_user {
+#user_holder .single_user, #caller_popup .popup_box {
   color: #96846c;
   width:200px;
   height:200px;
@@ -220,7 +220,7 @@ h1 {
 }
 
 
-#food {
+#food, #default_food_form #default_food {
   width: 170px; 
   height: 115px;
   resize: none;
@@ -258,4 +258,23 @@ h1 {
 }
 .histbox ul li:HOVER {
   background: #F0F0F0;
+}
+
+#caller_popup {
+  position: absolute;
+  top:20%;
+  left:40%;
+  z-index:100;
+  display: none;
+}
+
+.default_food_top {
+  color: #fff;
+  height:60px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: #9b59b6;
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 50px;
 }
