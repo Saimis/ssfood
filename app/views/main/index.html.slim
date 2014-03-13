@@ -1,12 +1,4 @@
 -if current_round
-  - if !signed_in? && current_user.id == current_round.caller
-    #caller_popup
-      .shadow_box
-        .popup_box
-          .default_food_top
-            | Default food
-          = form_tag "default_food", :id => "default_food_form" do
-            = text_area_tag "default_food"
   #countdown data-end=(@restaurant_time)
   #restaurants_holder
     - @restaurants.each do |restaurant|
@@ -44,9 +36,13 @@
           .user_name
             - if !signed_in? && user.id == @current_user.id
               .history title="History"
-            span.user_name_activefield
-              = user.name
-            .copy title="CopyCAT!"
+            - if current_round.caller == user.id
+              span.user_name_activefield.caller
+                = user.name
+            - else 
+              span.user_name_activefield 
+                = user.name
+              .copy title="CopyCAT!"
             
           - if !signed_in? && user.id == @current_user.id
             .histbox
