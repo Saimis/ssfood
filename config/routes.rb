@@ -16,7 +16,7 @@ FoodApp::Application.routes.draw do
   get 'users' => 'users#index'
 
   #main paths
-  get 'getData' => 'main#getData'
+  get 'get_data' => 'main#get_data'
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
   

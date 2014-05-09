@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only:  [:show, :edit, :update, :destroy]
 
   def admin_check 
-    if current_user.nil? || current_user.name != 'admin'
+    if current_user.nil? or current_user.name != 'admin'
       redirect_to root_path
     end
   end
@@ -26,11 +26,11 @@ class UsersController < ApplicationController
     
     users_without_admin = User.all.count - 1
 
-    if current_user && (Time.now > t.to_datetime || voted_users >= users_without_admin) && (Time.now < t_food.to_datetime)
-      user = User.where(:remember => cookies[:remember]).first
-      if !user.nil?
-        #userarchyve = Userarchyves.where(:user_id => user.id)
-        userarchyve = Userarchyves.where(:user_id => user.id, :archyves_id => current_round.id).first
+    if current_user and (Time.now > t.to_datetime || voted_users >= users_without_admin) and (Time.now < t_food.to_datetime)
+      user = User.where(remember: cookies[:remember]).first
+      if user
+        #userarchyve = Userarchyves.where(user_id: user.id)
+        userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first
         user.food = ActionController::Base.helpers.strip_tags(params[:food])
         user.save
         userarchyve.food = ActionController::Base.helpers.strip_tags(params[:food])
@@ -97,7 +97,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      if !current_user.nil? && current_user.name == 'admin'
+      if current_user and current_user.name == 'admin'
         @user = User.find(params[:id])
       else
         @user = User.find(current_user.id)

@@ -70,11 +70,11 @@ $(document).ready(function(){
     
     if(friends_food.length > 0) {
       if($("#food").val().length > 0){
-	if (confirm("Kopijuoti?")) {
-	  $("#food").val(friends_food);
-	}   
+  if (confirm("Kopijuoti?")) {
+    $("#food").val(friends_food);
+  }   
       } else {
-	$("#food").val(friends_food);
+  $("#food").val(friends_food);
       }
     } else {
       alert("Empty? Dude c'mon....");
@@ -87,8 +87,8 @@ $(document).ready(function(){
   $(".user_name_activefield").click(function(){
     if($(this).parent().parent().find(".food").text().length == 0) {
       $(this).parent().parent().css({
-      	"background": "red",
-      	"color": "#fff"
+        "background": "red",
+        "color": "#fff"
       });
       return;
     }
@@ -96,13 +96,13 @@ $(document).ready(function(){
     var x = $(this).parent().parent().css('backgroundColor');
      if(x != "rgb(39, 174, 96)") {
       $(this).parent().parent().css({
-      	"background": "#27ae60",
-      	"color": "#fff"
+        "background": "#27ae60",
+        "color": "#fff"
       });
     } else {
       $(this).parent().parent().css({
-      	"background": "#ecf0f1",
-      	"color": "#96846c"
+        "background": "#ecf0f1",
+        "color": "#96846c"
       });
     }
     
@@ -125,15 +125,15 @@ function saveFood(){
     var formURL = $("#food_form").attr("action");
     $.ajax(
     {
-    	url : formURL,
-    	type: "POST",
-    	data : postData,
-    	success:function(data, textStatus, jqXHR) {
-    	  console.log("Saved!");
-    	},
-    	error: function(jqXHR, textStatus, errorThrown) {
-    	  console.log("Some shitty error occured...");
-    	}
+      url : formURL,
+      type: "POST",
+      data : postData,
+      success:function(data, textStatus, jqXHR) {
+        console.log("Saved!");
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log("Some shitty error occured...");
+      }
     });
     e.preventDefault();
   });
@@ -175,7 +175,7 @@ function setwinner(msg) {
     $("#countdown_food").css("display","block");
     $("#restaurants_holder").children(".shadow_box").each(function(){
       if($(this).attr("id") != "rest_" + msg.id) {
-	      $(this).css("opacity","0.3");
+        $(this).css("opacity","0.3");
       }
     });
   }
@@ -213,24 +213,24 @@ function parseInfo(msg) {
 function waitForMsg(){
   $.ajax({
       type: "GET",
-      url: "getData.json",
+      url: "get_data.json",
 
       async: true,
       cache: false,
       timeout:50000,
 
       success: function(data){ 
-    	  parseInfo(data);
-    	  setTimeout(
-    	      waitForMsg,
-    	      5000
-    	  );
+        parseInfo(data);
+        setTimeout(
+            waitForMsg,
+            5000
+        );
       },
       error: function(XMLHttpRequest, textStatus, errorThrown){
-    	  addmsg("error", textStatus + " (" + errorThrown + ")");
-    	  setTimeout(
-    	      waitForMsg, 
-    	      15000
+        addmsg("error", textStatus + " (" + errorThrown + ")");
+        setTimeout(
+            waitForMsg, 
+            15000
         );  
       }
   });

@@ -1,31 +1,31 @@
 class AdminController < ApplicationController
-	before_action :admin_check
+  before_action :admin_check
 
-	def admin_check 
-		if current_user.nil? || current_user.name != 'admin'
-			redirect_to root_path
-		end
-	end
+  def admin_check 
+    if current_user.nil? || current_user.name != 'admin'
+      redirect_to root_path
+    end
+  end
 
-	def index
-		@archyve = Archyves.last
-		@users = User.find(:all, :order => "name ASC")
-		@archyves = Archyves.all 
-    @userarchyves = Userarchyves.find(:all, :order => "archyves_id DESC")
+  def index
+    @archyve = Archyves.last
+    @users = User.order('name').all
+    @archyves = Archyves.all 
+    @userarchyves = Userarchyves.order('archyves_id').all
     @restaurants = Restaurant.all
-	end
+  end
 
-	def start
+  def start
     admin_check
-    User.update_all(:food => nil)
-    Restaurant.update_all(:votes => 0)
+    User.update_all(food: nil)
+    Restaurant.update_all(votes: 0)
     
     time_gap = params[:time].to_i > 0 ? params[:time].to_i : 1200
     food_time_gap = params[:foodtime].to_i > 0 ? params[:foodtime].to_i : 1200
-    archyve = Archyves.create :date => Time.now + time_gap, :food_time => food_time_gap, :caller => get_caller.id
+    archyve = Archyves.create(date: Time.now + time_gap, food_time: food_time_gap, caller: get_caller.id)
     
     User.all.each do |user|
-      Userarchyves.create :user_id => user.id, :archyves_id => archyve.id
+      Userarchyves.create(user_id: user.id, archyves_id: archyve.id)
     end
     
     redirect_to admin_url

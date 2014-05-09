@@ -31,8 +31,14 @@ ActiveRecord::Schema.define(version: 20140206141455) do
     t.string   "phone"
   end
 
-# Could not dump table "userarchyves" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "userarchyves", force: true do |t|
+    t.integer  "archyves_id"
+    t.integer  "voted_for"
+    t.string   "food"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"

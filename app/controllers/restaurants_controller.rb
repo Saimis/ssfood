@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
   def admin_check 
-    if current_user.nil? || current_user.name != 'admin'
+    if current_user.nil? or current_user.name != 'admin'
       redirect_to root_path
     end
   end
@@ -19,18 +19,18 @@ class RestaurantsController < ApplicationController
     current_round = Archyves.last
     users_without_admin = User.all.count - 1
     
-    if current_user && Time.now < current_round.date.to_datetime && voted_users <= users_without_admin && !params[:id].nil?
-      user = User.where(:remember => cookies[:remember]).first
-      if !user.nil? 
+    if current_user and Time.now < current_round.date.to_datetime and voted_users <= users_without_admin and params[:id].present?
+      user = User.where(remember: cookies[:remember]).first
+      if user
         restaurant = Restaurant.find(params[:id])
-        userarchyve = Userarchyves.where(:user_id => user.id, :archyves_id => current_round.id).first_or_create
+        userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first_or_create
         #if user.voted.nil? && params[:act].nil?
-        if userarchyve.voted_for.nil? && params[:act].nil?
+        if userarchyve.voted_for.nil? and params[:act].nil?
           restaurant.increment(:votes, by = 1)
           #user.voted = params[:id]
           userarchyve.voted_for = params[:id]
         #elsif !user.voted.nil? && !params[:act].nil?
-        elsif !userarchyve.voted_for.nil? && !params[:act].nil?
+        elsif userarchyve.voted_for and params[:act].present?
           restaurant.decrement(:votes, by = 1)
           #user.voted = nil
            userarchyve.voted_for = nil
