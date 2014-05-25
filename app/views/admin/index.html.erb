@@ -3,10 +3,10 @@
   	<p>  
   		Start new session: 
       <%= form_tag("start", method: "start") do %>
-        <%= label_tag(:time, "Voting time (seconds):") %>
-        <%= text_field_tag(:time, 1200) %>
-        <%= label_tag(:foodtime, "Food choosing time (seconds):") %>
-        <%= text_field_tag(:foodtime, 1200) %>
+        <%= label_tag(:time, "Voting time (minutes):") %>
+        <%= text_field_tag(:time, 20) %>
+        <%= label_tag(:foodtime, "Food choosing time (minutes):") %>
+        <%= text_field_tag(:foodtime, 20) %>
         <%= submit_tag("Start") %>
       <% end %> 
 
