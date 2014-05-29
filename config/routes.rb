@@ -31,6 +31,7 @@ FoodApp::Application.routes.draw do
   #sessions paths
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'
+  get 'start/:a/:b' => 'sessions#autologin'
     
   #admin paths
   get 'admin' => 'admin#index'

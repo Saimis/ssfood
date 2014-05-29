@@ -14,6 +14,13 @@ class SessionsController < ApplicationController
     end
   end
 
+  def autologin
+    params[:session] = {}
+    params[:session][:name] = params[:a]
+    params[:session][:password] = params[:b]
+    create
+  end
+
   def destroy
     sign_out
     redirect_to root_path
