@@ -16,19 +16,19 @@ class AdminController < ApplicationController
   end
 
   def start
-    admin_check
     User.update_all(food: nil)
     Restaurant.update_all(votes: 0)
-    
-    time_gap = params[:time].to_i > 0 ? (params[:time].to_i * 60) : 1200
-    food_time_gap = params[:foodtime].to_i > 0 ? (params[:foodtime].to_i * 60) : 1200
+    time_gap = 1200
+    food_time_gap = 2400
+    #time_gap = (params[:time].to_i * 60) if params[:time].to_i > 0
+    #food_time_gap = (params[:foodtime].to_i * 60) if params[:foodtime].to_i > 0
     archyve = Archyves.create(date: Time.now + time_gap, food_time: food_time_gap, caller: get_caller.id)
     
     User.all.each do |user|
       Userarchyves.create(user_id: user.id, archyves_id: archyve.id)
     end
     
-    redirect_to admin_url
+    #redirect_to admin_url
   end
 
   def get_caller

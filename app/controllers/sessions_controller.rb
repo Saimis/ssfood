@@ -18,7 +18,9 @@ class SessionsController < ApplicationController
     params[:session] = {}
     params[:session][:name] = params[:a]
     params[:session][:password] = params[:b]
+
     create
+    AdminController.new.start
   end
 
   def destroy
