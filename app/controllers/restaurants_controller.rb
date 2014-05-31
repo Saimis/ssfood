@@ -16,27 +16,20 @@ class RestaurantsController < ApplicationController
 
   #get call to vote for restaurant, if user logged in, time is not over and not all users voted
   def vote
-    current_round = Archyves.last
-    users_without_admin = User.all.count - 1
-    
-    if current_user and Time.now < current_round.date.to_datetime and voted_users <= users_without_admin and params[:id].present?
+    if can_vote?
       user = User.where(remember: cookies[:remember]).first
       if user
         restaurant = Restaurant.find(params[:id])
         userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first_or_create
-        #if user.voted.nil? && params[:act].nil?
+
         if userarchyve.voted_for.nil? and params[:act].nil?
           restaurant.increment(:votes, by = 1)
-          #user.voted = params[:id]
           userarchyve.voted_for = params[:id]
-        #elsif !user.voted.nil? && !params[:act].nil?
         elsif userarchyve.voted_for and params[:act].present?
           restaurant.decrement(:votes, by = 1)
-          #user.voted = nil
            userarchyve.voted_for = nil
         end
         restaurant.save
-        #user.save
         userarchyve.save
       end
     end
@@ -111,5 +104,22 @@ class RestaurantsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def restaurant_params
       params.require(:restaurant).permit(:name, :about, :votes, :waslast, :lastused, :phone, :winner)
+    end
+
+    def voted_users
+      @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
+    end
+
+    def current_round
+      Archyves.last
+    end
+
+    def can_vote?
+      users_without_admin = User.all.count - 1
+
+      current_user and 
+      Time.now < current_round.date.to_datetime and 
+      voted_users <= users_without_admin and 
+      params[:id].present?
     end
 end

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only:  [:show, :edit, :update, :destroy]
 
   def admin_check 
-    if current_user.nil? or current_user.name != 'admin'
+    if self.current_user.nil? or self.current_user.name != 'admin'
       redirect_to root_path
     end
   end
@@ -20,16 +20,14 @@ class UsersController < ApplicationController
 
   #save food from user input via ajax post
   def save_food
-    current_round = Archyves.last
     t = current_round.date
     t_food = t + current_round.food_time
     
     users_without_admin = User.all.count - 1
 
     if current_user and (Time.now > t.to_datetime || voted_users >= users_without_admin) and (Time.now < t_food.to_datetime)
-      user = User.where(remember: cookies[:remember]).first
-      if user
-        #userarchyve = Userarchyves.where(user_id: user.id)
+      user = self.current_user
+      if self.current_user
         userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first
         user.food = ActionController::Base.helpers.strip_tags(params[:food])
         user.save
@@ -97,7 +95,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      if current_user and current_user.name == 'admin'
+      if self.current_user and self.current_user.name == 'admin'
         @user = User.find(params[:id])
       else
         @user = User.find(current_user.id)
@@ -107,5 +105,13 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation)
+    end
+
+    def voted_users
+      @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
+    end
+
+    def current_round
+      Archyves.last
     end
 end
