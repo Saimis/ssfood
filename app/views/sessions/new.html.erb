@@ -4,10 +4,10 @@ $(document).ready(function(){
   $("#session_name").focus();
 });
 </script>
-<h1>Prisijungti</h1>
 
-<div class="row">
-  <div class="span6 offset3">
+
+<div class="ssfood_form">
+<h1>Log in</h1>
     <%= form_for(:session, url: sessions_path) do |f| %>
 
       <%= f.label :name %>
@@ -15,9 +15,6 @@ $(document).ready(function(){
 
       <%= f.label :password %>
       <%= f.password_field :password %>
-      <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Log in", class: "btn btn-large btn-primary" %>
     <% end %>
-
-   <!--<p>New user? < %= link_to "Sign up now!", signup_path %></p>-->
-  </div>
 </div>

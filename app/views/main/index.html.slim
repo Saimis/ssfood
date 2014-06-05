@@ -10,18 +10,15 @@
             span
               = restaurant.phone
             br
-            a target="_blank" href=(restaurant.about)
-              | Meniu
+            a target="_blank" href=(restaurant.about) Menu
           .winner_image
             = image_tag("last.png")
-          - if !signed_in? && current_round_userarchyve.voted_for.nil?
+          - if current_round_userarchyve.try(:voted_for).nil?
             .vote_button_holder
-              a.vote_button href=("vote/#{restaurant.id}")
-                | Balsuoti!
-          - elsif !signed_in? && current_round_userarchyve.voted_for == restaurant.id
+              a.vote_button href=("vote/#{restaurant.id}") Vote!
+          - elsif current_round_userarchyve.try(:voted_for) == restaurant.id
             .vote_button_holder
-              a.vote_button href=("vote/#{restaurant.id}/1")
-                | Atsaukti!
+              a.vote_button href=("vote/#{restaurant.id}/1") Unvote!
           .vote_holder
             .votes
               = restaurant.votes
@@ -34,7 +31,7 @@
       .shadow_box
         .single_user id="usr_#{user.id}"
           .user_name
-            - if !signed_in? && user.id == @current_user.id
+            - if user.id == @current_user.try(:id)
               .history title="History"
             - if current_round.caller == user.id
               span.user_name_activefield.caller
@@ -44,14 +41,26 @@
                 = user.name
             .copy title="CopyCAT!"
             
-          - if !signed_in? && user.id == @current_user.id
+          - if user.id == @current_user.try(:id)
             .histbox
             .food
-                = form_tag "savefood", :id => "food_form" do
+                = form_tag "savefood", id: "food_form" do
                   = text_area_tag "food", user.food
           - else
             .food id=("uf_#{user.id}")
               = h user.food
+    - if current_round.caller == @current_user.try(:id) and current_round_ended?       
+      #caller_popup 
+        h2 = current_winner(current_round.restaurant_id).try(:name)
+        h3 = current_winner(current_round.restaurant_id).try(:phone)
+        - @users.each do |user|
+          .popup_user_line
+            span = "#{user.name}: "
+            - if user.food.blank?
+              i
+                = user_last_food(user.id)
+            - else
+              = user.food 
 - else
   .no_session
     h1 No active session

@@ -10,7 +10,7 @@ class AdminController < ApplicationController
   def index
     @archyve = Archyves.last
     @users = User.order('name').all
-    @archyves = Archyves.all 
+    @archyves = Archyves.last(3)
     @userarchyves = Userarchyves
                       .where(archyves_id: @archyves.last.id)
                       .order('archyves_id').all
@@ -20,8 +20,8 @@ class AdminController < ApplicationController
   def start
     User.update_all(food: nil)
     Restaurant.update_all(votes: 0)
-    time_gap = 120
-    food_time_gap = 240
+    time_gap = 40
+    food_time_gap = 120
     archyve = Archyves.create(
       date: Time.now + time_gap, 
       food_time: Time.now + time_gap + food_time_gap, 
@@ -34,7 +34,14 @@ class AdminController < ApplicationController
 
   def select_caller
     last_caller = Archyves.last.nil? ? 0 : Archyves.last.caller
-    last_caller = User.where("id > ?", last_caller).where("name != 'admin'").first
-    last_caller ||= User.first
+    last_caller = User.where("id > ?", last_caller).where("name != 'admin'").first # get next user in line
+    last_caller ||= User.first # or get first, if no next user
+  end
+
+  def archyves
+    @users = User.order('name').all
+    @archyves = Archyves.all 
+    @userarchyves = Userarchyves.order('archyves_id').all
+    @restaurants = Restaurant.all
   end
 end

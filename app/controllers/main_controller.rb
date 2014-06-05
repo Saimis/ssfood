@@ -15,29 +15,7 @@ class MainController < ApplicationController
     users_without_admin = User.where("name != 'admin'").count
     users = Userarchyves.select('user_id, food, voted_for').where(archyves_id: current_round.id).all
     retaurants = Restaurant.select('id, votes').all
-    winner = {}
-    food_history = {}
-    round_end = false
-
-    #if there's no winner set yet and all users voted or time ended and also if any restaurant got a vote
-    if winner?
-      winner = Restaurant.order("votes DESC, RANDOM()").first
-      save_winner(winner.id)
-    elsif current_round.restaurant_id
-      winner = Restaurant.find(current_round.restaurant_id)
-    end
-
-    if current_round.restaurant_id and current_user
-       food_history = Userarchyves.joins(:archyves)
-        .where("userarchyves.user_id = ?", current_user.id)
-        .where("archyves.restaurant_id = ?", current_round.restaurant_id)
-        .order("userarchyves.id DESC")
-    end
-
-    if Time.now > current_round.food_time
-      round_end = true
-    end
-    
+            
     # return json 
     respond_to do |format|
       format.json {
@@ -46,18 +24,45 @@ class MainController < ApplicationController
          restaurants: retaurants.as_json(only: [:id, :votes]),
          winner: winner.as_json(only: [:id]),
          food_history: food_history.as_json(only: [:food]),
-         round_end: round_end.as_json
+         round_end: round_ended?.as_json
         }
       }
     end
   end
 
-  def winner?
+  def round_ended?
+    Time.now > current_round.food_time
+  end
+
+  def food_history
+    return {} unless current_round.restaurant_id and current_user 
+    Userarchyves.joins(:archyves)
+        .where("userarchyves.user_id = ?", current_user.id)
+        .where("archyves.restaurant_id = ?", current_round.restaurant_id)
+        .order("userarchyves.id DESC")
+  end
+
+  def voting_ended?
     users_without_admin = User.where("name != 'admin'").count
     current_round.restaurant_id.nil? and 
       (voted_users >= users_without_admin or Time.now > current_round.date.to_datetime)
   end
-  
+
+  def winner
+    save_winner if voting_ended?
+    if current_round.restaurant_id
+      Restaurant.find(current_round.restaurant_id) 
+    else
+      {}
+    end
+  end
+
+  def save_winner
+    round = current_round
+    round.restaurant_id = Restaurant.order("votes DESC, RANDOM()").first.try(:id)
+    round.save
+  end
+
   def destroy_userarchyve
     if current_user and current_user.name == 'admin'
       Userarchyves.destroy(params[:id])
@@ -73,11 +78,5 @@ class MainController < ApplicationController
 
   def current_round
     Archyves.last
-  end
-
-  def save_winner(restaurant_id)
-    round = current_round
-    round.restaurant_id = restaurant_id
-    round.save
   end
 end

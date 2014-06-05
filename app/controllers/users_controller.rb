@@ -20,18 +20,13 @@ class UsersController < ApplicationController
 
   #save food from user input via ajax post
   def save_food
-    t = current_round.date
-    t_food = t + current_round.food_time
-    
-    users_without_admin = User.all.count - 1
-
-    if current_user and (Time.now > t.to_datetime || voted_users >= users_without_admin) and (Time.now < t_food.to_datetime)
+    if current_user and can_save?
       user = self.current_user
       if self.current_user
+        food = ActionController::Base.helpers.strip_tags(params[:food])
         userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first
-        user.food = ActionController::Base.helpers.strip_tags(params[:food])
+        user.food = userarchyve.food = food 
         user.save
-        userarchyve.food = ActionController::Base.helpers.strip_tags(params[:food])
         userarchyve.save
       end
     end
@@ -113,5 +108,13 @@ class UsersController < ApplicationController
 
     def current_round
       Archyves.last
+    end
+
+    def can_save?
+      (Time.now > current_round.date.to_datetime || voted_users >= users_without_admin) and (Time.now < current_round.food_time.to_datetime)
+    end
+
+    def users_without_admin
+      User.all.count - 1
     end
 end

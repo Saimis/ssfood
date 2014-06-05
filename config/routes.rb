@@ -35,6 +35,7 @@ FoodApp::Application.routes.draw do
     
   #admin paths
   get 'admin' => 'admin#index'
+  get 'admin/archyves' => 'admin#archyves'
   post 'start' => 'admin#start'
   #patch 'editarchyve' => 'admin#edit_last_archyve'
   

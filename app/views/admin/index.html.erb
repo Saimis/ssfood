@@ -88,9 +88,9 @@
         <tr>
           <td><%= archyve.id %></td>
           <td><%= archyve.date %></td>
-          <td><%= archyve.restaurant_id %></td>
+          <td><%= @restaurants.select{ |d| d[:id] == archyve.restaurant_id }.first.try(:name) %></td>
           <td><%= archyve.food_time %></td>
-          <td><%= archyve.caller %></td>
+          <td><%= @users.select{ |d| d[:id] == archyve.caller }.first.try(:name) %></td>
           <td><%= link_to 'Show', archyve %></td>
           <td><%= link_to 'Edit', edit_archyfe_path(archyve) %></td>
           <td><%= link_to 'Destroy', archyve, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -113,9 +113,9 @@
             <% @userarchyves.each do |single_userarchyve| %>
               <tr>
                 <td><%= single_userarchyve.archyves_id %></td>
-                <td><%= single_userarchyve.voted_for %></td>
+                <td><%= @restaurants.select{ |d| d[:id] == single_userarchyve.voted_for }.first.try(:name) %></td>
                 <td><%= single_userarchyve.food %></td>
-                <td><%= single_userarchyve.user_id %></td>
+                <td><%= @users.select{ |d| d[:id] == single_userarchyve.user_id }.first.try(:name) %></td>
                 <td><a href="archyve/u/<%= single_userarchyve.id %>">X</a></td>
               </tr>
             <% end %>

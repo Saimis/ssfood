@@ -152,7 +152,7 @@ h1 {
   margin:20px;
 }
 
-#user_holder .single_user, #caller_popup .popup_box {
+#user_holder .single_user {
   color: #96846c;
   width:200px;
   height:200px;
@@ -266,7 +266,22 @@ h1 {
   left:40%;
   z-index:100;
   display: none;
+  padding: 20px;
+  border-radius: 5px;
+  background:#edede5;
 }
+  #caller_popup .popup_user_line {
+    color: #96846c;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  #caller_popup h2 {
+    color: #d35400;
+  }
+  #caller_popup h3 {
+    color: #34495e
+  }
 
 .default_food_top {
   color: #fff;
@@ -298,3 +313,14 @@ h1 {
 #admin_panel a {
   color:blue;
 }
+
+.ssfood_form {
+  width: 300px;
+  margin: auto auto;
+  text-align: justify;
+}
+  .ssfood_form input {
+    margin-bottom:10px;
+  }
+  .ssfood_form label {
+  }
