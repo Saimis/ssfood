@@ -111,7 +111,7 @@ class UsersController < ApplicationController
     end
 
     def can_save?
-      (Time.now > current_round.date.to_datetime || voted_users >= users_without_admin) and (Time.now < current_round.food_time.to_datetime)
+      (Time.now > current_round.date.to_datetime || voted_users >= users_without_admin) and (Time.now < current_round.food_datetime.to_datetime)
     end
 
     def users_without_admin

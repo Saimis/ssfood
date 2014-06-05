@@ -20,6 +20,7 @@ var form_timout;
 var isWinnerSet = false;
 var startPolling = true;
 var historyIsSet = false;
+var popupLoaded = false;
 $(document).ready(function(){
   $(document).click(function(e) { 
     if (!$(e.target).is(".history") && !$(e.target).is(".f_history_item")) {
@@ -237,7 +238,9 @@ function waitForMsg(){
 };
 
 function roundEnd() {
-  if(!$("#caller_popup").is(":visible")) {
+  if(!$("#caller_popup").is(":visible") && !popupLoaded) {
+    $("#caller_popup").load("get_data/callerpopup");
     $("#caller_popup").show();
+    popupLoaded = true;
   }
 }

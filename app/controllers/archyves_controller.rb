@@ -76,6 +76,6 @@ class ArchyvesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def archyve_params
-      params.require(:archyves).permit(:date, :restaurant_id, :caller, :food_time)
+      params.require(:archyves).permit(:date, :restaurant_id, :caller, :food_datetime)
     end
 end

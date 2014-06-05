@@ -4,6 +4,6 @@ module MainHelper
   end
 
   def current_round_ended?
-  	Time.now > current_round.food_time
+  	Time.now > current_round.food_datetime
   end
 end

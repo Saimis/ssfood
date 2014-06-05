@@ -6,7 +6,7 @@ class MainController < ApplicationController
     
     if current_round
       @restaurant_time = current_round.date.asctime.to_s
-      @food_time = current_round.food_time.asctime.to_s
+      @food_time = current_round.food_datetime.asctime.to_s
     end
   end
 
@@ -31,7 +31,7 @@ class MainController < ApplicationController
   end
 
   def round_ended?
-    Time.now > current_round.food_time
+    Time.now > current_round.food_datetime
   end
 
   def food_history
@@ -78,5 +78,10 @@ class MainController < ApplicationController
 
   def current_round
     Archyves.last
+  end
+
+  def create_popup 
+    @restaurants = Restaurant.order("name").all
+    @users = User.where("name != 'admin'").order('name').all
   end
 end

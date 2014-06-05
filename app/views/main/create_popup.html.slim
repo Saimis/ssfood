@@ -1,0 +1,10 @@
+h2 = current_winner(current_round.restaurant_id).try(:name)
+h3 = current_winner(current_round.restaurant_id).try(:phone)
+- @users.each do |user|
+  .popup_user_line
+    span = "#{user.name}: "
+    - if user.food.blank?
+      i
+        = user_last_food(user.id)
+    - else
+      = user.food 

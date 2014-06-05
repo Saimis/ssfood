@@ -89,7 +89,7 @@
           <td><%= archyve.id %></td>
           <td><%= archyve.date %></td>
           <td><%= @restaurants.select{ |d| d[:id] == archyve.restaurant_id }.first.try(:name) %></td>
-          <td><%= archyve.food_time %></td>
+          <td><%= archyve.food_datetime %></td>
           <td><%= @users.select{ |d| d[:id] == archyve.caller }.first.try(:name) %></td>
           <td><%= link_to 'Show', archyve %></td>
           <td><%= link_to 'Edit', edit_archyfe_path(archyve) %></td>

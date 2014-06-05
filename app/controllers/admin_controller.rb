@@ -24,7 +24,7 @@ class AdminController < ApplicationController
     food_time_gap = 120
     archyve = Archyves.create(
       date: Time.now + time_gap, 
-      food_time: Time.now + time_gap + food_time_gap, 
+      food_datetime: Time.now + time_gap + food_time_gap, 
       caller: select_caller.id)
     
     User.all.each do |user|

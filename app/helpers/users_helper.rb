@@ -11,7 +11,7 @@ module UsersHelper
 
   def user_last_food(user_id)
 	  Userarchyves.joins(:archyves)
-      .where("userarchyves.food NOT NULL and userarchyves.user_id = ?", current_user.id)
+      .where("userarchyves.food NOT NULL and userarchyves.user_id = ?", user_id)
       .where("archyves.restaurant_id = ?", current_round.restaurant_id)
       .order("userarchyves.id DESC").first.try(:food) || "Dienos pietūs"
   end

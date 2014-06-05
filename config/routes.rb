@@ -17,6 +17,7 @@ FoodApp::Application.routes.draw do
 
   #main paths
   get 'get_data' => 'main#get_data'
+  get 'get_data/callerpopup' => 'main#create_popup'
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
   

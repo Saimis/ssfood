@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531223105) do
+ActiveRecord::Schema.define(version: 20140605223135) do
 
   create_table "archyves", force: true do |t|
     t.datetime "date"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140531223105) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "food_time"
+    t.datetime "food_datetime"
   end
 
   create_table "delayed_jobs", force: true do |t|
