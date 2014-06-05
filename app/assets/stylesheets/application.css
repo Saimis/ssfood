@@ -283,6 +283,10 @@ h1 {
     color: #34495e
   }
 
+  #caller_popup .check {
+    color: #c1c1c1;
+  }
+
 .default_food_top {
   color: #fff;
   height:60px;
@@ -321,6 +325,7 @@ h1 {
 }
   .ssfood_form input {
     margin-bottom:10px;
+    display: block;
   }
   .ssfood_form label {
   }

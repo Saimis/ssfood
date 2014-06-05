@@ -239,7 +239,7 @@ function waitForMsg(){
 
 function roundEnd() {
   if(!$("#caller_popup").is(":visible") && !popupLoaded) {
-    $("#caller_popup").load("get_data/callerpopup");
+    $("#caller_popup").load("callerpopup #it");
     $("#caller_popup").show();
     popupLoaded = true;
   }
