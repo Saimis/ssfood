@@ -1,12 +1,12 @@
 FoodApp::Application.routes.draw do
- 
+
   root :to => 'main#index'
-      
+
   resources :users
   resources :restaurants
   resources :sessions
   resources :archyves
-  
+
   #users paths
   get 'changepass' => 'users#change_password'
   patch 'changepass' => 'users#change_password'
@@ -20,7 +20,8 @@ FoodApp::Application.routes.draw do
   get 'callerpopup' => 'main#create_popup'
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
-  
+  post 'force_round_end'  => 'main#end_round'
+
   #userarchive paths
   get 'archyve/u/:id' => 'main#destroy_userarchyve'
 
@@ -28,18 +29,18 @@ FoodApp::Application.routes.draw do
   get 'restaurants' => 'restaurants#index'
   get 'vote/:id/:act' => 'restaurants#vote'
   get 'vote/:id' => 'restaurants#vote'
-  
+
   #sessions paths
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'
   get 'start/:a/:b' => 'sessions#autologin'
-    
+
   #admin paths
   get 'admin' => 'admin#index'
   get 'admin/archyves' => 'admin#archyves'
   post 'start' => 'admin#start'
   #patch 'editarchyve' => 'admin#edit_last_archyve'
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -80,7 +81,7 @@ FoodApp::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

@@ -1,56 +1,20 @@
 -if current_round
-  #countdown data-end=(@restaurant_time)
+  - unless current_round.complete?
+    #countdown data-end=(@restaurant_time)
   #restaurants_holder
     - @restaurants.each do |restaurant|
-      .shadow_box id=("rest_#{restaurant.id}")
-        .single_restaurant
-          .restaurant_name
-            = restaurant.name
-          .restaurant_info
-            span
-              = restaurant.phone
-            br
-            a target="_blank" href=(restaurant.about) Menu
-          .winner_image
-            = image_tag("last.png")
-          - if current_round_userarchyve.try(:voted_for).nil?
-            .vote_button_holder
-              a.vote_button href=("vote/#{restaurant.id}") Vote!
-          - elsif current_round_userarchyve.try(:voted_for) == restaurant.id
-            .vote_button_holder
-              a.vote_button href=("vote/#{restaurant.id}/1") Unvote!
-          .vote_holder
-            .votes
-              = restaurant.votes
-            .vote_bar style="height:#{restaurant.votes}0px;"
+      = render partial: 'restaurant', locals: { restaurant: restaurant }
 
   div style="clear:both;"
-  #countdown_food data-end=(@food_time)
+  - unless current_round.complete?
+    #countdown_food data-end=(@food_time)
+  - if current_round.caller == @current_user.try(:id)
+    .force_round_end End round!
   #user_holder
     - @users.each do |user|
-      .shadow_box
-        .single_user id="usr_#{user.id}"
-          .user_name
-            - if user.id == @current_user.try(:id)
-              .history title="History"
-            - if current_round.caller == user.id
-              span.user_name_activefield.caller
-                = user.name
-            - else 
-              span.user_name_activefield 
-                = user.name
-            .copy title="CopyCAT!"
-            
-          - if user.id == @current_user.try(:id)
-            .histbox
-            .food
-                = form_tag "savefood", id: "food_form" do
-                  = text_area_tag "food", user.food
-          - else
-            .food id=("uf_#{user.id}")
-              = h user.food
-    - if current_round.caller == @current_user.try(:id)   
-      #caller_popup 
+      = render partial: 'user', locals: { user: user }
+    - if current_round.caller == @current_user.try(:id)
+      #caller_popup
 - else
   .no_session
     h1 No active session

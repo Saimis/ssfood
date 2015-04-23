@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :admin_check, only: [:index, :show, :edit,  :destroy, :new, :create]
   before_action :set_user, only:  [:show, :edit, :update, :destroy]
 
-  def admin_check 
+  def admin_check
     if self.current_user.nil? or self.current_user.name != 'admin'
       redirect_to root_path
     end
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       if self.current_user
         food = ActionController::Base.helpers.strip_tags(params[:food])
         userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first
-        user.food = userarchyve.food = food 
+        user.food = userarchyve.food = food
         user.save
         userarchyve.save
       end
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation)
+      params.require(:user).permit(:name, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation, :disabled)
     end
 
     def voted_users
@@ -111,7 +111,7 @@ class UsersController < ApplicationController
     end
 
     def can_save?
-      (Time.now > current_round.date.to_datetime || voted_users >= users_without_admin) and (Time.now < current_round.food_datetime.to_datetime)
+      current_round.complete? == false
     end
 
     def users_without_admin

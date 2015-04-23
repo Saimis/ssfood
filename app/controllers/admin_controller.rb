@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   before_action :admin_check
 
-  def admin_check 
+  def admin_check
     if current_user.nil? || current_user.name != 'admin'
       redirect_to root_path
     end
@@ -20,13 +20,14 @@ class AdminController < ApplicationController
   def start
     User.update_all(food: nil)
     Restaurant.update_all(votes: 0)
-    time_gap = 1200
+    time_gap = 30
     food_time_gap = 2400
     archyve = Archyves.create(
-      date: Time.now + time_gap, 
-      food_datetime: Time.now + time_gap + food_time_gap, 
-      caller: select_caller.id)
-    
+      date: Time.now + time_gap,
+      food_datetime: Time.now + time_gap + food_time_gap,
+      caller: select_caller.id,
+      complete: false)
+
     User.all.each do |user|
       Userarchyves.create(user_id: user.id, archyves_id: archyve.id)
     end
@@ -40,7 +41,7 @@ class AdminController < ApplicationController
 
   def archyves
     @users = User.order('name').all
-    @archyves = Archyves.all 
+    @archyves = Archyves.all
     @userarchyves = Userarchyves.order('archyves_id').all
     @restaurants = Restaurant.all
   end

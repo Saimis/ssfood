@@ -22,19 +22,19 @@ var startPolling = true;
 var historyIsSet = false;
 var popupLoaded = false;
 $(document).ready(function(){
-  $(document).click(function(e) { 
+  $(document).click(function(e) {
     if (!$(e.target).is(".history") && !$(e.target).is(".f_history_item")) {
       if($(".histbox").is(":visible")) {
         $(".histbox").hide();
       }
     }
   });
-  
+
   var endtime = $("#countdown").data("end");
   var endtime_food = $("#countdown_food").data("end");
   $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
   $("#countdown_food").countdown({until: new Date(endtime_food), onExpiry: hideFoodTimer , compact: true,  format: 'HMs'});
- 
+
   $("#food").blur(function() {
     saveFood();
   });
@@ -45,7 +45,7 @@ $(document).ready(function(){
     form_timout = setTimeout(function() {
       clearTimeout(form_timout);
       saveFood();
-    }, 2000);    
+    }, 2000);
   });
 
   $(".history").click(function(event) {
@@ -63,17 +63,17 @@ $(document).ready(function(){
   });
 
   $(".copy").click(function(event) {
-        
+
     if($(this).parent().parent().find("#food").length > 0){
       return;
     }
     var friends_food = $(this).parent().parent().find(".food").text();
-    
+
     if(friends_food.length > 0) {
       if($("#food").val().length > 0){
   if (confirm("Kopijuoti?")) {
     $("#food").val(friends_food);
-  }   
+  }
       } else {
   $("#food").val(friends_food);
       }
@@ -81,10 +81,10 @@ $(document).ready(function(){
       alert("Empty? Dude c'mon....");
       return;
     }
-       
+
     saveFood();
   });
-  
+
   $(".user_name_activefield").click(function(){
     if($(this).parent().parent().find(".food").text().length == 0) {
       $(this).parent().parent().css({
@@ -93,7 +93,7 @@ $(document).ready(function(){
       });
       return;
     }
-      
+
     var x = $(this).parent().parent().css('backgroundColor');
      if(x != "rgb(39, 174, 96)") {
       $(this).parent().parent().css({
@@ -106,9 +106,24 @@ $(document).ready(function(){
         "color": "#96846c"
       });
     }
-    
+
   });
-   
+  $(".force_round_end").click(function(event) {
+    if (confirm("You fokin serial, mate?")) {
+      $.ajax({
+        url : 'force_round_end',
+        type: "POST",
+        data : {force_end_round: true},
+        success:function(data, textStatus, jqXHR) {
+          roundEnd();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Some shitty error occured...");
+        }
+      });
+    }
+  });
+
   if(startPolling){
     waitForMsg();
     startPolling = false;
@@ -151,24 +166,24 @@ function addmsg(msg){
       $("#usr_" + item.user_id).find(".user_name").css("background","#6bcbca");
       $("#uf_" + item.user_id).html("");
     }
-    
+
     if(item.voted != null && item.voted.length > 0) {
       $("#usr_" + item.user_id).find(".voted").show();
     }
-  });     
+  });
 }
 
 function addvotes(msg) {
   jQuery.each(msg, function(i, item) {
     $("#rest_" + item.id).children().find(".vote_bar").css("height",item.votes + "0px");
     $("#rest_" + item.id).children().find(".votes").html(item.votes);
-  });  
+  });
 }
 
 function setwinner(msg) {
   if(isWinnerSet == false && msg.id != null) {
     isWinnerSet = true;
-    
+
     $("#rest_" + msg.id).children().find(".winner_image").css("display","block");
     $("#countdown").hide();
     $(".vote_button").css("display","none");
@@ -183,7 +198,7 @@ function setwinner(msg) {
 }
 function appendHistory(msg) {
   if(!historyIsSet) {
-    
+
     var foodHistoryList = "<ul>";
     jQuery.each(msg, function(i, item) {
       if(item.food != null) {
@@ -206,7 +221,7 @@ function parseInfo(msg) {
   if(msg.food_history.length > 0) {
     appendHistory(msg.food_history);
   }
-  if(msg.round_end == true) {
+  if(msg.round_end == 1) {
     roundEnd();
   }
 }
@@ -220,7 +235,7 @@ function waitForMsg(){
       cache: false,
       timeout:50000,
 
-      success: function(data){ 
+      success: function(data){
         parseInfo(data);
         setTimeout(
             waitForMsg,
@@ -230,9 +245,9 @@ function waitForMsg(){
       error: function(XMLHttpRequest, textStatus, errorThrown){
         addmsg("error", textStatus + " (" + errorThrown + ")");
         setTimeout(
-            waitForMsg, 
+            waitForMsg,
             15000
-        );  
+        );
       }
   });
 };
@@ -242,5 +257,10 @@ function roundEnd() {
     $("#caller_popup").load("callerpopup #it");
     $("#caller_popup").show();
     popupLoaded = true;
+  }
+  hideFoodTimer();
+
+  if($('#food').length) {
+    $('#food').attr('disabled', true);
   }
 }

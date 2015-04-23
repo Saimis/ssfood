@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140605223135) do
+ActiveRecord::Schema.define(version: 20150403133354) do
 
   create_table "archyves", force: true do |t|
     t.datetime "date"
@@ -19,25 +19,10 @@ ActiveRecord::Schema.define(version: 20140605223135) do
     t.integer  "caller"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "food_time"
+    t.integer  "food_time"
     t.datetime "food_datetime"
+    t.integer  "complete"
   end
-
-  create_table "delayed_jobs", force: true do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
 
   create_table "restaurants", force: true do |t|
     t.string   "name"
@@ -48,14 +33,8 @@ ActiveRecord::Schema.define(version: 20140605223135) do
     t.string   "phone"
   end
 
-  create_table "userarchyves", force: true do |t|
-    t.integer  "archyves_id"
-    t.integer  "voted_for"
-    t.string   "food"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "userarchyves" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -65,6 +44,7 @@ ActiveRecord::Schema.define(version: 20140605223135) do
     t.string   "remember"
     t.string   "password"
     t.string   "password_digest"
+    t.integer  "disabled"
   end
 
   add_index "users", ["remember"], name: "index_users_on_remember"

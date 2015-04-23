@@ -17,7 +17,7 @@ html {
  -webkit-background-size: cover;
  -moz-background-size: cover;
  -o-background-size: cover;
- background-size: cover; 
+ background-size: cover;
 }
 body a {
    color: #ccc;
@@ -43,7 +43,7 @@ h1 {
     background:#edede5;
     color: #96846c;
   }
-  
+
     #restaurants_holder .single_restaurant a{
       text-decoration:none;
     }
@@ -67,13 +67,13 @@ h1 {
       #restaurants_holder .single_restaurant .restaurant_info span {
 	clear:both;
       }
-      
+
       #restaurants_holder .single_restaurant .restaurant_info a {
 	clear:both;
 	 color: #d35400;
       }
-     
-        
+
+
     #restaurants_holder .single_restaurant .vote_holder {
       position: absolute;
       left:0;
@@ -89,14 +89,14 @@ h1 {
     .winner_image {
       display:none;
     }
-    
+
      #restaurants_holder .single_restaurant .last_time {
 	font-size:9px;
 	position: absolute;
 	right:10px;
 	bottom:5px;
      }
-   
+
     #restaurants_holder .single_restaurant .vote_button_holder .vote_button {
       font-size:16px;
       font-family:Arial;
@@ -221,7 +221,7 @@ h1 {
 
 
 #food, #default_food_form #default_food {
-  width: 170px; 
+  width: 170px;
   height: 115px;
   resize: none;
   margin-top: 15px;
@@ -334,3 +334,24 @@ h1 {
   }
   .ssfood_form label {
   }
+
+.force_round_end {
+  margin: 10px auto;
+  width: 100px;
+  -webkit-border-radius: 16;
+  -moz-border-radius: 16;
+  border-radius: 16px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  text-align: center;
+  background: #fc0000;
+  padding: 0px 20px 0px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.force_round_end:hover {
+  background: #990606;
+  text-decoration: none;
+}
