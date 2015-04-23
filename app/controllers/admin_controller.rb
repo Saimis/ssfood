@@ -20,7 +20,7 @@ class AdminController < ApplicationController
   def start
     User.update_all(food: nil)
     Restaurant.update_all(votes: 0)
-    time_gap = 30
+    time_gap = 1200
     food_time_gap = 2400
     archyve = Archyves.create(
       date: Time.now + time_gap,
