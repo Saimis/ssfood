@@ -188,6 +188,7 @@ function setwinner(msg) {
     $("#countdown").hide();
     $(".vote_button").css("display","none");
     $("#user_holder").css("display","block");
+    $(".force_round_end").show();
     $("#countdown_food").css("display","block");
     $("#restaurants_holder").children(".shadow_box").each(function(){
       if($(this).attr("id") != "rest_" + msg.id) {

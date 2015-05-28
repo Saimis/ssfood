@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403133354) do
+ActiveRecord::Schema.define(version: 20150528151931) do
 
   create_table "archyves", force: true do |t|
     t.datetime "date"
@@ -22,6 +22,11 @@ ActiveRecord::Schema.define(version: 20150403133354) do
     t.integer  "food_time"
     t.datetime "food_datetime"
     t.integer  "complete"
+    t.integer  "payer"
+    t.integer  "gc"
+    t.string   "callers",       default: "--- []\n"
+    t.string   "payers",        default: "--- []\n"
+    t.string   "gcs",           default: "--- []\n"
   end
 
   create_table "restaurants", force: true do |t|
