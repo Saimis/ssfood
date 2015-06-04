@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150403133354) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "archyves", force: true do |t|
     t.datetime "date"
     t.integer  "restaurant_id"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150403133354) do
     t.datetime "updated_at"
     t.integer  "food_time"
     t.datetime "food_datetime"
-    t.integer  "complete"
+    t.integer  "complete",      default: 0
   end
 
   create_table "restaurants", force: true do |t|
@@ -33,8 +36,14 @@ ActiveRecord::Schema.define(version: 20150403133354) do
     t.string   "phone"
   end
 
-# Could not dump table "userarchyves" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "userarchyves", force: true do |t|
+    t.integer  "archyves_id"
+    t.integer  "voted_for"
+    t.string   "food"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -44,9 +53,9 @@ ActiveRecord::Schema.define(version: 20150403133354) do
     t.string   "remember"
     t.string   "password"
     t.string   "password_digest"
-    t.integer  "disabled"
+    t.integer  "disabled",        default: 0
   end
 
-  add_index "users", ["remember"], name: "index_users_on_remember"
+  add_index "users", ["remember"], name: "index_users_on_remember", using: :btree
 
 end

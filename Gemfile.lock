@@ -144,7 +144,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   jquery-turbolinks
-  pg (= 0.17.0)
+  pg
   pry
   rails (= 4.1.1)
   sass-rails (~> 4.0.0)

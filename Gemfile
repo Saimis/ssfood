@@ -7,10 +7,11 @@ group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
   gem 'pry'
+  gem 'pg'
 end
 
 group :production do
-  gem 'pg', '0.17.0'
+  gem 'pg'
 end
 
 # Use SCSS for stylesheets
