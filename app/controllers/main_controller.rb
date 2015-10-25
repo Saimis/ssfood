@@ -19,17 +19,13 @@ class MainController < ApplicationController
     end_round
 
     # return json
-    respond_to do |format|
-      format.json {
-       render json: {
+      render json: {
          users: users.as_json(only: [:user_id, :food, :voted]),
          restaurants: retaurants.as_json(only: [:id, :votes]),
          winner: winner.as_json(only: [:id]),
          food_history: food_history.as_json(only: [:food]),
          round_end: current_round.complete.as_json
         }
-      }
-    end
   end
 
   def end_round
@@ -37,7 +33,7 @@ class MainController < ApplicationController
    round = current_round
    round.complete = true
    round.save
-   render json: { ended: true }
+   render json: { ended: true } if params[:force_end_round]
   end
 
   def can_end_round?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403133354) do
+ActiveRecord::Schema.define(version: 20151025182445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,11 @@ ActiveRecord::Schema.define(version: 20150403133354) do
     t.integer  "food_time"
     t.datetime "food_datetime"
     t.integer  "complete",      default: 0
+    t.integer  "payer"
+    t.integer  "gc"
+    t.text     "callers",       default: "--- []\n"
+    t.text     "payers",        default: "--- []\n"
+    t.text     "gcs",           default: "--- []\n"
   end
 
   create_table "restaurants", force: true do |t|

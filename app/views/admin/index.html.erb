@@ -1,10 +1,10 @@
 <div id="admin_panel">
   <div id="restaurants_holder">
-  	<p>  
-  		Start new session: 
+  	<p>
+  		Start new session:
       <%= form_tag("start", method: "start") do %>
         <%= submit_tag("Start session") %>
-      <% end %> 
+      <% end %>
 
   		<% if !@archyve.nil? && @archyve.date > Time.now %>
         <span style="color:red;">Voting session is active</span>
@@ -48,7 +48,7 @@
             <th>Phone</th>
             <th></th>
             <th></th>
-            <th></th> 
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -76,7 +76,9 @@
         <th>Date</th>
         <th>Winner restaurant</th>
         <th>Food time (s)</th>
-        <th>Caller id</th>
+        <th>Caller</th>
+        <th>Payer</th>
+        <th>Garbage collector</th>
         <th></th>
         <th></th>
         <th></th>
@@ -91,6 +93,8 @@
           <td><%= @restaurants.select{ |d| d[:id] == archyve.restaurant_id }.first.try(:name) %></td>
           <td><%= archyve.food_datetime %></td>
           <td><%= @users.select{ |d| d[:id] == archyve.caller }.first.try(:name) %></td>
+          <td><%= @users.select{ |d| d[:id] == archyve.payer }.first.try(:name) %></td>
+          <td><%= @users.select{ |d| d[:id] == archyve.gc }.first.try(:name) %></td>
           <td><%= link_to 'Show', archyve %></td>
           <td><%= link_to 'Edit', edit_archyfe_path(archyve) %></td>
           <td><%= link_to 'Destroy', archyve, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -100,11 +104,11 @@
     </table>
     <hr />
     <div>
-      
+
         <div class="rounds_holder">
           <table>
             <tr>
-              <td>Archyves ID</td>    
+              <td>Archyves ID</td>
               <td>Voted for</td>
               <td>Food</td>
               <td>User id</td>
@@ -120,9 +124,9 @@
               </tr>
             <% end %>
           </table>
-          
+
         </div>
-     
+
     </div>
   </div>
 </div>

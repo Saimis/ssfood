@@ -8,7 +8,7 @@
   div style="clear:both;"
   - unless current_round.complete?
     #countdown_food data-end=(@food_time)
-  - if current_round.caller == @current_user.try(:id)
+  - if caller?
     .force_round_end End round!
   #user_holder
     - @users.each do |user|

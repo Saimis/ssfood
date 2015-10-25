@@ -302,9 +302,17 @@ h1 {
   vertical-align: middle;
   line-height: 50px;
 }
-.caller {
+.caller, .payer, .gc {
   padding-left:20px;
+}
+.caller {
   background: url(phone_icon.png) 0% 50% no-repeat;
+}
+.payer {
+  background: url(euro_icon.png) 0% 50% no-repeat;
+}
+.gc {
+  background: url(gc_icon.png) 0% 50% no-repeat;
 }
 #admin_panel {
   background:#E0E0E0;
@@ -336,6 +344,7 @@ h1 {
   }
 
 .force_round_end {
+  display: none;
   margin: 10px auto;
   width: 100px;
   -webkit-border-radius: 16;
