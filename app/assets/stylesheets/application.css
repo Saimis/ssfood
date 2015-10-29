@@ -401,6 +401,10 @@ h1 {
   padding: 40px;
 }
 
+#statistics .most-wins {
+  margin-bottom: 100px;
+}
+
 #statistics .chart {
   width: 500px;
   display: inline-block;
