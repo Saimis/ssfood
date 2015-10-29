@@ -21,6 +21,7 @@ var isWinnerSet = false;
 var startPolling = true;
 var historyIsSet = false;
 var popupLoaded = false;
+
 $(document).ready(function(){
   $(document).click(function(e) {
     if (!$(e.target).is(".history") && !$(e.target).is(".f_history_item")) {
@@ -35,10 +36,11 @@ $(document).ready(function(){
   $("#countdown").countdown({until: new Date(endtime)/*, onExpiry: liftOff */, compact: true,  format: 'HMs'});
   $("#countdown_food").countdown({until: new Date(endtime_food), onExpiry: hideFoodTimer , compact: true,  format: 'HMs'});
 
-  $("#food").blur(function() {
+  $("#food, #sum").blur(function() {
+    console.log('blur')
     saveFood();
   });
-  $("#food").keyup(function() {
+  $("#food, #sum").keyup(function() {
     if(form_timout != null) {
       clearTimeout(form_timout);
     }
@@ -70,12 +72,16 @@ $(document).ready(function(){
     var friends_food = $(this).parent().parent().find(".food").text();
 
     if(friends_food.length > 0) {
+      var friends_sum = $(this).parent().parent().find(".sum").text();
+
       if($("#food").val().length > 0){
-  if (confirm("Kopijuoti?")) {
-    $("#food").val(friends_food);
-  }
+        if (confirm("Kopijuoti?")) {
+          $("#food").val(friends_food);
+          $("#sum").val(friends_sum);
+        }
       } else {
-  $("#food").val(friends_food);
+        $("#food").val(friends_food);
+        $("#sum").val(friends_sum);
       }
     } else {
       alert("Empty? Dude c'mon....");
@@ -136,32 +142,56 @@ function hideFoodTimer() {
 }
 
 function saveFood(){
-  $("#food_form").submit(function(e) {
-    var postData = $("#food_form").serializeArray();
-    var formURL = $("#food_form").attr("action");
-    $.ajax(
-    {
-      url : formURL,
-      type: "POST",
-      data : postData,
-      success:function(data, textStatus, jqXHR) {
-        console.log("Saved!");
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log("Some shitty error occured...");
-      }
+  if (checkForm()){
+    $("#food_form").submit(function(e) {
+      var postData = $("#food_form").serializeArray();
+      var formURL = $("#food_form").attr("action");
+      $.ajax(
+      {
+        url : formURL,
+        type: "POST",
+        data : postData,
+        success:function(data, textStatus, jqXHR) {
+          console.log("Saved!");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.log("Some shitty error occured...");
+        }
+      });
+      e.preventDefault();
     });
-    e.preventDefault();
-  });
-  $("#food_form").submit();
+    $("#food_form").submit();
+  }
 }
 
+function checkForm(){
+  if ($('#food').val().length && checkSum()) {
+    $('#sum').removeClass('empty');
+    return true;
+  } else {
+    $('#sum').addClass('empty');
+    return false;
+  }
+}
+
+function checkSum(){
+  var sum = $('#sum').val();
+  if (sum.length) {
+    sum = sum.replace(/,/g , ".");
+    if ($.isNumeric(sum)) {
+      $('#sum').val(sum);
+      return true;
+    }
+  }
+
+}
 
 function addmsg(msg){
   jQuery.each(msg, function(i, item) {
     if(item.food != null && item.food.length > 0) {
      $("#usr_" + item.user_id).find(".user_name").css("background","#97ce68");
-     $("#uf_" + item.user_id).html("<span>" + item.food + "</span>");
+     $("#uf_" + item.user_id).html('<span>' + item.food + '</span>');
+     $("#usr_" + item.user_id).children('.sum').html(item.sum);
     } else {
       $("#usr_" + item.user_id).find(".user_name").css("background","#6bcbca");
       $("#uf_" + item.user_id).html("");
@@ -230,7 +260,7 @@ function parseInfo(msg) {
 function waitForMsg(){
   $.ajax({
       type: "GET",
-      url: "get_data.json",
+      url: "/get_data.json",
 
       async: true,
       cache: false,
@@ -262,6 +292,6 @@ function roundEnd() {
   hideFoodTimer();
 
   if($('#food').length) {
-    $('#food').attr('disabled', true);
+    $('#food, #sum').attr('disabled', true);
   }
 }

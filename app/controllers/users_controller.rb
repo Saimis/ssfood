@@ -23,9 +23,22 @@ class UsersController < ApplicationController
     if current_user and can_save?
       user = self.current_user
       if self.current_user
-        food = ActionController::Base.helpers.strip_tags(params[:food])
-        userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first
-        user.food = userarchyve.food = food
+        userarchyve = current_userarchyve(user.id)
+        user.food = userarchyve.food = strip_tags(params[:food])
+        user.sum = userarchyve.sum = strip_tags(params[:sum])
+        user.save
+        userarchyve.save
+      end
+    end
+    redirect_to root_path
+  end
+
+  def save_sun
+    if current_user and can_save?
+      user = self.current_user
+      if self.current_user
+        userarchyve = current_userarchyve(user.id)
+        user.sum = userarchyve.sum = strip_tags(params[:sum])
         user.save
         userarchyve.save
       end
@@ -99,7 +112,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation, :disabled)
+      params.require(:user).permit(:name, :lastname, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation, :disabled)
     end
 
     def voted_users
@@ -116,5 +129,13 @@ class UsersController < ApplicationController
 
     def users_without_admin
       User.all.count - 1
+    end
+    
+    def current_userarchyve(uid)
+      Userarchyves.where(user_id: uid, archyves_id: current_round.id).first
+    end
+
+    def strip_tags(param)
+      ActionController::Base.helpers.strip_tags(param)
     end
 end

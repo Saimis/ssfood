@@ -208,11 +208,22 @@ h1 {
 
 #user_holder .single_user .food {
   font-size: 16px;
-  line-height: 140px;
-  height: 140px;
   padding: 0 5px 0 5px;
   overflow: hidden;
 }
+
+#user_holder .single_user .food .empty {
+  border-color: red;
+}
+
+#user_holder .single_user .food.preview {
+  line-height: 140px;
+}
+
+#user_holder .single_user .sum {
+  display: none;
+}
+
 #user_holder .single_user .food span {
   display: inline-block;
   vertical-align: middle;
@@ -222,12 +233,33 @@ h1 {
 
 #food, #default_food_form #default_food {
   width: 170px;
-  height: 115px;
+  height: 100px;
   resize: none;
   margin-top: 15px;
   border-radius: 5px;
   border: none;
 }
+
+#sum {
+   border-radius: 5px;
+   width: 30px;
+   outline: none;
+   height: 18px;
+}
+
+.euro-symbol {
+     position: relative;
+     margin-top: 1px;
+ }
+ .euro-symbol input {
+     padding-left:18px;
+ }
+ .euro-symbol:before {
+     position: absolute;
+     top: 3px;
+     content:"€";
+     left: 5px;
+ }
 
 .hasCountdown {
   border: none !important;
@@ -363,4 +395,37 @@ h1 {
 .force_round_end:hover {
   background: #990606;
   text-decoration: none;
+}
+
+#statistics {
+  padding: 40px;
+}
+
+#statistics .chart {
+  width: 500px;
+  display: inline-block;
+  margin: 30px;
+}
+#statistics .chart h3 {
+  text-align: center;
+}
+
+#amounts {
+  background: #fff;
+  color: #000;
+  padding:50px;
+}
+
+#amounts table {
+  margin: auto;
+  border-collapse: collapse;
+}
+#amounts table thead {
+  font-weight: bold;
+  text-align: center;
+}
+
+#amounts table td {
+  width: 200px;
+  text-align: center;
 }

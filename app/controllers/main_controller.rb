@@ -14,13 +14,13 @@ class MainController < ApplicationController
   #the main information source for long poller, returns all information about users and restaurants
   def get_data
     users_without_admin = User.where("name != 'admin'").where(disabled: false).count
-    users = Userarchyves.select('user_id, food, voted_for').where(archyves_id: current_round.id).all
+    users = Userarchyves.select('user_id, food, sum, voted_for').where(archyves_id: current_round.id).all
     retaurants = Restaurant.select('id, votes').all
     end_round
 
     # return json
       render json: {
-         users: users.as_json(only: [:user_id, :food, :voted]),
+         users: users.as_json(only: [:user_id, :food, :sum, :voted]),
          restaurants: retaurants.as_json(only: [:id, :votes]),
          winner: winner.as_json(only: [:id]),
          food_history: food_history.as_json(only: [:food]),

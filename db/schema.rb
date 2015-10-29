@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025182445) do
+ActiveRecord::Schema.define(version: 20151029224658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20151025182445) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "sum"
   end
 
   create_table "users", force: true do |t|
@@ -59,6 +60,8 @@ ActiveRecord::Schema.define(version: 20151025182445) do
     t.string   "password"
     t.string   "password_digest"
     t.integer  "disabled",        default: 0
+    t.float    "sum"
+    t.string   "lastname"
   end
 
   add_index "users", ["remember"], name: "index_users_on_remember", using: :btree

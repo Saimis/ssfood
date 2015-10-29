@@ -18,9 +18,9 @@ class AdminController < ApplicationController
   end
 
   def start
-    User.update_all(food: nil)
+    User.update_all(food: nil, sum: nil)
     Restaurant.update_all(votes: 0)
-    time_gap = 200
+    time_gap = 1200
     food_time_gap = 2400
     callers = select_caller
     payers = select_payer

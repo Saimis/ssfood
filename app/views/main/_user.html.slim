@@ -22,6 +22,10 @@
       .food
           = form_tag "savefood", id: "food_form" do
             = text_area_tag "food", user.food
+            span.euro-symbol
+              = text_field_tag "sum", user.sum
     - else
-      .food id=("uf_#{user.id}")
-        = h user.food
+      .food.preview id=("uf_#{user.id}")
+        = h user.sum
+      .sum
+        = user.sum

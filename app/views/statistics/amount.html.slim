@@ -1,0 +1,25 @@
+#amounts
+  table border="1"
+    thead
+      tr
+        td Vardas
+        td Pavardė
+        td Suma
+        td Parašas
+    tbody
+      - @userarchyves.each do |archyve|
+        tr
+          td = @users_list[archyve.user_id].name
+          td = @users_list[archyve.user_id].lastname
+          td 
+            = archyve.sum || 0
+            | &euro;
+          td 
+    tfooter
+      tr
+        td
+        td Suma
+        td 
+          = @total 
+          | &euro;
+        td

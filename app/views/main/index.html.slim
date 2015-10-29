@@ -9,7 +9,7 @@
   - unless current_round.complete?
     #countdown_food data-end=(@food_time)
   - if caller?
-    .force_round_end End round!
+    .force_round_end title="Will end food choosing and show summary table. CANNOT BE UNDONE!" End round!
   #user_holder
     - @users.each do |user|
       = render partial: 'user', locals: { user: user }

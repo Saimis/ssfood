@@ -1,0 +1,72 @@
+= stylesheet_link_tag "jquery.jqplot.min"
+#statistics
+  #restaurants
+    .most-wins
+      .chart
+        h3 Winner restaurants
+        #rmWins
+  #users
+    .most-active-voters
+      .chart
+        h3 Most active voters
+        #maVoters
+      .chart
+        h3 Most active fooders
+        #maFooders
+      .chart
+        h3 Most active callers
+        #maCallers
+
+
+
+javascript:
+  $(document).ready(function(){
+    var rmWinsPlot = jQuery.jqplot ('rmWins', [#{raw @restaurants_win.to_json}],
+      {
+        seriesDefaults: {
+          renderer: jQuery.jqplot.PieRenderer,
+          rendererOptions: {
+            showDataLabels: true
+          }
+        },
+        legend: { show:true, location: 'e' }
+      }
+    );
+
+    var rmWinsPlot = jQuery.jqplot ('maVoters', [#{raw @users_votes_data.to_json}],
+      {
+        seriesDefaults: {
+          renderer: jQuery.jqplot.PieRenderer,
+          rendererOptions: {
+            showDataLabels: true
+          }
+        },
+        legend: { show:true, location: 'e' }
+      }
+    );
+
+    var rmWinsPlot = jQuery.jqplot ('maFooders', [#{raw @users_food_data.to_json}],
+      {
+        seriesDefaults: {
+          renderer: jQuery.jqplot.PieRenderer,
+          rendererOptions: {
+            showDataLabels: true
+          }
+        },
+        legend: { show:true, location: 'e' }
+      }
+    );
+
+    var rmWinsPlot = jQuery.jqplot ('maCallers', [#{raw @users_callers_data.to_json}],
+      {
+        seriesDefaults: {
+          renderer: jQuery.jqplot.PieRenderer,
+          rendererOptions: {
+            showDataLabels: true
+          }
+        },
+        legend: { show:true, location: 'e' }
+      }
+    );
+
+  });
