@@ -433,3 +433,8 @@ h1 {
   width: 200px;
   text-align: center;
 }
+
+#amounts .title {
+  text-align: center;
+  font-size: 16px;
+}
