@@ -1,9 +1,9 @@
 #amounts
   .title
     p UAB “SameSystem”
-    p = current_round.date.strftime('%Y-%m-%d') || Date.today
+    p = current_round.date.strftime('%Y-%m-%d')
     p
-      b = Restaurant.find(current_round.restaurant_id).name || ''
+      b = Restaurant.find(current_round.restaurant_id).name
   table border="1"
     thead
       tr
@@ -13,11 +13,12 @@
         td Parašas
     tbody
       - @userarchyves.each do |archyve|
+	
         tr
-          td = @users_list[archyve.user_id].name || ''
-          td = @users_list[archyve.user_id].lastname || ''
+          td = @users_list[archyve.user_id].name
+          td = @users_list[archyve.user_id].lastname
           td
-            = archyve.sum || 0
+            = archyve.sum
             | &euro;
           td
     tfooter
@@ -28,3 +29,4 @@
           = @total || 0
           | &euro;
         td
+
