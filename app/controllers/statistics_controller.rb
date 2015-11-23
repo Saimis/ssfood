@@ -47,11 +47,8 @@ class StatisticsController < ApplicationController
     @users ||= User.where("name != 'admin'")
   end
 
-  def admin
-    User.where(name: 'admin').first
-  end
-
   def amount
+    admin = User.where(name: 'admin').first
     @users_list = User.where("name != 'admin'").where(disabled: 0).select(:id, :name, :lastname).index_by(&:id)
     @userarchyves = Userarchyves.where(archyves_id: Archyves.last.id).where('user_id != ?', admin.id)
     @total = @userarchyves.sum(:sum)
