@@ -23,8 +23,11 @@ class SessionsController < ApplicationController
     params[:session][:name] = params[:a]
     params[:session][:password] = params[:b]
 
+
     create
-    AdminController.new.start
+    if current_user and current_user.name == 'admin'
+      AdminController.new.start
+    end
   end
 
   def destroy
