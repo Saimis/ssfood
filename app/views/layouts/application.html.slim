@@ -4,6 +4,12 @@ html
     title Food
 
     = stylesheet_link_tag    'application', media: "all", "data-turbolinks-track" => true
+    - if params[:controller] =~ /admin/
+      = stylesheet_link_tag    'vendor', media: "all", "data-turbolinks-track" => true
+    - else
+      = stylesheet_link_tag    'scaffolds', media: "all", "data-turbolinks-track" => true
+      = stylesheet_link_tag    'old', media: "all", "data-turbolinks-track" => true
+
     = javascript_include_tag 'application', "data-turbolinks-track" => true
     = javascript_include_tag '/javascripts/jquery.jqplot.min.js', "data-turbolinks-track" => true
     = javascript_include_tag '/javascripts/jqplot.pieRenderer.min.js', "data-turbolinks-track" => true
@@ -11,6 +17,13 @@ html
 
     = csrf_meta_tags
   body
-    = render 'navbar'
     = render 'flashes'
-    = yield
+
+    - if params[:controller] =~ /admin/
+      = render 'new_navbar'
+      .container
+        = yield
+
+    - else
+      = render 'navbar'
+      = yield

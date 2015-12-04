@@ -1,6 +1,11 @@
 FoodApp::Application.routes.draw do
   root to: 'main#index'
 
+  namespace :admin do
+    resources :restaurants
+    resources :users
+  end
+
   resources :users
   resources :restaurants
   resources :sessions

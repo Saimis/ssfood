@@ -1,0 +1,426 @@
+html {
+ background: url("home_bg.jpg") no-repeat center center fixed #324a6f;
+ -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
+}
+body a {
+   color: #ccc;
+}
+h1 {
+  color: #fff;
+}
+
+#restaurants_holder {
+  clear: both;
+  width: 90%;
+  margin: auto;
+}
+
+  #restaurants_holder .single_restaurant {
+    width:200px;
+    height:200px;
+    float:left;
+    margin: 3px 0 0 3px;
+    text-align:center;
+    position:relative;
+    border-radius:5px;
+    background:#edede5;
+    color: #96846c;
+  }
+
+    #restaurants_holder .single_restaurant a{
+      text-decoration:none;
+    }
+    #restaurants_holder .single_restaurant a:hover{
+      text-decoration:none;
+    }
+    #restaurants_holder .single_restaurant .restaurant_name {
+      background: #f39c12;
+      height:50px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      font-size: 20px;
+      vertical-align: middle;
+      line-height: 50px;
+      color: #fff;
+    }
+    #restaurants_holder .single_restaurant .restaurant_info {
+      font-size: 16px;
+      margin: 10px 0 10px 0;
+    }
+      #restaurants_holder .single_restaurant .restaurant_info span {
+	clear:both;
+      }
+
+      #restaurants_holder .single_restaurant .restaurant_info a {
+	clear:both;
+	 color: #d35400;
+      }
+
+
+    #restaurants_holder .single_restaurant .vote_holder {
+      position: absolute;
+      left:0;
+      bottom:0;
+    }
+    #restaurants_holder .single_restaurant .vote_bar {
+      width: 20px;
+      background:#2ecc71;
+      border-bottom-left-radius:5px;
+    }
+    #restaurants_holder .single_restaurant .vote_bar .votes {
+    }
+    .winner_image {
+      display:none;
+    }
+
+     #restaurants_holder .single_restaurant .last_time {
+	font-size:9px;
+	position: absolute;
+	right:10px;
+	bottom:5px;
+     }
+
+    #restaurants_holder .single_restaurant .vote_button_holder .vote_button {
+      font-size:16px;
+      font-family:Arial;
+      font-weight:normal;
+      -moz-border-radius:8px;
+      -webkit-border-radius:8px;
+      border-radius:8px;
+      border:0px solid #eeb44f;
+      padding:5px 38px;
+      text-decoration:none;
+      background:-webkit-gradient( linear, left top, left bottom, color-stop(5%, #ffc477), color-stop(100%, #fb9e25) );
+      background:-moz-linear-gradient( center top, #ffc477 5%, #fb9e25 100% );
+      background:-ms-linear-gradient( top, #ffc477 5%, #fb9e25 100% );
+      filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25');
+      background-color:#ffc477;
+      color:#ffffff;
+      display:inline-block;
+      text-shadow:1px 1px 0px #cc9f52;
+      -webkit-box-shadow:inset 1px 1px 0px 0px #fce2c1;
+      -moz-box-shadow:inset 1px 1px 0px 0px #fce2c1;
+      box-shadow:inset 1px 1px 0px 0px #fce2c1;
+    }
+	#restaurants_holder .single_restaurant .vote_button_holder .vote_button:hover {
+	  background:-webkit-gradient( linear, left top, left bottom, color-stop(5%, #fb9e25), color-stop(100%, #ffc477) );
+	  background:-moz-linear-gradient( center top, #fb9e25 5%, #ffc477 100% );
+	  background:-ms-linear-gradient( top, #fb9e25 5%, #ffc477 100% );
+	  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477');
+	  background-color:#fb9e25;
+	}
+	#restaurants_holder .single_restaurant .vote_button_holder .vote_button:active {
+	  position:relative;
+	  top:1px;
+	}
+
+
+#user_holder {
+  clear: both;
+  margin-top:30px;
+  width: 90%;
+  margin: auto;
+  display: none;
+}
+
+#countdown_food {
+  display: none;
+}
+
+.shadow_box {
+  background: url(background_shadow.png);
+  width: 212px;
+  height: 212px;
+  float:left;
+  margin:20px;
+}
+
+#user_holder .single_user {
+  color: #96846c;
+  width:200px;
+  height:200px;
+  margin: 3px 0 0 3px;
+  text-align:center;
+  border-radius:5px;
+  background:#edede5;
+  position: relative;
+}
+
+#user_holder .single_user .user_name {
+  color: #fff;
+  height:50px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 50px;
+  position: relative;
+  background: #6bcbca;
+}
+.user_name_activefield {
+   cursor: pointer;
+}
+
+#user_holder .single_user .user_name .copy {
+  background: url(copy_icon.png);
+  height:17px;
+  width: 17px;
+  position:absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+#user_holder .single_user .user_name .history {
+  background: url(journal.png);
+  height:17px;
+  width: 17px;
+  position:absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  display: none;
+}
+
+#user_holder .single_user .user_name .voted {
+  height:17px;
+  width: 18px;
+  position:absolute;
+  top: 0px;
+  left: 10px;
+}
+
+#user_holder .single_user .food {
+  font-size: 16px;
+  padding: 0 5px 0 5px;
+  overflow: hidden;
+}
+
+#user_holder .single_user .food .empty {
+  border-color: red;
+}
+
+#user_holder .single_user .food.preview {
+  line-height: 140px;
+}
+
+#user_holder .single_user .sum {
+  display: none;
+}
+
+#user_holder .single_user .food span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+
+#food, #default_food_form #default_food {
+  width: 170px;
+  height: 100px;
+  resize: none;
+  margin-top: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+#sum {
+   border-radius: 5px;
+   width: 30px;
+   outline: none;
+   height: 18px;
+}
+
+.euro-symbol {
+     position: relative;
+     margin-top: 1px;
+ }
+ .euro-symbol input {
+     padding-left:18px;
+ }
+ .euro-symbol:before {
+     position: absolute;
+     top: 3px;
+     content:"€";
+     left: 5px;
+ }
+
+.hasCountdown {
+  border: none !important;
+  background: none !important;
+  text-align: center !important;
+}
+.histbox {
+  display: none;
+  background: #fff;
+  position: absolute;
+  padding:5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  top: 30px;
+  left: 10px;
+  border: 1px solid #ccc;
+  z-index: 10;
+}
+
+.histbox ul {
+  margin:0;
+  padding:0;
+}
+.histbox ul li {
+  list-style: none;
+  border-bottom: 1px solid #F2F2F2;
+  cursor: pointer;
+}
+.histbox ul li:HOVER {
+  background: #F0F0F0;
+}
+
+#caller_popup {
+  position: absolute;
+  display: none;
+  top:20%;
+  left:50%;
+  margin-left:-500px;
+  width: 1000px;
+  z-index:100;
+  padding: 20px;
+  border-radius: 5px;
+  background:#edede5;
+}
+  #caller_popup .popup_user_line {
+    color: #96846c;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  #caller_popup h2, #caller_popup h3 {
+    color: #d35400;
+  }
+
+  #caller_popup span {
+    font-weight: bold;
+    color: #34495e;
+  }
+
+  #caller_popup .check {
+    color: #c1c1c1;
+  }
+
+.default_food_top {
+  color: #fff;
+  height:60px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: #9b59b6;
+  font-size: 20px;
+  vertical-align: middle;
+  line-height: 50px;
+}
+.caller, .payer, .gc {
+  padding-left:20px;
+}
+.caller {
+  background: url(phone_icon.png) 0% 50% no-repeat;
+}
+.payer {
+  background: url(euro_icon.png) 0% 50% no-repeat;
+}
+.gc {
+  background: url(gc_icon.png) 0% 50% no-repeat;
+}
+#admin_panel {
+  background:#E0E0E0;
+  border-radius: 5px;
+  color:#000;
+}
+#admin_panel table {
+  border-collapse:collapse;
+}
+#admin_panel td {
+  border: 1px solid gray;
+  padding:2px;
+}
+
+#admin_panel a {
+  color:blue;
+}
+
+.ssfood_form {
+  width: 300px;
+  margin: auto auto;
+  text-align: justify;
+}
+  .ssfood_form input {
+    margin-bottom:10px;
+    display: block;
+  }
+  .ssfood_form label {
+  }
+
+.force_round_end {
+  display: none;
+  margin: 10px auto;
+  width: 100px;
+  -webkit-border-radius: 16;
+  -moz-border-radius: 16;
+  border-radius: 16px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  text-align: center;
+  background: #fc0000;
+  padding: 0px 20px 0px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.force_round_end:hover {
+  background: #990606;
+  text-decoration: none;
+}
+
+#statistics {
+  padding: 40px;
+}
+
+#statistics .most-wins {
+  margin-bottom: 300px;
+}
+
+#statistics .chart {
+  width: 500px;
+  display: inline-block;
+  margin: 30px;
+}
+#statistics .chart h3 {
+  text-align: center;
+}
+
+#amounts {
+  background: #fff;
+  color: #000;
+  padding:50px;
+}
+
+#amounts table {
+  margin: auto;
+  border-collapse: collapse;
+}
+#amounts table thead {
+  font-weight: bold;
+  text-align: center;
+}
+
+#amounts table td {
+  width: 200px;
+  text-align: center;
+}
+
+#amounts .title {
+  text-align: center;
+  font-size: 16px;
+}

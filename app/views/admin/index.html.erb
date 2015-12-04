@@ -35,40 +35,6 @@
       <a href="users/new"><button><span>Add New User</span></button></a>
     </div>
     <hr />
-    <div class="admin_user_holder" style="border:1px solid #ccc;">
-      <table style="text-align:center;">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>About</th>
-            <th>Votes</th>
-            <th>Waslast</th>
-            <th>Lastused</th>
-            <th>Phone</th>
-            <th></th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @restaurants.each do |restaurant| %>
-            <tr>
-              <td><%= restaurant.id %></td>
-              <td><%= restaurant.name %></td>
-              <td><%= restaurant.about %></td>
-              <td><%= restaurant.votes %></td>
-              <td><%= restaurant.phone %></td>
-              <td><%= link_to 'Show', restaurant %></td>
-              <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
-              <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <a href="restaurants/new"><button><span>Add New Restaurant</span></button></a>
-    </div>
-    <hr />
     <table style="text-align:center;">
     <thead>
       <tr>
