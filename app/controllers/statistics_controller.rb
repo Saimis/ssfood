@@ -8,6 +8,13 @@ class StatisticsController < ApplicationController
     @users_callers_data = users_callers_data
   end
 
+  def amount
+    @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
+      .index_by(&:id)
+    @userarchyves = user_archives
+    @total = @userarchyves.sum(:sum)
+  end
+
   private
 
   def restaurants_win_data
@@ -41,13 +48,6 @@ class StatisticsController < ApplicationController
 
   def users
     @users ||= User.without_admins
-  end
-
-  def amount
-    @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
-      .index_by(&:id)
-    @userarchyves = user_archives
-    @total = @userarchyves.sum(:sum)
   end
 
   def user_archives

@@ -33,6 +33,7 @@ class AdminController < ApplicationController
     User.all.each do |user|
       Userarchyves.create(user_id: user.id, archyves_id: archyve.id)
     end
+    redirect_to :back
   end
 
   def select_caller
