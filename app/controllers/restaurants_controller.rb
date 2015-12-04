@@ -1,12 +1,6 @@
 class RestaurantsController < ApplicationController
-  before_action :admin_check, only: [:index, :show, :edit,  :destroy, :new, :create]
+  before_action :authenticate_admin!
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
-
-  def admin_check 
-    if current_user.nil? or current_user.name != 'admin'
-      redirect_to root_path
-    end
-  end
 
   # GET /restaurants
   # GET /restaurants.json
@@ -117,9 +111,9 @@ class RestaurantsController < ApplicationController
     def can_vote?
       users_without_admin = User.all.count - 1
 
-      current_user and 
-      Time.now < current_round.date.to_datetime and 
-      voted_users <= users_without_admin and 
+      current_user and
+      Time.now < current_round.date.to_datetime and
+      voted_users <= users_without_admin and
       params[:id].present?
     end
 end

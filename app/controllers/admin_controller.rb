@@ -1,11 +1,5 @@
 class AdminController < ApplicationController
-  before_action :admin_check
-
-  def admin_check
-    if current_user.nil? || current_user.name != 'admin'
-      redirect_to root_path
-    end
-  end
+  before_action :authenticate_admin!
 
   def index
     @archyve = Archyves.last

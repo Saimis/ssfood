@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
   has_secure_password
-  #attr_accessible :email, :password, :password_confirmation
 
   before_create :create_remember
+
+  def admin?
+    name == 'admin'
+  end
 
   private
 

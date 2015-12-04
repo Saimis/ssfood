@@ -1,11 +1,5 @@
 class StatisticsController < ApplicationController
-  before_action :admin_check, only: :amount
-
-  def admin_check
-    if current_user.nil? || current_user.name != 'admin'
-      redirect_to root_path
-    end
-  end
+  before_action :authenticate_admin!, only: :amount
 
   def index
     @restaurants_win = restaurants_win_data
@@ -35,7 +29,7 @@ class StatisticsController < ApplicationController
 
   def users_food_data
     users_data = []
-    users.map { |u| users_data.push([ u.name, counter(u.id) ]) }
+    users.map { |u| users_data.push([u.name, counter(u.id)]) }
     users_data
   end
 
