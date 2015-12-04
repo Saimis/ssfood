@@ -71,15 +71,6 @@ class MainController < ApplicationController
     round.save
   end
 
-  def destroy_userarchyve
-    if current_user && current_user.admin?
-      Userarchyves.destroy(params[:id])
-      redirect_to admin_url
-    else
-      redirect_to root_path
-    end
-  end
-
   def voted_users
     @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
   end

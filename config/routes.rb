@@ -7,6 +7,7 @@ FoodApp::Application.routes.draw do
     resources :restaurants
     resources :users
     resources :orders
+    resources :order_users, only: [:destroy]
   end
 
   resources :users
@@ -27,9 +28,6 @@ FoodApp::Application.routes.draw do
   get 'food' => 'main#choosefood'
   get 'reset/:pass' => 'main#reset'
   post 'force_round_end' => 'main#end_round'
-
-  # User Archive paths
-  get 'archyve/u/:id' => 'main#destroy_userarchyve'
 
   # Restaurants paths
   get 'restaurants' => 'restaurants#index'
