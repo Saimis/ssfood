@@ -2,8 +2,8 @@ class MainController < ApplicationController
   attr_accessor :current_round
 
   def index
-    @restaurants = Restaurant.order("name").all
-    @users = User.where("name != 'admin'").where(disabled: false).order('name').all
+    @restaurants = Restaurant.order(:name).all
+    @users = User.without_admins.enabled.order(:name).all
 
     if current_round
       @restaurant_time = current_round.date.asctime.to_s
@@ -13,9 +13,10 @@ class MainController < ApplicationController
 
   #the main information source for long poller, returns all information about users and restaurants
   def get_data
-    users_without_admin = User.where("name != 'admin'").where(disabled: false).count
-    users = Userarchyves.select('user_id, food, sum, voted_for').where(archyves_id: current_round.id).all
-    retaurants = Restaurant.select('id, votes').all
+    users_without_admin = User.without_admins.enabled.count
+    users = Userarchyves.select(:user_id, :food, :sum, :voted_for)
+      .where(archyves_id: current_round.id).all
+    retaurants = Restaurant.select(:id, :votes).all
     end_round
 
     # return json
@@ -50,9 +51,9 @@ class MainController < ApplicationController
   end
 
   def voting_ended?
-    users_without_admin = User.where("name != 'admin'").count
-    current_round.restaurant_id.nil? and
-      (voted_users >= users_without_admin or Time.now > current_round.date.to_datetime)
+    users_without_admin = User.without_admins.count
+    current_round.restaurant_id.nil? &&
+      (voted_users >= users_without_admin || Time.now > current_round.date.to_datetime)
   end
 
   def winner
@@ -71,7 +72,7 @@ class MainController < ApplicationController
   end
 
   def destroy_userarchyve
-    if current_user and current_user.name == 'admin'
+    if current_user && current_user.admin?
       Userarchyves.destroy(params[:id])
       redirect_to admin_url
     else
@@ -88,7 +89,7 @@ class MainController < ApplicationController
   end
 
   def create_popup
-    @restaurants = Restaurant.order("name").all
-    @users = User.where("name != 'admin'").where(disabled: false).order('name').all
+    @restaurants = Restaurant.order(:name).all
+    @users = User.without_admins.enabled.order(:name).all
   end
 end

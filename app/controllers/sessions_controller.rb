@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-
   def new
   end
 
@@ -7,7 +6,8 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:session][:name])
     if user.try(:authenticate, params[:session][:password])
       sign_in user
-      if user.name == 'admin'
+
+      if user.admin?
         redirect_to admin_url
       else
         redirect_to root_path
@@ -23,9 +23,9 @@ class SessionsController < ApplicationController
     params[:session][:name] = params[:a]
     params[:session][:password] = params[:b]
 
-
     create
-    if current_user and current_user.name == 'admin'
+
+    if current_user && current_user.admin?
       AdminController.new.start
     end
   end

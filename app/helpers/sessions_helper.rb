@@ -1,5 +1,4 @@
 module SessionsHelper
-
   def sign_in(user)
     cookies.permanent[:remember] = user.remember
     self.current_user = user
@@ -13,8 +12,8 @@ module SessionsHelper
     @current_user ||= User.find_by_remember(cookies[:remember])
   end
 
-  def signed_in?
-   current_user.nil?
+  def user_signed_in?
+    current_user.present?
   end
 
   def sign_out

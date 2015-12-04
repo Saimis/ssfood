@@ -1,15 +1,7 @@
 class UsersController < ApplicationController
-  before_action :admin_check, only: [:index, :show, :edit,  :destroy, :new, :create]
+  before_action :authenticate_admin!, only: [:index, :show, :edit,  :destroy, :new, :create]
   before_action :set_user, only:  [:show, :edit, :update, :destroy]
 
-  def admin_check
-    if self.current_user.nil? or self.current_user.name != 'admin'
-      redirect_to root_path
-    end
-  end
-
-  # GET /users`
-  # GET /users.json
   def index
     @users = User.all
   end
@@ -46,22 +38,16 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
   end
 
-  # GET /users/new
   def new
     @user = User.new
   end
 
-  # GET /users/1/edit
   def edit
   end
 
-  # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
 
@@ -76,12 +62,10 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to root_path}
+        format.html { redirect_to root_path }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -90,8 +74,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
@@ -101,41 +83,45 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      if self.current_user and self.current_user.name == 'admin'
-        @user = User.find(params[:id])
-      else
-        @user = User.find(current_user.id)
-      end
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:name, :lastname, :ip, :voted, :food, :decided, :password, :remember, :password_confirmation, :disabled)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    if current_user && current_user.admin?
+      @user = User.find(params[:id])
+    else
+      @user = User.find(current_user.id)
     end
+  end
 
-    def voted_users
-      @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
-    end
+  def user_params
+    params.require(:user).permit(
+      :name, :lastname, :ip, :voted, :food, :decided, :password, :remember,
+      :password_confirmation, :disabled)
+  end
 
-    def current_round
-      Archyves.last
-    end
+  def voted_users
+    @voted_users = Userarchyves.where('voted_for > 0')
+      .where(archyves_id: current_round.id)
+      .count
+  end
 
-    def can_save?
-      current_round.complete? == false
-    end
+  def current_round
+    Archyves.last
+  end
 
-    def users_without_admin
-      User.all.count - 1
-    end
-    
-    def current_userarchyve(uid)
-      Userarchyves.where(user_id: uid, archyves_id: current_round.id).first
-    end
+  def can_save?
+    current_round.complete? == false
+  end
 
-    def strip_tags(param)
-      ActionController::Base.helpers.strip_tags(param)
-    end
+  def users_without_admin
+    User.all.count - 1
+  end
+
+  def current_userarchyve(uid)
+    Userarchyves.where(user_id: uid, archyves_id: current_round.id).first
+  end
+
+  def strip_tags(param)
+    ActionController::Base.helpers.strip_tags(param)
+  end
 end

@@ -1,0 +1,13 @@
+Style/Documentation:
+  Enabled: false
+
+Style/AlignParameters:
+  Enabled: true
+  EnforcedStyle: with_fixed_indentation
+
+Style/MultilineOperationIndentation:
+  Enabled: true
+  EnforcedStyle: indented
+
+AllCops:
+  RunRailsCops: true

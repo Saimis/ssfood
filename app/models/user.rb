@@ -1,8 +1,16 @@
 class User < ActiveRecord::Base
   has_secure_password
-  #attr_accessible :email, :password, :password_confirmation
+
+  validates :name, presence: true
 
   before_create :create_remember
+
+  scope :without_admins, -> { where.not(name: 'admin') }
+  scope :enabled, -> { where(disabled: false) }
+
+  def admin?
+    name == 'admin'
+  end
 
   private
 

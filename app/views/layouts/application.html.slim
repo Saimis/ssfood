@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title Food
+
+    = stylesheet_link_tag    'application', media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag 'application', "data-turbolinks-track" => true
+    = javascript_include_tag '/javascripts/jquery.jqplot.min.js', "data-turbolinks-track" => true
+    = javascript_include_tag '/javascripts/jqplot.pieRenderer.min.js', "data-turbolinks-track" => true
+    = favicon_link_tag 'favicon.ico'
+
+    = csrf_meta_tags
+  body
+    = render 'navbar'
+    = render 'flashes'
+    = yield

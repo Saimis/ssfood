@@ -3,9 +3,9 @@ module UsersHelper
     @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", Archyves.last.id).count
   end
 
-  def current_round_userarchyve 
+  def current_round_userarchyve
     	@current_round_userarchyve = Userarchyves.where(
-    		user_id: current_user.try(:id), 
+    		user_id: current_user.try(:id),
     		archyves_id: current_round.try(:id)).first
   end
 

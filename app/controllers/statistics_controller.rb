@@ -1,11 +1,5 @@
 class StatisticsController < ApplicationController
-  before_action :admin_check, only: :amount
-
-  def admin_check
-    if current_user.nil? || current_user.name != 'admin'
-      redirect_to root_path
-    end
-  end
+  before_action :authenticate_admin!, only: :amount
 
   def index
     @restaurants_win = restaurants_win_data
@@ -13,6 +7,15 @@ class StatisticsController < ApplicationController
     @users_food_data = users_food_data
     @users_callers_data = users_callers_data
   end
+
+  def amount
+    @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
+      .index_by(&:id)
+    @userarchyves = user_archives
+    @total = @userarchyves.sum(:sum)
+  end
+
+  private
 
   def restaurants_win_data
     restaurants = Restaurant.all
@@ -35,7 +38,7 @@ class StatisticsController < ApplicationController
 
   def users_food_data
     users_data = []
-    users.map { |u| users_data.push([ u.name, counter(u.id) ]) }
+    users.map { |u| users_data.push([u.name, counter(u.id)]) }
     users_data
   end
 
@@ -44,13 +47,14 @@ class StatisticsController < ApplicationController
   end
 
   def users
-    @users ||= User.where("name != 'admin'")
+    @users ||= User.without_admins
   end
 
-  def amount
+  def user_archives
+    last_archive = Archyves.last
+    return [] unless last_archive
     admin = User.where(name: 'admin').first
-    @users_list = User.where("name != 'admin'").where(disabled: 0).select(:id, :name, :lastname).index_by(&:id)
-    @userarchyves = Userarchyves.where(archyves_id: Archyves.last.id).where('user_id != ?', admin.id)
-    @total = @userarchyves.sum(:sum)
+    Userarchyves.where(archyves_id: last_archive.id)
+      .where.not(user_id: admin.id)
   end
 end

@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  username: ssfood
+  password: toor
+  database: ssfood
+  pool: 5
+  timeout: 5000
+  host: localhost
