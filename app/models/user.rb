@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_secure_password
 
+  validates :name, presence: true
+
   before_create :create_remember
 
   scope :without_admins, -> { where.not(name: 'admin') }
