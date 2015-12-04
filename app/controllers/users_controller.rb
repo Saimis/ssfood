@@ -2,8 +2,6 @@ class UsersController < ApplicationController
   before_action :authenticate_admin!, only: [:index, :show, :edit,  :destroy, :new, :create]
   before_action :set_user, only:  [:show, :edit, :update, :destroy]
 
-  # GET /users`
-  # GET /users.json
   def index
     @users = User.all
   end
@@ -40,22 +38,16 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
   end
 
-  # GET /users/new
   def new
     @user = User.new
   end
 
-  # GET /users/1/edit
   def edit
   end
 
-  # POST /users
-  # POST /users.json
   def create
     @user = User.new(user_params)
 
@@ -70,8 +62,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params)
@@ -84,8 +74,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @user.destroy
     respond_to do |format|
@@ -112,8 +100,9 @@ class UsersController < ApplicationController
   end
 
   def voted_users
-    @voted_users = Userarchyves.where(
-      'voted_for > 0 AND archyves_id = ?', current_round.id).count
+    @voted_users = Userarchyves.where('voted_for > 0')
+      .where(archyves_id: current_round.id)
+      .count
   end
 
   def current_round
