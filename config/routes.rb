@@ -2,14 +2,16 @@ FoodApp::Application.routes.draw do
   root to: 'main#index'
 
   namespace :admin do
+    get '/' => 'dashboard#index', as: :dashboard
+    get 'session_start' => 'dashboard#session_start', as: :start_session
     resources :restaurants
     resources :users
+    resources :orders
   end
 
   resources :users
   resources :restaurants
   resources :sessions
-  resources :archyves
 
   # Users paths
   get 'changepass' => 'users#change_password'
@@ -40,9 +42,6 @@ FoodApp::Application.routes.draw do
   get 'start/:a/:b' => 'sessions#autologin'
 
   # Admin paths
-  get 'admin' => 'admin#index'
-  get 'admin/archyves' => 'admin#archyves'
-  post 'start' => 'admin#start'
   get 'stats' => 'statistics#index'
   get 'stats/amount' => 'statistics#amount'
 end

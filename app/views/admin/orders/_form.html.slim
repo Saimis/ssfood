@@ -1,0 +1,10 @@
+= simple_form_for @order, url: admin_order_path(@order) do |f|
+  = f.input :date
+  = f.input :restaurant_id
+  = f.input :caller
+  = f.input :payer
+  = f.input :gc
+
+  = f.button :submit
+
+br

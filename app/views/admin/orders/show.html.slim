@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Date:
+  = @order.date
+p
+  strong Restaurant:
+  = @order.restaurant_id
+p
+  strong Caller:
+  = @order.caller
+p
+  strong Payer:
+  = @order.payer
+p
+  strong Gc:
+  = @order.gc
+
+= link_to 'Edit', edit_admin_order_path(@order)
+'|
+= link_to 'Back', admin_orders_path

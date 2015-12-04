@@ -1,0 +1,26 @@
+h3 New session
+= link_to 'Start session', admin_start_session_path, class: 'btn btn-success'
+
+- if @last_order.present? && @last_order.date > Time.now
+  br
+  span.text-danger Voting session is active
+
+br
+br
+
+h3 Last order users
+table.table.table-hover
+  thead
+    tr
+      th User
+      th Voted for
+      th Food
+      th
+  tbody
+    - @order_users.each do |order_user|
+      tr
+        td = order_user.user_id
+        td = order_user.voted_for
+        td = order_user.food
+        td.text-right
+          = link_to 'Unvote', "/archyve/u/#{order_user.user_id}", class: 'btn btn-default'

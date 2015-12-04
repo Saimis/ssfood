@@ -9,7 +9,7 @@ nav.navbar.navbar-default.navbar-static-top
       a.navbar-brand href="#"  Food
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
-        = active_link_to 'Home', root_path, wrap_tag: :li
+        = active_link_to 'Home', root_path, wrap_tag: :li, active: :exclusive
         li
           = link_to 'Stats', '/stats'
 
@@ -20,10 +20,10 @@ nav.navbar.navbar-default.navbar-static-top
               | Administration
               span.caret
             ul.dropdown-menu
+              = active_link_to 'Dashboard', admin_dashboard_path, wrap_tag: :li, active: :exclusive
+              = active_link_to 'Orders', admin_orders_path, wrap_tag: :li
               = active_link_to 'Users', admin_users_path, wrap_tag: :li
               = active_link_to 'Restaurants', admin_restaurants_path, wrap_tag: :li
-              li
-                = link_to 'Admin panel', '/admin'
               li
                 = link_to 'Amounts', '/stats/amount'
 
