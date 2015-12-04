@@ -8,6 +8,8 @@ class StatisticsController < ApplicationController
     @users_callers_data = users_callers_data
   end
 
+  private
+
   def restaurants_win_data
     restaurants = Restaurant.all
     restaurants_data = []
@@ -38,13 +40,21 @@ class StatisticsController < ApplicationController
   end
 
   def users
-    @users ||= User.where("name != 'admin'")
+    @users ||= User.without_admins
   end
 
   def amount
-    admin = User.where(name: 'admin').first
-    @users_list = User.where("name != 'admin'").where(disabled: 0).select(:id, :name, :lastname).index_by(&:id)
-    @userarchyves = Userarchyves.where(archyves_id: Archyves.last.id).where('user_id != ?', admin.id)
+    @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
+      .index_by(&:id)
+    @userarchyves = user_archives
     @total = @userarchyves.sum(:sum)
+  end
+
+  def user_archives
+    last_archive = Archyves.last
+    return [] unless last_archive
+    admin = User.where(name: 'admin').first
+    Userarchyves.where(archyves_id: last_archive.id)
+      .where.not(user_id: admin.id)
   end
 end

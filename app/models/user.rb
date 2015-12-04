@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
 
   before_create :create_remember
 
+  scope :without_admins, -> { where.not(name: 'admin') }
+  scope :enabled, -> { where(disabled: false) }
+
   def admin?
     name == 'admin'
   end
