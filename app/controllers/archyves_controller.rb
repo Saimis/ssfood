@@ -2,28 +2,20 @@ class ArchyvesController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_archive, only: [:show, :edit, :update, :destroy]
 
-  # GET /users`
-  # GET /users.json
   def index
     @archyves = Archyves.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
   end
 
-  # GET /users/new
   def new
     @archyve = Archyves.new
   end
 
-  # GET /users/1/edit
   def edit
   end
 
-  # POST /users
-  # POST /users.json
   def create
     @archyve = Archyve.new(archyve_params)
 
@@ -38,8 +30,6 @@ class ArchyvesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
       if @archyve.update(archyve_params)
@@ -52,8 +42,6 @@ class ArchyvesController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
     @archyve.destroy
     respond_to do |format|

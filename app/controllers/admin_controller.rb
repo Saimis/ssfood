@@ -3,11 +3,11 @@ class AdminController < ApplicationController
 
   def index
     @archyve = Archyves.last
-    @users = User.order('name').all
+    @users = User.order(:name).all
     @archyves = Archyves.last(user_count)
     @userarchyves = Userarchyves
                       .where(archyves_id: @archyves.last.id)
-                      .order('archyves_id').all rescue []
+                      .order(:archyves_id).all rescue []
     @restaurants = Restaurant.all
   end
 
@@ -65,20 +65,20 @@ class AdminController < ApplicationController
     id_list.uniq!
     id_list = [] if id_list.size >= user_count
     condition = id_list.empty? ? '' : "id not in (#{id_list.join(",")})"
-    users = User.where("name != 'admin'").where(disabled: 0).where(condition)
+    users = User.without_admins.enabled.where(condition)
     user = users.shuffle.first
     @temp_list << user.id
     user
   end
 
   def user_count
-    User.where("name != 'admin'").where(disabled: 0).count
+    User.without_admins.enabled.count
   end
 
   def archyves
-    @users = User.order('name').all
+    @users = User.order(:name).all
     @archyves = Archyves.all
-    @userarchyves = Userarchyves.order('archyves_id').all
+    @userarchyves = Userarchyves.order(:archyves_id).all
     @restaurants = Restaurant.all
   end
 end
