@@ -1,0 +1,21 @@
+div.controls
+  - if user_signed_in?
+    - if current_user.admin?
+      = link_to 'Home', root_path
+      = ' | '
+
+
+    - if current_user.admin?
+      = link_to 'Admin panel', 'admin'
+      = ' | '
+      = link_to 'Amounts', 'stats/amount'
+      = ' | '
+    - else
+      = link_to 'Stats', 'stats'
+      = ' | '
+
+    = link_to 'Profile', 'changepass'
+    = ' | '
+    = link_to "Log out", log_out_path
+  - else
+    = link_to 'Log in', log_in_path
