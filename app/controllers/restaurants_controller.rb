@@ -1,11 +1,4 @@
 class RestaurantsController < ApplicationController
-  before_action :authenticate_admin!, except: [:vote]
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @restaurants = Restaurant.all
-  end
-
   def vote
     if can_vote?
       user = User.where(remember: cookies[:remember]).first
@@ -27,74 +20,23 @@ class RestaurantsController < ApplicationController
     redirect_to root_path
   end
 
-  def show
-  end
-
-  def new
-    @restaurant = Restaurant.new
-  end
-
-  def edit
-  end
-
-  def create
-    @restaurant = Restaurant.new(restaurant_params)
-
-    respond_to do |format|
-      if @restaurant.save
-        format.html { redirect_to @restaurant, notice: 'Restaurant was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @restaurant }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @restaurant.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @restaurant.update(restaurant_params)
-        format.html { redirect_to @restaurant, notice: 'Restaurant was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @restaurant.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @restaurant.destroy
-    respond_to do |format|
-      format.html { redirect_to restaurants_url }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
-  def set_restaurant
-    @restaurant = Restaurant.find(params[:id])
-  end
-
-  def restaurant_params
-    params.require(:restaurant).permit(:name, :about, :votes, :waslast, :lastused, :phone, :winner)
-  end
-
-  def voted_users
-    @voted_users = OrderUser.with_restaurant.where(order_id: current_round.id).count
-  end
-
   def current_round
-    Order.last
+    @last_order ||= Order.last
+  end
+
+  def voted_users_count
+    @voted_users_count ||= OrderUser
+      .with_restaurant.where(order_id: current_round.id).count
   end
 
   def can_vote?
-    users_without_admin = User.all.count - 1
+    users_without_admins_count = User.without_admins.count
 
     current_user &&
       Time.zone.now < current_round.date.to_datetime &&
-      voted_users <= users_without_admin &&
+      voted_users_count <= users_without_admins_count &&
       params[:id].present?
   end
 end
