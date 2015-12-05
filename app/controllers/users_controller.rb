@@ -101,12 +101,12 @@ class UsersController < ApplicationController
 
   def voted_users
     @voted_users = OrderUser.with_restaurant
-      .where(archyves_id: current_round.id)
+      .where(order_id: current_round.id)
       .count
   end
 
   def current_round
-    Archyves.last
+    Order.last
   end
 
   def can_save?
@@ -118,7 +118,7 @@ class UsersController < ApplicationController
   end
 
   def current_order_user(uid)
-    OrderUser.where(user_id: uid, archyves_id: current_round.id).first
+    OrderUser.where(user_id: uid, order_id: current_round.id).first
   end
 
   def strip_tags(param)

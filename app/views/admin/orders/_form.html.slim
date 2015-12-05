@@ -1,4 +1,4 @@
-= simple_form_for @order, url: admin_order_path(@order) do |f|
+= simple_form_for [:admin, @order] do |f|
   = f.input :date
   = f.input :restaurant_id
   = f.input :caller

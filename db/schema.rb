@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205000723) do
+ActiveRecord::Schema.define(version: 20151205002931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "archyves", force: :cascade do |t|
+  create_table "order_users", force: :cascade do |t|
+    t.integer  "order_id"
+    t.integer  "restaurant_id"
+    t.string   "food"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "sum"
+  end
+
+  create_table "orders", force: :cascade do |t|
     t.datetime "date"
     t.integer  "restaurant_id"
     t.integer  "caller"
@@ -30,16 +40,6 @@ ActiveRecord::Schema.define(version: 20151205000723) do
     t.text     "callers",       default: "--- []\n"
     t.text     "payers",        default: "--- []\n"
     t.text     "gcs",           default: "--- []\n"
-  end
-
-  create_table "order_users", force: :cascade do |t|
-    t.integer  "archyves_id"
-    t.integer  "restaurant_id"
-    t.string   "food"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "sum"
   end
 
   create_table "restaurants", force: :cascade do |t|

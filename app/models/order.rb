@@ -1,4 +1,4 @@
-class Archyves < ActiveRecord::Base
+class Order < ActiveRecord::Base
   def current?
     date > Time.zone.now
   end

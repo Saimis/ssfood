@@ -11,7 +11,7 @@ class RestaurantsController < ApplicationController
       user = User.where(remember: cookies[:remember]).first
       if user
         restaurant = Restaurant.find(params[:id])
-        order_user = OrderUser.where(user_id: user.id, archyves_id: current_round.id).first_or_create
+        order_user = OrderUser.where(user_id: user.id, order_id: current_round.id).first_or_create
 
         if order_user.restaurant_id.nil? && params[:act].nil?
           restaurant.increment(:votes, 1)
@@ -82,11 +82,11 @@ class RestaurantsController < ApplicationController
   end
 
   def voted_users
-    @voted_users = OrderUser.with_restaurant.where(archyves_id: current_round.id).count
+    @voted_users = OrderUser.with_restaurant.where(order_id: current_round.id).count
   end
 
   def current_round
-    Archyves.last
+    Order.last
   end
 
   def can_vote?

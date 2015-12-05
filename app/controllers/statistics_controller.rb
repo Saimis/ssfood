@@ -20,13 +20,13 @@ class StatisticsController < ApplicationController
   def restaurants_win_data
     restaurants = Restaurant.all
     restaurants_data = []
-    restaurants.map { |r| restaurants_data.push([ r.name, Archyves.where(restaurant_id: r.id).count ]) }
+    restaurants.map { |r| restaurants_data.push([ r.name, Order.where(restaurant_id: r.id).count ]) }
     restaurants_data
   end
 
   def users_callers_data
     users_data = []
-    users.map { |u| users_data.push([ u.name, Archyves.where(caller: u.id).count ]) }
+    users.map { |u| users_data.push([ u.name, Order.where(caller: u.id).count ]) }
     users_data
   end
 
@@ -51,10 +51,10 @@ class StatisticsController < ApplicationController
   end
 
   def order_users
-    last_archive = Archyves.last
-    return [] unless last_archive
+    last_order = Order.last
+    return [] unless last_order
     admin = User.where(name: 'admin').first
-    OrderUser.where(archyves_id: last_archive.id)
+    OrderUser.where(order_id: last_order.id)
       .where.not(user_id: admin.id)
   end
 end

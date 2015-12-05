@@ -9,7 +9,7 @@ module Admin
       callers = select_caller
       payers = select_payer
       garbage_collectors = select_garbage_collector
-      archyve = Archyves.create(
+      order = Order.create(
         date: Time.now + time_gap,
         food_datetime: Time.now + time_gap + food_time_gap,
         caller: callers[1],
@@ -21,12 +21,12 @@ module Admin
         complete: false)
 
       User.all.each do |user|
-        OrderUser.create(user_id: user.id, archyves_id: archyve.id)
+        OrderUser.create(user_id: user.id, order_id: order.id)
       end
     end
 
     def select_caller
-      callers =  Archyves.last.nil? ? [] : YAML::load(Archyves.last.callers)
+      callers =  Order.last.nil? ? [] : YAML::load(Order.last.callers)
       callers = [callers.last] if callers.size >= user_count
       caller = get_randon_user(callers)
       callers << caller.id
@@ -34,7 +34,7 @@ module Admin
     end
 
     def select_payer
-      payers =  Archyves.last.nil? ? [] : YAML::load(Archyves.last.payers)
+      payers =  Order.last.nil? ? [] : YAML::load(Order.last.payers)
       payers = [payers.last] if payers.size >= user_count
       payer = get_randon_user(payers)
       payers << payer.id
@@ -42,7 +42,7 @@ module Admin
     end
 
     def select_garbage_collector
-      garbage_collectors =  Archyves.last.nil? ? [] : YAML::load(Archyves.last.gcs)
+      garbage_collectors =  Order.last.nil? ? [] : YAML::load(Order.last.gcs)
       garbage_collectors = [garbage_collectors.last] if garbage_collectors.size >= user_count
       garbage_collector = get_randon_user(garbage_collectors)
       garbage_collectors << garbage_collector.id

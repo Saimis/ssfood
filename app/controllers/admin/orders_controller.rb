@@ -2,21 +2,21 @@ class Admin::OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
 
   def index
-    @orders = Archyves.all
+    @orders = Order.all
   end
 
   def show
   end
 
   def new
-    @order = Archyves.new
+    @order = Order.new
   end
 
   def edit
   end
 
   def create
-    @order = Archyves.new(order_params)
+    @order = Order.new(order_params)
 
     respond_to do |format|
       if @order.save
@@ -52,10 +52,10 @@ class Admin::OrdersController < ApplicationController
   private
 
   def set_order
-    @order = Archyves.find(params[:id])
+    @order = Order.find(params[:id])
   end
 
   def order_params
-    params.require(:archyves).permit(:date, :restaurant_id, :caller, :payer, :gc)
+    params.require(:order).permit(:date, :restaurant_id, :caller, :payer, :gc)
   end
 end

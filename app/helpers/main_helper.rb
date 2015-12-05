@@ -1,6 +1,6 @@
 module MainHelper
   def current_round
-    @current_round ||= Archyves.last
+    @current_round ||= Order.last
   end
 
   def current_round_ended?
