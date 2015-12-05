@@ -13,7 +13,7 @@ table.table.table-hover
   tbody
     - @orders.each do |order|
       tr class=('success' if order.current?)
-        td = order.date
+        td = order.date.to_s(:db)
         td = order.restaurant.try(:name)
         td = order.caller.try(:name)
         td = order.payer.try(:name)
