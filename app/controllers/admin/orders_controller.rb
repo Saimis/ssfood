@@ -56,6 +56,7 @@ class Admin::OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:date, :restaurant_id, :caller, :payer, :gc)
+    params.require(:order).permit(
+      :date, :restaurant_id, :caller_id, :payer_id, :garbage_collector_id)
   end
 end

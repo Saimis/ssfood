@@ -9,14 +9,14 @@ module Admin
       callers = select_caller
       payers = select_payer
       garbage_collectors = select_garbage_collector
-      order = Order.create(
+      order = Order.create!(
         date: Time.now + time_gap,
         food_datetime: Time.now + time_gap + food_time_gap,
-        caller: callers[1],
+        caller_id: callers[1],
         callers: YAML::dump(callers[0]),
-        payer: payers[1],
+        payer_id: payers[1],
         payers: YAML::dump(payers[0]),
-        gc: garbage_collectors[1],
+        garbage_collector_id: garbage_collectors[1],
         gcs: YAML::dump(garbage_collectors[0]),
         complete: false)
 

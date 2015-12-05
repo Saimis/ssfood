@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205002931) do
+ActiveRecord::Schema.define(version: 20151205004637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,17 +29,17 @@ ActiveRecord::Schema.define(version: 20151205002931) do
   create_table "orders", force: :cascade do |t|
     t.datetime "date"
     t.integer  "restaurant_id"
-    t.integer  "caller"
+    t.integer  "caller_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "food_time"
     t.datetime "food_datetime"
-    t.integer  "complete",      default: 0
-    t.integer  "payer"
-    t.integer  "gc"
-    t.text     "callers",       default: "--- []\n"
-    t.text     "payers",        default: "--- []\n"
-    t.text     "gcs",           default: "--- []\n"
+    t.integer  "complete",             default: 0
+    t.integer  "payer_id"
+    t.integer  "garbage_collector_id"
+    t.text     "callers",              default: "--- []\n"
+    t.text     "payers",               default: "--- []\n"
+    t.text     "gcs",                  default: "--- []\n"
   end
 
   create_table "restaurants", force: :cascade do |t|

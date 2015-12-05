@@ -38,13 +38,13 @@ class MainController < ApplicationController
   end
 
   def can_end_round?
-    current_user and current_user.id == current_round.caller and
+    current_user and current_user.id == current_round.caller_id and
     Time.now > current_round.date and params[:force_end_round]
   end
 
   def food_history
     return {} unless current_round.restaurant_id && current_user
-    OrderUser.joins(:orders)
+    OrderUser.joins(:order)
       .where(user_id: current_user.id)
       .where(orders: { restaurant_id: current_round.restaurant_id })
       .order(id: :desc)

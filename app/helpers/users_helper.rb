@@ -13,7 +13,7 @@ module UsersHelper
   end
 
   def user_last_food(user_id)
-    OrderUser.joins(:orders)
+    OrderUser.joins(:order)
       .where.not(food: nil)
       .where(user_id: user_id)
       .where(orders: { restaurant_id: current_round.restaurant_id })

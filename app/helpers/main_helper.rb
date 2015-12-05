@@ -8,6 +8,6 @@ module MainHelper
   end
 
   def caller?
-    current_round.caller == @current_user.try(:id)
+    current_round.caller_id == @current_user.try(:id)
   end
 end

@@ -26,7 +26,7 @@ class StatisticsController < ApplicationController
 
   def users_callers_data
     users_data = []
-    users.map { |u| users_data.push([ u.name, Order.where(caller: u.id).count ]) }
+    users.map { |u| users_data.push([ u.name, Order.where(caller_id: u.id).count ]) }
     users_data
   end
 

@@ -13,7 +13,7 @@
   #user_holder
     - @users.each do |user|
       = render partial: 'user', locals: { user: user }
-    - if current_round.caller == @current_user.try(:id)
+    - if current_round.caller_id == @current_user.try(:id)
       #caller_popup
 - else
   .no_session

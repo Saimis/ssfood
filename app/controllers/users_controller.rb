@@ -53,7 +53,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to admin_url}
+        format.html { redirect_to admin_dashboard_url }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }

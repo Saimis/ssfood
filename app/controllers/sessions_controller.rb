@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       sign_in user
 
       if user.admin?
-        redirect_to admin_url
+        redirect_to admin_dashboard_url
       else
         redirect_to root_path
       end

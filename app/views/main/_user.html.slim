@@ -3,13 +3,13 @@
     .user_name
       - if user.id == @current_user.try(:id)
         .history title="History"
-      - if current_round.caller == user.id
+      - if current_round.caller_id == user.id
         span.user_name_activefield.caller title="Caller"
           = user.name
-      - elsif  current_round.payer == user.id
+      - elsif  current_round.payer_id == user.id
         span.user_name_activefield.payer title="Bankster"
           = user.name
-      - elsif  current_round.gc == user.id
+      - elsif  current_round.garbage_collector_id == user.id
         span.user_name_activefield.gc title="Garbage collector"
           = user.name
       - else

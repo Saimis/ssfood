@@ -5,16 +5,16 @@ p
   = @order.date
 p
   strong Restaurant:
-  = @order.restaurant_id
+  = @order.restaurant.try(:name)
 p
   strong Caller:
-  = @order.caller
+  = @order.caller.try(:name)
 p
   strong Payer:
-  = @order.payer
+  = @order.payer.try(:name)
 p
-  strong Gc:
-  = @order.gc
+  strong Garbage collector:
+  = @order.garbage_collector.try(:name)
 
 = link_to 'Edit', edit_admin_order_path(@order)
 '|

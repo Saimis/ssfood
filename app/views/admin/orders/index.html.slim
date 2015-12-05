@@ -7,17 +7,17 @@ table.table.table-hover
       th Restaurant
       th Caller
       th Payer
-      th Gc
+      th Garbage collector
       th
 
   tbody
     - @orders.each do |order|
       tr class=('success' if order.current?)
         td = order.date
-        td = order.restaurant_id
-        td = order.caller
-        td = order.payer
-        td = order.gc
+        td = order.restaurant.try(:name)
+        td = order.caller.try(:name)
+        td = order.payer.try(:name)
+        td = order.garbage_collector.try(:name)
         td.text-right
           .btn-group
             = link_to 'Show', admin_order_path(order), class: 'btn btn-default'
