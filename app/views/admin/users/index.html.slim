@@ -20,7 +20,7 @@ table.table.table-hover
         td = user.disabled? ? 'Yes' : 'No'
         td = user.food
         td = user.sum
-        td
+        td.text-right
           .btn-group
             = link_to 'Show', admin_user_path(user), class: 'btn btn-default'
             = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-default'
