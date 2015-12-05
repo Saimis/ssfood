@@ -100,7 +100,7 @@ class UsersController < ApplicationController
   end
 
   def voted_users
-    @voted_users = OrderUser.where('voted_for > 0')
+    @voted_users = OrderUser.with_restaurant
       .where(archyves_id: current_round.id)
       .count
   end

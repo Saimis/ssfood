@@ -1,7 +1,7 @@
 module UsersHelper
   def voted_users
     @voted_users = OrderUser
-      .where('voted_for > 0')
+      .with_restaurant
       .where(archyves_id: Archyves.last.id)
       .count
   end
