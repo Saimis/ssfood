@@ -11,7 +11,7 @@ module Admin
     private
 
     def set_order_user
-      @order_user = Userarchyves.find(params[:id])
+      @order_user = OrderUser.find(params[:id])
     end
   end
 end

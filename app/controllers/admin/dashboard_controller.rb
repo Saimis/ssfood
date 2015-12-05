@@ -17,7 +17,7 @@ module Admin
     def last_order_users
       return [] if @last_order.blank?
 
-      Userarchyves.where(archyves_id: @last_order.id).order(:user_id)
+      OrderUser.where(archyves_id: @last_order.id).order(:user_id)
     end
   end
 end

@@ -15,11 +15,11 @@ class UsersController < ApplicationController
     if current_user and can_save?
       user = self.current_user
       if self.current_user
-        userarchyve = current_userarchyve(user.id)
-        user.food = userarchyve.food = strip_tags(params[:food])
-        user.sum = userarchyve.sum = strip_tags(params[:sum])
+        order_user = current_order_user(user.id)
+        user.food = order_user.food = strip_tags(params[:food])
+        user.sum = order_user.sum = strip_tags(params[:sum])
         user.save
-        userarchyve.save
+        order_user.save
       end
     end
     redirect_to root_path
@@ -29,10 +29,10 @@ class UsersController < ApplicationController
     if current_user and can_save?
       user = self.current_user
       if self.current_user
-        userarchyve = current_userarchyve(user.id)
-        user.sum = userarchyve.sum = strip_tags(params[:sum])
+        order_user = current_order_user(user.id)
+        user.sum = order_user.sum = strip_tags(params[:sum])
         user.save
-        userarchyve.save
+        order_user.save
       end
     end
     redirect_to root_path
@@ -100,7 +100,7 @@ class UsersController < ApplicationController
   end
 
   def voted_users
-    @voted_users = Userarchyves.where('voted_for > 0')
+    @voted_users = OrderUser.where('voted_for > 0')
       .where(archyves_id: current_round.id)
       .count
   end
@@ -117,8 +117,8 @@ class UsersController < ApplicationController
     User.all.count - 1
   end
 
-  def current_userarchyve(uid)
-    Userarchyves.where(user_id: uid, archyves_id: current_round.id).first
+  def current_order_user(uid)
+    OrderUser.where(user_id: uid, archyves_id: current_round.id).first
   end
 
   def strip_tags(param)

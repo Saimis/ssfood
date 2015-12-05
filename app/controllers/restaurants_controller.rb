@@ -11,17 +11,17 @@ class RestaurantsController < ApplicationController
       user = User.where(remember: cookies[:remember]).first
       if user
         restaurant = Restaurant.find(params[:id])
-        userarchyve = Userarchyves.where(user_id: user.id, archyves_id: current_round.id).first_or_create
+        order_user = OrderUser.where(user_id: user.id, archyves_id: current_round.id).first_or_create
 
-        if userarchyve.voted_for.nil? && params[:act].nil?
+        if order_user.voted_for.nil? && params[:act].nil?
           restaurant.increment(:votes, 1)
-          userarchyve.voted_for = params[:id]
-        elsif userarchyve.voted_for && params[:act].present?
+          order_user.voted_for = params[:id]
+        elsif order_user.voted_for && params[:act].present?
           restaurant.decrement(:votes, 1)
-          userarchyve.voted_for = nil
+          order_user.voted_for = nil
         end
         restaurant.save
-        userarchyve.save
+        order_user.save
       end
     end
     redirect_to root_path
@@ -82,7 +82,7 @@ class RestaurantsController < ApplicationController
   end
 
   def voted_users
-    @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
+    @voted_users = OrderUser.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
   end
 
   def current_round

@@ -21,7 +21,7 @@ module Admin
         complete: false)
 
       User.all.each do |user|
-        Userarchyves.create(user_id: user.id, archyves_id: archyve.id)
+        OrderUser.create(user_id: user.id, archyves_id: archyve.id)
       end
     end
 

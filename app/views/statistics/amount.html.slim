@@ -12,13 +12,13 @@
         td Suma
         td Parašas
     tbody
-      - @userarchyves.each do |archyve|
-        - next unless !archyve.sum.nil? and @users_list.include? archyve.user_id
+      - @order_users.each do |order_user|
+        - next unless !order_user.sum.nil? and @users_list.include? order_user.user_id
         tr
-          td = @users_list[archyve.user_id].name
-          td = @users_list[archyve.user_id].lastname
+          td = @users_list[order_user.user_id].name
+          td = @users_list[order_user.user_id].lastname
           td
-            = archyve.sum
+            = order_user.sum
             | &euro;
           td
     tfooter

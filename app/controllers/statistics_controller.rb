@@ -11,8 +11,8 @@ class StatisticsController < ApplicationController
   def amount
     @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
       .index_by(&:id)
-    @userarchyves = user_archives
-    @total = @userarchyves.sum(:sum)
+    @order_users = order_users
+    @total = @order_users.sum(:sum)
   end
 
   private
@@ -43,18 +43,18 @@ class StatisticsController < ApplicationController
   end
 
   def counter(uid)
-    Userarchyves.where(user_id: uid).where('food IS NOT NULL').count
+    OrderUser.where(user_id: uid).where('food IS NOT NULL').count
   end
 
   def users
     @users ||= User.without_admins
   end
 
-  def user_archives
+  def order_users
     last_archive = Archyves.last
     return [] unless last_archive
     admin = User.where(name: 'admin').first
-    Userarchyves.where(archyves_id: last_archive.id)
+    OrderUser.where(archyves_id: last_archive.id)
       .where.not(user_id: admin.id)
   end
 end

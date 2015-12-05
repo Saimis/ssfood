@@ -14,7 +14,7 @@ class MainController < ApplicationController
   #the main information source for long poller, returns all information about users and restaurants
   def get_data
     users_without_admin = User.without_admins.enabled.count
-    users = Userarchyves.select(:user_id, :food, :sum, :voted_for)
+    users = OrderUser.select(:user_id, :food, :sum, :voted_for)
       .where(archyves_id: current_round.id).all
     retaurants = Restaurant.select(:id, :votes).all
     end_round
@@ -43,11 +43,11 @@ class MainController < ApplicationController
   end
 
   def food_history
-    return {} unless current_round.restaurant_id and current_user
-    Userarchyves.joins(:archyves)
-        .where("userarchyves.user_id = ?", current_user.id)
-        .where("archyves.restaurant_id = ?", current_round.restaurant_id)
-        .order("userarchyves.id DESC")
+    return {} unless current_round.restaurant_id && current_user
+    OrderUser.joins(:archyves)
+      .where(user_id: current_user.id)
+      .where(archyves: { restaurant_id: current_round.restaurant_id })
+      .order(id: :desc)
   end
 
   def voting_ended?
@@ -72,7 +72,7 @@ class MainController < ApplicationController
   end
 
   def voted_users
-    @voted_users = Userarchyves.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
+    @voted_users = OrderUser.where("voted_for > 0 AND archyves_id = ?", current_round.id).count
   end
 
   def current_round

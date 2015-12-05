@@ -14,7 +14,7 @@ table.table.table-hover
 
   tbody
     - @orders.each do |order|
-      tr
+      tr class=('success' if order.current?)
         td = order.date
         td = order.restaurant_id
         td = order.caller
