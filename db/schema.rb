@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20151205004637) do
   create_table "order_users", force: :cascade do |t|
     t.integer  "order_id"
     t.integer  "restaurant_id"
-    t.string   "food"
+    t.string   "food",          limit: 255
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -43,25 +43,25 @@ ActiveRecord::Schema.define(version: 20151205004637) do
   end
 
   create_table "restaurants", force: :cascade do |t|
-    t.string   "name"
-    t.string   "about"
+    t.string   "name",       limit: 255
+    t.string   "about",      limit: 255
     t.integer  "votes"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone"
+    t.string   "phone",      limit: 255
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "food"
+    t.string   "name",            limit: 255
+    t.string   "food",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember"
-    t.string   "password"
-    t.string   "password_digest"
-    t.integer  "disabled",        default: 0
+    t.string   "remember",        limit: 255
+    t.string   "password",        limit: 255
+    t.string   "password_digest", limit: 255
+    t.integer  "disabled",                    default: 0
     t.float    "sum"
-    t.string   "lastname"
+    t.string   "lastname",        limit: 255
   end
 
   add_index "users", ["remember"], name: "index_users_on_remember", using: :btree

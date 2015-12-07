@@ -11,6 +11,7 @@ FoodApp::Application.routes.draw do
   end
 
   resources :sessions
+  resources :users, only: [:update]
 
   # Users paths
   get 'changepass' => 'users#change_password'

@@ -19,7 +19,7 @@ table.table.table-hover
   tbody
     - @order_users.each do |order_user|
       tr
-        td = order_user.user.name
+        td = order_user.user.try(:name)
         td = order_user.restaurant.try(:name)
         td = order_user.food
         td.text-right
