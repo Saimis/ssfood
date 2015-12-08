@@ -6,7 +6,7 @@ h1 Listing users
       tr
         th #
         th Name
-        th Lastname
+        th Last name
         th Disabled
         th Food
         th Sum
@@ -17,7 +17,7 @@ h1 Listing users
         tr
           th scope="row" = user.id
           td = user.name
-          td = user.lastname
+          td = user.last_name
           td = user.disabled? ? 'Yes' : 'No'
           td = user.food
           td = user.sum

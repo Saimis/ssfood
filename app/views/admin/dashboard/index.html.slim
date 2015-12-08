@@ -19,8 +19,13 @@ table.table.table-hover
   tbody
     - @order_users.each do |order_user|
       tr
-        td = order_user.user.try(:name)
-        td = order_user.restaurant.try(:name)
+        td
+          - if order_user.user
+            = link_to order_user.user.name, admin_user_path(order_user.user)
+        td
+          - if order_user.restaurant
+            = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
+
         td = order_user.food
         td.text-right
           = link_to 'Unvote', admin_order_user_path(order_user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-default'

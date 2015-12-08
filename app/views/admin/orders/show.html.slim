@@ -1,21 +1,46 @@
-p#notice = notice
-
 p
   strong Date:
-  = @order.date
+  =< @order.date.to_s(:db)
+p
+  strong Food date:
+  =< @order.food_datetime.to_s(:db)
 p
   strong Restaurant:
-  = @order.restaurant.try(:name)
+  =< @order.restaurant.try(:name)
 p
   strong Caller:
-  = @order.caller.try(:name)
+  =< @order.caller.try(:name)
 p
   strong Payer:
-  = @order.payer.try(:name)
+  =< @order.payer.try(:name)
 p
   strong Garbage collector:
-  = @order.garbage_collector.try(:name)
+  =< @order.garbage_collector.try(:name)
 
-= link_to 'Edit', edit_admin_order_path(@order)
-'|
-= link_to 'Back', admin_orders_path
+br
+
+.btn-toolbar
+  = link_to 'Edit', edit_admin_order_path(@order), class: 'btn btn-primary'
+  = link_to 'Back', admin_orders_path, class: 'btn btn-primary'
+br
+br
+
+h4 Users
+
+table.table.table-hover
+  thead
+    tr
+      th User
+      th Voted for
+      th Food
+  tbody
+    - @order.users.each do |order_user|
+      tr
+        td
+          - if order_user.user
+            = link_to order_user.user.name, admin_user_path(order_user.user)
+        td
+          - if order_user.restaurant
+            = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
+
+        td = order_user.food
