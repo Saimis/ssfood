@@ -8,13 +8,6 @@ class StatisticsController < ApplicationController
     @users_callers_data = users_callers_data
   end
 
-  def amount
-    @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
-      .index_by(&:id)
-    @order_users = order_users
-    @total = @order_users.sum(:sum)
-  end
-
   private
 
   def restaurants_win_data
@@ -48,13 +41,5 @@ class StatisticsController < ApplicationController
 
   def users
     @users ||= User.without_admins
-  end
-
-  def order_users
-    last_order = Order.last
-    return [] unless last_order
-    admin = User.where(name: 'admin').first
-    OrderUser.where(order_id: last_order.id)
-      .where.not(user_id: admin.id)
   end
 end

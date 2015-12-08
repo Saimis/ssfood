@@ -4,10 +4,12 @@ FoodApp::Application.routes.draw do
   namespace :admin do
     get '/' => 'dashboard#index', as: :dashboard
     get 'session_start' => 'dashboard#session_start', as: :start_session
+
     resources :restaurants
     resources :users
     resources :orders
     resources :order_users, only: [:destroy]
+    resources :amounts, only: :index
   end
 
   resources :sessions
@@ -35,5 +37,4 @@ FoodApp::Application.routes.draw do
 
   # Admin paths
   get 'stats' => 'statistics#index'
-  get 'stats/amount' => 'statistics#amount'
 end

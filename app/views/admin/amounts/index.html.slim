@@ -1,0 +1,38 @@
+.row
+  .col-sm-12
+    .text-center
+      h4 UAB “SameSystem”
+      p = @order.date.strftime('%Y-%m-%d')
+      p
+        b = @order.restaurant.try(:name)
+
+br
+
+.row
+  .col-sm-12
+    table.table.table-bordered
+      thead
+        tr
+          th Vardas
+          th Pavardė
+          th Suma
+          th Parašas
+      tbody
+        - @order_users.each do |order_user|
+          - next if order_user.sum.blank?
+
+          tr
+            td = order_user.user.name
+            td = order_user.user.lastname
+            td
+              = order_user.sum
+              | &euro;
+            td
+      tfooter
+        tr
+          td
+          td Suma
+          td
+            = @total.presence || 0
+            | &euro;
+          td
