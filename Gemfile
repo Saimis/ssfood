@@ -24,8 +24,13 @@ group :development do
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'faker'
   gem 'pry-rails'
+end
+
+group :production do
+  gem 'rails_12factor' # For Heroku
 end
 
 # Assets
