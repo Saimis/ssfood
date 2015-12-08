@@ -12,6 +12,7 @@ FoodApp::Application.routes.draw do
     resources :amounts, only: :index
   end
 
+  resources :statistics, only: [:index]
   resources :sessions
   resources :users, only: [:update]
 
@@ -34,7 +35,4 @@ FoodApp::Application.routes.draw do
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'
   get 'start/:a/:b' => 'sessions#autologin'
-
-  # Admin paths
-  get 'stats' => 'statistics#index'
 end

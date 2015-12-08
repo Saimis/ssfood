@@ -10,8 +10,7 @@ nav.navbar.navbar-inverse.navbar-static-top
     #navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
         = active_link_to 'Home', root_path, wrap_tag: :li, active: :exclusive
-        li
-          = link_to 'Stats', '/stats'
+        = active_link_to 'Statistics', statistics_path, wrap_tag: :li
 
         / Administration
         - if current_user.admin?

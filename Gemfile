@@ -4,6 +4,7 @@ ruby '2.2.3'
 
 gem 'active_link_to'
 gem 'bcrypt', '~> 3.1.10'
+gem 'chartkick'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'jbuilder', '~> 2.3'
 gem 'memoist'

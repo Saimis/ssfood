@@ -1,6 +1,4 @@
 class StatisticsController < ApplicationController
-  before_action :authenticate_admin!, only: :amount
-
   def index
     @restaurants_win = restaurants_win_data
     @users_votes_data = users_votes_data
