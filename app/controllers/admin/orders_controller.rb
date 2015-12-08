@@ -4,7 +4,7 @@ module Admin
     before_action :set_order, only: [:show, :edit, :update, :destroy]
 
     def index
-      @orders = Order.order(:id)
+      @orders = Order.order(id: :desc)
     end
 
     def show
