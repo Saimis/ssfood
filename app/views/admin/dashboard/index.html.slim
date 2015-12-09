@@ -1,4 +1,4 @@
-h3 New session
+h2 New session
 = link_to 'Start session', admin_start_session_path, class: 'btn btn-success'
 
 - if @last_order.present? && @last_order.date > Time.now
@@ -7,8 +7,16 @@ h3 New session
 
 br
 br
+hr
 
-h3 Last order users
+- if @last_order.current?
+  h2 Current order
+- else
+  h2 Last order
+
+= render partial: 'last_order_table', locals: { order: @last_order }
+
+h4 Users
 table.table.table-hover
   thead
     tr
@@ -28,4 +36,4 @@ table.table.table-hover
 
         td = order_user.food
         td.text-right
-          = link_to 'Unvote', admin_order_user_path(order_user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-default'
+          = link_to 'Delete', admin_order_user_path(order_user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
