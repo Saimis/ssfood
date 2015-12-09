@@ -1,15 +1,30 @@
 module Admin
   class SessionStart
-    # TODO: Totally refactor!
     def initialize
+      clear_current_foods!
+      reset_votes!
+      create_order!
+      create_order_users!
+    end
+
+    private
+
+    def clear_current_foods!
       User.update_all(food: nil, sum: nil)
+    end
+
+    def reset_votes!
       Restaurant.update_all(votes: 0)
+    end
+
+    # TODO: Refactor
+    def create_order!
       time_gap = 1200
       food_time_gap = 2400
       callers = select_caller
       payers = select_payer
       garbage_collectors = select_garbage_collector
-      order = Order.create!(
+      @order = Order.create!(
         date: Time.now + time_gap,
         food_datetime: Time.now + time_gap + food_time_gap,
         caller_id: callers[1],
@@ -19,11 +34,15 @@ module Admin
         garbage_collector_id: garbage_collectors[1],
         gcs: YAML::dump(garbage_collectors[0]),
         complete: false)
+    end
 
-      User.all.each do |user|
+    def create_order_users!
+      User.without_admins.enabled.each do |user|
         OrderUser.create(user_id: user.id, order_id: order.id)
       end
     end
+
+    # REFACTOR :
 
     def select_caller
       callers =  Order.last.nil? ? [] : YAML::load(Order.last.callers)
