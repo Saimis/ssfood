@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208161445) do
+ActiveRecord::Schema.define(version: 20151209113518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 20151208161445) do
     t.integer  "caller_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "food_time"
     t.datetime "food_datetime"
     t.integer  "complete",             default: 0
     t.integer  "payer_id"
