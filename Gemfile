@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+ruby '2.3.0'
 
 gem 'active_link_to'
 gem 'bcrypt', '~> 3.1.10'
 gem 'chartkick'
-gem 'coffee-rails', '~> 4.1.0'
-gem 'jbuilder', '~> 2.3'
+gem 'coffee-rails', '~> 4.1.1'
+gem 'jbuilder', '~> 2.4'
 gem 'memoist'
 gem 'pg'
 gem 'postgres_ext'
@@ -37,7 +37,7 @@ end
 # Assets
 
 gem 'bootstrap-sass', '~> 3.3.6'
-gem 'font-awesome-sass', '~> 4.4.0'
+gem 'font-awesome-sass', '~> 4.5.0'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'select2-rails'
