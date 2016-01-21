@@ -11,7 +11,7 @@ class StatisticsController < ApplicationController
   def amount
     @users_list = User.without_admins.enabled.select(:id, :name, :lastname)
       .index_by(&:id)
-    @userarchyves = user_archives
+    @userarchyves = user_archives( params[:id])
     @total = @userarchyves.sum(:sum)
   end
 
@@ -50,8 +50,8 @@ class StatisticsController < ApplicationController
     @users ||= User.without_admins
   end
 
-  def user_archives
-    last_archive = Archyves.last
+  def user_archives(id)
+    last_archive = id.nil? ? Archyves.last : Archyves.find(id) rescue nil
     return [] unless last_archive
     admin = User.where(name: 'admin').first
     Userarchyves.where(archyves_id: last_archive.id)

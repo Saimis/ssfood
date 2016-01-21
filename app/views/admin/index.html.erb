@@ -5,8 +5,7 @@
       <%= form_tag("start", method: "start") do %>
         <%= submit_tag("Start session") %>
       <% end %>
-
-  		<% if !@archyve.nil? && @archyve.date > Time.now %>
+  		<% if !@archyve.nil? && (@archyve.complete.to_i.zero? || @archyve.date > Time.now) %>
         <span style="color:red;">Voting session is active</span>
       <% end %>
   	</p>
@@ -129,4 +128,5 @@
 
     </div>
   </div>
+  <br />
 </div>

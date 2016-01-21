@@ -40,4 +40,5 @@ FoodApp::Application.routes.draw do
   post 'start' => 'admin#start'
   get 'stats' => 'statistics#index'
   get 'stats/amount' => 'statistics#amount'
+  get 'stats/amount/:id' => 'statistics#amount'
 end

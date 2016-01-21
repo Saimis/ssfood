@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.2.3'
+ruby '2.3.0'
 
 gem 'active_link_to'
 gem 'bcrypt', '~> 3.1.10'
