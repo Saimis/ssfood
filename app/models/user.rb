@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include Gravtastic
+
+  has_gravatar secure: true, default: :mm
   has_secure_password
 
   validates :username, :first_name, :last_name, :email, presence: true
