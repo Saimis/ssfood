@@ -5,16 +5,16 @@
         .history title="History"
       - if current_round.caller_id == user.id
         span.user_name_activefield.caller title="Caller"
-          = user.name
+          = user.short_name
       - elsif  current_round.payer_id == user.id
         span.user_name_activefield.payer title="Bankster"
-          = user.name
+          = user.short_name
       - elsif  current_round.garbage_collector_id == user.id
         span.user_name_activefield.gc title="Garbage collector"
-          = user.name
+          = user.short_name
       - else
         span.user_name_activefield
-          = user.name
+          = user.short_name
       .copy title="CopyCAT!"
 
     - if user.id == @current_user.try(:id)

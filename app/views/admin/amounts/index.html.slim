@@ -23,7 +23,7 @@ br
           - next if order_user.sum.blank?
 
           tr
-            td = order_user.user.name
+            td = order_user.user.first_name
             td = order_user.user.last_name
             td.sum
               = order_user.sum

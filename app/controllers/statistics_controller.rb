@@ -17,19 +17,19 @@ class StatisticsController < ApplicationController
 
   def users_callers_data
     users_data = []
-    users.map { |u| users_data.push([ u.name, Order.where(caller_id: u.id).count ]) }
+    users.map { |u| users_data.push([ u.short_name, Order.where(caller_id: u.id).count ]) }
     users_data
   end
 
   def users_votes_data
     users_data = []
-    users.map { |u| users_data.push([ u.name, counter(u.id) ]) }
+    users.map { |u| users_data.push([ u.short_name, counter(u.id) ]) }
     users_data
   end
 
   def users_food_data
     users_data = []
-    users.map { |u| users_data.push([u.name, counter(u.id)]) }
+    users.map { |u| users_data.push([u.short_name, counter(u.id)]) }
     users_data
   end
 

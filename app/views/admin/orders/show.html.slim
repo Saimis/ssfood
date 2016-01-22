@@ -9,13 +9,13 @@ p
   =< @order.restaurant.try(:name)
 p
   strong Caller:
-  =< @order.caller.try(:name)
+  =< @order.caller.try(:short_name)
 p
   strong Payer:
-  =< @order.payer.try(:name)
+  =< @order.payer.try(:short_name)
 p
   strong Garbage collector:
-  =< @order.garbage_collector.try(:name)
+  =< @order.garbage_collector.try(:short_name)
 
 br
 
@@ -39,7 +39,7 @@ table.table.table-hover
       tr
         td
           - if order_user.user
-            = link_to order_user.user.name, admin_user_path(order_user.user)
+            = link_to order_user.user.short_name, admin_user_path(order_user.user)
         td
           - if order_user.restaurant
             = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)

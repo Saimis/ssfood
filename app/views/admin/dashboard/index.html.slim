@@ -29,7 +29,7 @@ hr
         tr
           td
             - if order_user.user
-              = link_to order_user.user.name, admin_user_path(order_user.user)
+              = link_to order_user.user.short_name, admin_user_path(order_user.user)
           td
             - if order_user.restaurant
               = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
