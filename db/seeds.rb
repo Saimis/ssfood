@@ -26,7 +26,7 @@ ActiveRecord::Base.transaction do
   restaurants = 10.times.map do
     Restaurant.create!(
       name: Faker::Company.name,
-      about: Faker::Internet.url,
+      website: Faker::Internet.url,
       phone: Faker::PhoneNumber.cell_phone
     )
   end
