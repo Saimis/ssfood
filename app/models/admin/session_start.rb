@@ -38,7 +38,7 @@ module Admin
 
     def create_order_users!
       User.without_admins.enabled.each do |user|
-        OrderUser.create(user_id: user.id, order_id: order.id)
+        OrderUser.create(user_id: user.id, order_id: @order.id)
       end
     end
 

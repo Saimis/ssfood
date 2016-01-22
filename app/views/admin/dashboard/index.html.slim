@@ -8,32 +8,34 @@ h2 New session
 br
 br
 hr
+- if @last_order.present?
+  - if @last_order.current?
+    h2 Current order
+  - else
+    h2 Last order
 
-- if @last_order.current?
-  h2 Current order
-- else
-  h2 Last order
+  = render partial: 'last_order_table', locals: { order: @last_order }
 
-= render partial: 'last_order_table', locals: { order: @last_order }
-
-h4 Users
-table.table.table-hover
-  thead
-    tr
-      th User
-      th Voted for
-      th Food
-      th
-  tbody
-    - @order_users.each do |order_user|
+  h4 Users
+  table.table.table-hover
+    thead
       tr
-        td
-          - if order_user.user
-            = link_to order_user.user.name, admin_user_path(order_user.user)
-        td
-          - if order_user.restaurant
-            = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
+        th User
+        th Voted for
+        th Food
+        th
+    tbody
+      - @order_users.each do |order_user|
+        tr
+          td
+            - if order_user.user
+              = link_to order_user.user.name, admin_user_path(order_user.user)
+          td
+            - if order_user.restaurant
+              = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
 
-        td = order_user.food
-        td.text-right
-          = link_to 'Delete', admin_order_user_path(order_user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
+          td = order_user.food
+          td.text-right
+            = link_to 'Delete', admin_order_user_path(order_user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
+- else
+  | There are no orders at this moment.

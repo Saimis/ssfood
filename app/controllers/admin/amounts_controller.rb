@@ -8,6 +8,7 @@ module Admin
       @order = manager[:order]
       @order_users = manager[:order_users]
       @total = manager[:total]
+      render :index
     end
     alias_method :show, :index
   end

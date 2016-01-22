@@ -3,7 +3,7 @@ _admin_user = User.create(name: 'admin', password: 'test')
 _users = 10.times.map do
   User.create(
     name: Faker::Name.first_name,
-    lastname: Faker::Name.last_name,
+    last_name: Faker::Name.last_name,
     password: 'test'
   )
 end
