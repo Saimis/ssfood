@@ -1,12 +1,12 @@
 $(document).ready(function(){
   $('.sum').dblclick(function(evt){
     evt.stopImmediatePropagation();
-    
+
     var sum = $(this).text();
     sum = sum.replace('€', '').trim();
-    
+
     $(this).html('<input class="change_sum" type="text" value="' + sum + '">');
-    
+
   });
 
   $('td').on('keypress', '.change_sum', function(evt){
@@ -35,6 +35,6 @@ function recalculateTotal() {
       total += parseFloat(sum);
     }
   });
-  $('td.total').html(total + '€');
+  $('td.total').html(total.toFixed(2) + '€');
 }
 
