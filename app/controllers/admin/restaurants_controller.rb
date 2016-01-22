@@ -58,7 +58,7 @@ module Admin
     end
 
     def restaurant_params
-      params.require(:restaurant).permit(:name, :about, :phone)
+      params.require(:restaurant).permit(:name, :website, :phone)
     end
   end
 end

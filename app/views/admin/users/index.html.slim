@@ -5,7 +5,8 @@ h1 Listing users
     thead
       tr
         th #
-        th Name
+        th Email
+        th First name
         th Last name
         th Disabled
         th Food
@@ -16,7 +17,8 @@ h1 Listing users
       - @users.each do |user|
         tr
           th scope="row" = user.id
-          td = user.name
+          td = user.email
+          td = user.first_name
           td = user.last_name
           td = user.disabled? ? 'Yes' : 'No'
           td = user.food

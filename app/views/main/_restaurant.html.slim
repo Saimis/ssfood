@@ -6,7 +6,7 @@
       span
         = restaurant.phone
       br
-      a target="_blank" href=(restaurant.about) Menu
+      a target="_blank" href=(restaurant.website) Menu
     .winner_image
       = image_tag("last.png")
     - if current_round_order_user.try(:restaurant_id).nil?

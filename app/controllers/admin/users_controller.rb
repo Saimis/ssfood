@@ -58,7 +58,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :last_name, :disabled, :food, :sum)
+      params.require(:user).permit(:email, :username, :first_name, :last_name, :disabled, :food, :sum)
     end
   end
 end

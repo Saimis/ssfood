@@ -23,18 +23,20 @@ hr
         th User
         th Voted for
         th Food
+        th Sum
         th
     tbody
       - @order_users.each do |order_user|
         tr
           td
             - if order_user.user
-              = link_to order_user.user.name, admin_user_path(order_user.user)
+              = link_to order_user.user.short_name, admin_user_path(order_user.user)
           td
             - if order_user.restaurant
               = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
 
           td = order_user.food
+          td = number_to_currency(order_user.sum, locale: :lt)
           td.text-right
             = link_to 'Delete', admin_order_user_path(order_user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-danger'
 - else

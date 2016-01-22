@@ -3,7 +3,7 @@ class MainController < ApplicationController
 
   def index
     @restaurants = Restaurant.order(:name).all
-    @users = User.without_admins.enabled.order(:name).all
+    @users = User.without_admins.enabled.order(:first_name, :last_name).all
 
     if current_round
       @restaurant_time = current_round.date.asctime.to_s
