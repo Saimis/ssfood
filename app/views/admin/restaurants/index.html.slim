@@ -16,7 +16,7 @@ h1 Listing restaurants
         tr
           th scope="row" = restaurant.id
           td = restaurant.name
-          td = restaurant.website
+          td = link_to restaurant.website, restaurant.website
           td = restaurant.phone
           td = restaurant.votes
           td.text-right.btn-group-column

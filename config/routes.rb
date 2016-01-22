@@ -7,7 +7,9 @@ FoodApp::Application.routes.draw do
 
     resources :restaurants
     resources :users
-    resources :orders
+    resources :orders do
+      get 'page/:page', action: :index, on: :collection
+    end
     resources :order_users, only: [:destroy]
     resources :amounts, only: [:index, :show, :update]
   end

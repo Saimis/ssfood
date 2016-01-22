@@ -11,7 +11,7 @@ $(document).ready(function(){
 
   $('td').on('keypress', '.change_sum', function(evt){
     if (evt.which == 13) {
-      $(this).blur();2
+      $(this).blur();
     }
   });
 
@@ -20,7 +20,7 @@ $(document).ready(function(){
     console.log('focusout');
     var sum = $(this).val();
     if ($.isNumeric(sum)) {
-      $(this).parent().html(sum + '€');
+      $(this).parent().html(sum + ' €');
     }
     recalculateTotal();
   });
@@ -35,6 +35,5 @@ function recalculateTotal() {
       total += parseFloat(sum);
     }
   });
-  $('td.total').html(total.toFixed(2) + '€');
+  $('strong.total').html(total.toFixed(2) + ' €');
 }
-

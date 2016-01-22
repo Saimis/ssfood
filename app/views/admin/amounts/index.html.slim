@@ -26,12 +26,16 @@ br
             td = order_user.user.first_name
             td = order_user.user.last_name
             td.sum
-              = order_user.sum
+              = number_to_currency(order_user.sum, unit: '')
+              = ' '
               | &euro;
       tfooter
         tr
           td
-          td Suma
-          td.total
-            = @total.presence || 0
-            | &euro;
+          td
+            strong Suma
+          td
+            strong.total
+              = number_to_currency(@total.presence || 0,  unit: '')
+              = ' '
+              | &euro;
