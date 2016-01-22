@@ -20,6 +20,7 @@ p
 br
 
 .btn-toolbar
+  = link_to 'Amounts', admin_amount_path(@order), class: 'btn btn-primary'
   = link_to 'Edit', edit_admin_order_path(@order), class: 'btn btn-primary'
   = link_to 'Back', admin_orders_path, class: 'btn btn-primary'
 br
