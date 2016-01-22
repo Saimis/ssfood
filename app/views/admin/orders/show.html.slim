@@ -34,6 +34,7 @@ table.table.table-hover
       th User
       th Voted for
       th Food
+      th Sum
   tbody
     - @order.users.each do |order_user|
       tr
@@ -45,3 +46,4 @@ table.table.table-hover
             = link_to order_user.restaurant.name, admin_restaurant_path(order_user.restaurant)
 
         td = order_user.food
+        td = number_to_currency(order_user.sum, locale: :lt)
