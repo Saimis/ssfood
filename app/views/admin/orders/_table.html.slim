@@ -8,7 +8,7 @@
         th Caller
         th Payer
         th Garbage collector
-        th
+        th style="width: 280px"
 
     tbody
       - orders.each do |order|
@@ -30,6 +30,7 @@
 
           td.text-right.btn-group-column
             .btn-group
-              = link_to 'Show', admin_order_path(order), class: 'btn btn-primary'
-              = link_to 'Edit', edit_admin_order_path(order), class: 'btn btn-primary'
-              = link_to 'Destroy', admin_order_path(order), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-primary'
+              = link_to 'Show', admin_order_path(order), class: 'btn btn-primary btn-sm'
+              = link_to 'Amounts', admin_amount_path(order), class: 'btn btn-primary btn-sm'
+              = link_to 'Edit', edit_admin_order_path(order), class: 'btn btn-primary btn-sm'
+              = link_to 'Destroy', admin_order_path(order), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-primary btn-sm'
