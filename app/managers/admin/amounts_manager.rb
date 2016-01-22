@@ -2,9 +2,15 @@ module Admin
   class AmountsManager
     extend Memoist
 
+    attr_reader :params
+
+    def initialize(params)
+      @params = params
+    end
+
     def call
       {
-        order: last_order,
+        order: order,
         order_users: order_users,
         total: total
       }
@@ -17,17 +23,25 @@ module Admin
     end
 
     memoize def order_users
-      return OrderUser.none unless last_order
+      return OrderUser.none unless order
 
       OrderUser
         .includes(:user)
-        .where(order: last_order, user_id: users.ids)
+        .where(order: order, user_id: users.ids)
     end
 
     # === HELPERS
 
     memoize def users
       User.without_admins.enabled
+    end
+
+    memoize def order
+      if params[:id].present?
+        Order.includes(:restaurant).find(params[:id])
+      else
+        last_order
+      end
     end
 
     memoize def last_order

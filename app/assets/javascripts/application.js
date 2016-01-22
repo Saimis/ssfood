@@ -38,7 +38,6 @@ $(document).ready(function(){
   $("#countdown_food").countdown({until: new Date(endtime_food), onExpiry: hideFoodTimer , compact: true,  format: 'HMs'});
 
   $("#food, #sum").blur(function() {
-    console.log('blur')
     saveFood();
   });
   $("#food, #sum").keyup(function() {
@@ -295,4 +294,6 @@ function roundEnd() {
   if($('#food').length) {
     $('#food, #sum').attr('disabled', true);
   }
+
+  $(".force_round_end").hide();
 }

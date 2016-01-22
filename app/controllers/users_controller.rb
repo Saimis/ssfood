@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to root_path }
+        format.html { redirect_to admin_url }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

@@ -39,7 +39,7 @@ class MainController < ApplicationController
 
   def can_end_round?
     current_user and current_user.id == current_round.caller_id and
-    Time.now > current_round.date and params[:force_end_round]
+    (Time.now > current_round.date or current_round.restaurant_id) and params[:force_end_round]
   end
 
   def food_history

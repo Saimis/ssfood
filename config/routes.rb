@@ -9,7 +9,7 @@ FoodApp::Application.routes.draw do
     resources :users
     resources :orders
     resources :order_users, only: [:destroy]
-    resources :amounts, only: :index
+    resources :amounts, only: [:index, :show, :update]
   end
 
   resources :statistics, only: [:index]

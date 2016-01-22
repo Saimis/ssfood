@@ -1,7 +1,7 @@
 h2 New session
 = link_to 'Start session', admin_start_session_path, class: 'btn btn-success'
 
-- if @last_order.present? && @last_order.date > Time.now
+- if @last_order.present? && (@last_order.complete.to_i.zero? || @last_order.date > Time.now)
   br
   span.text-danger Voting session is active
 
