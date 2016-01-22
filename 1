@@ -1,10 +1,10 @@
 class AnotherPgMigr < ActiveRecord::Migration
   def change
-    remove_column :archyves, :callers
-    remove_column :archyves, :payers
-    remove_column :archyves, :gcs
-    add_column :archyves, :callers,:text, array: true, default: []
-    add_column :archyves, :payers, :text, array: true, default: []
-    add_column :archyves, :gcs,    :text, array: true, default: []
+    remove_column :orders, :callers
+    remove_column :orders, :payers
+    remove_column :orders, :gcs
+    add_column :orders, :callers,:text, array: true, default: []
+    add_column :orders, :payers, :text, array: true, default: []
+    add_column :orders, :gcs,    :text, array: true, default: []
   end
 end

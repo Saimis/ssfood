@@ -1,0 +1,11 @@
+= simple_form_for [:admin, @order] do |f|
+  = f.input :date
+  = f.input :food_datetime
+  = f.association :restaurant
+  = f.association :caller
+  = f.association :payer
+  = f.association :garbage_collector
+
+  = f.button :submit
+
+br

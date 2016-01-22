@@ -1,0 +1,10 @@
+= simple_form_for [:admin, @user] do |f|
+  = f.input :name
+  = f.input :last_name
+  = f.input :food
+  = f.input :sum
+  = f.input :disabled, as: :boolean
+
+  = f.button :submit
+
+br

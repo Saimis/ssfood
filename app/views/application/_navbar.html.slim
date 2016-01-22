@@ -6,12 +6,12 @@ div.controls
 
 
     - if current_user.admin?
-      = link_to 'Admin panel', '/admin'
+      = link_to 'Admin panel', admin_dashboard_path
       = ' | '
-      = link_to 'Amounts', '/stats/amount'
+      = link_to 'Amounts', admin_amounts_path
       = ' | '
     - else
-      = link_to 'Stats', '/stats'
+      = link_to 'Stats', statistics_path
       = ' | '
 
     = link_to 'Profile', '/changepass'

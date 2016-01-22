@@ -12,6 +12,11 @@ class User < ActiveRecord::Base
     name == 'admin'
   end
 
+  def short_name
+    short_last_name = "#{last_name[1]}." if last_name.present?
+    [name.presence, short_last_name].compact.join(' ').titleize
+  end
+
   private
 
   def create_remember

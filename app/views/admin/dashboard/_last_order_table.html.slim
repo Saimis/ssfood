@@ -1,0 +1,32 @@
+.table-responsive
+  table.table.table-hover
+    thead
+      tr
+        th Date
+        th Food date
+        th Restaurant
+        th Caller
+        th Payer
+        th Garbage collector
+        th
+
+    tbody
+      tr
+        td = order.date.to_s(:db)
+        td = order.food_datetime.to_s(:db)
+        td
+          - if order.restaurant
+            = link_to order.restaurant.name, admin_restaurant_path(order.restaurant)
+        td
+          - if order.caller
+            = link_to order.caller.short_name, admin_user_path(order.caller)
+        td
+          - if order.payer
+            = link_to order.payer.short_name, admin_user_path(order.payer)
+        td
+          - if order.garbage_collector
+            = link_to order.garbage_collector.short_name, admin_user_path(order.garbage_collector)
+
+        td.text-right.btn-group-column
+          .btn-group
+            = link_to 'Edit', edit_admin_order_path(order), class: 'btn btn-primary'

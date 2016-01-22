@@ -1,6 +1,6 @@
 module MainHelper
   def current_round
-    @current_round ||= Archyves.last
+    @current_round ||= Order.last
   end
 
   def current_round_ended?
@@ -8,6 +8,6 @@ module MainHelper
   end
 
   def caller?
-    current_round.caller == @current_user.try(:id)
+    current_round.caller_id == @current_user.try(:id)
   end
 end

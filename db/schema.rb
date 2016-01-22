@@ -11,25 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029224658) do
+ActiveRecord::Schema.define(version: 20151209113518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "archyves", force: true do |t|
-    t.datetime "date"
+  create_table "order_users", force: true do |t|
+    t.integer  "order_id"
     t.integer  "restaurant_id"
-    t.integer  "caller"
+    t.string   "food"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "food_time"
+    t.float    "sum"
+  end
+
+  create_table "orders", force: true do |t|
+    t.datetime "date"
+    t.integer  "restaurant_id"
+    t.integer  "caller_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "food_datetime"
-    t.integer  "complete",      default: 0
-    t.integer  "payer"
-    t.integer  "gc"
-    t.text     "callers",       default: "--- []\n"
-    t.text     "payers",        default: "--- []\n"
-    t.text     "gcs",           default: "--- []\n"
+    t.integer  "complete",             default: 0
+    t.integer  "payer_id"
+    t.integer  "garbage_collector_id"
+    t.text     "callers",              default: "--- []\n"
+    t.text     "payers",               default: "--- []\n"
+    t.text     "gcs",                  default: "--- []\n"
   end
 
   create_table "restaurants", force: true do |t|
@@ -39,16 +48,6 @@ ActiveRecord::Schema.define(version: 20151029224658) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "phone"
-  end
-
-  create_table "userarchyves", force: true do |t|
-    t.integer  "archyves_id"
-    t.integer  "voted_for"
-    t.string   "food"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "sum"
   end
 
   create_table "users", force: true do |t|
@@ -61,7 +60,7 @@ ActiveRecord::Schema.define(version: 20151029224658) do
     t.string   "password_digest"
     t.integer  "disabled",        default: 0
     t.float    "sum"
-    t.string   "lastname"
+    t.string   "last_name"
   end
 
   add_index "users", ["remember"], name: "index_users_on_remember", using: :btree

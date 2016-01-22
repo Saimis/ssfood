@@ -11,11 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require turbolinks
-//= require jquery.turbolinks
 //= require_tree .
+//= require turbolinks
 
 var form_timout;
 var isWinnerSet = false;

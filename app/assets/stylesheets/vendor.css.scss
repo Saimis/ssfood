@@ -1,4 +1,11 @@
-// @import 'bootstrap-sprockets';
-// @import 'bootstrap';
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import 'select2';
+@import 'select2-bootstrap';
+@import 'flat-ui';
+
+.btn-group-column {
+  min-width: 250px;
+}

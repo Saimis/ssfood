@@ -1,0 +1,30 @@
+h1 Listing restaurants
+
+.table-responsive
+  table.table.table-hover
+    thead
+      tr
+        th #
+        th Name
+        th About
+        th Phone
+        th Votes
+        th
+
+    tbody
+      - @restaurants.each do |restaurant|
+        tr
+          th scope="row" = restaurant.id
+          td = restaurant.name
+          td = restaurant.about
+          td = restaurant.phone
+          td = restaurant.votes
+          td.text-right.btn-group-column
+            .btn-group
+              = link_to 'Show', admin_restaurant_path(restaurant), class: 'btn btn-primary'
+              = link_to 'Edit', edit_admin_restaurant_path(restaurant), class: 'btn btn-primary'
+              = link_to 'Destroy', admin_restaurant_path(restaurant), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-primary'
+
+br
+
+= link_to 'New Restaurant', new_admin_restaurant_path, class: 'btn btn-success'

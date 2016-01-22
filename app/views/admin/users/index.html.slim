@@ -1,0 +1,32 @@
+h1 Listing users
+
+.table-responsive
+  table.table.table-hover
+    thead
+      tr
+        th #
+        th Name
+        th Last name
+        th Disabled
+        th Food
+        th Sum
+        th
+
+    tbody
+      - @users.each do |user|
+        tr
+          th scope="row" = user.id
+          td = user.name
+          td = user.last_name
+          td = user.disabled? ? 'Yes' : 'No'
+          td = user.food
+          td = user.sum
+          td.text-right.btn-group-column
+            .btn-group
+              = link_to 'Show', admin_user_path(user), class: 'btn btn-primary'
+              = link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary'
+              = link_to 'Destroy', admin_user_path(user), data: {:confirm => 'Are you sure?'}, :method => :delete, class: 'btn btn-primary'
+
+br
+
+= link_to 'New User', new_admin_user_path, class: 'btn btn-success'
